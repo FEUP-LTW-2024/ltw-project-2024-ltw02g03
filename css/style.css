@@ -2,8 +2,14 @@ body {
   width: 60em;
   margin: 1em auto;
 
+  max-width: 100vw;
+
   --background-color: #ffe8d6;
   --main-color: #0a9396;
+}
+
+body > * {
+  margin: 0 1em;
 }
 
 body > header {
@@ -18,26 +24,28 @@ body > header h1 {
   flex-grow: 1;
 }
 
-body > header h1 a {
+body > header a {
   color: var(--main-color);
   text-decoration: none;
 }
 
-
 body > header form {
   display: grid;
+}
+
+body > header form.login {
   grid-template-columns: auto auto;
   gap: 1em;
 }
 
-body > header form input {
+body > header form.login input {
   grid-column-end: span 2;
 }
 
 main {
   background-color: var(--background-color);
 
-  margin: 1em 0;
+  margin: 1em;
   padding: 1em;
 }
 
@@ -46,21 +54,41 @@ main a {
   text-decoration: none;
 }
 
-#groups {
+main > header {
   display: flex;
+}
+
+main > header h2 {
+  flex-grow: 1;
+}
+
+main > header input {
+  align-self: center;
+}
+
+i.action {
+  font-size: 0.8em;
+}
+
+#artists {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1em;
 }
 
-#groups article {
+#artists article {
   display: grid;
+  justify-content: center;
+  width: 200px;
 }
 
-#groups article * {
+#artists article * {
   grid-column-start: 1;
   grid-row-start: 1;
 }
 
-#groups article a {
+#artists article a {
   color: white;
   text-decoration: none;
   text-shadow: 2px 2px #333;
@@ -70,8 +98,7 @@ main a {
   align-self: center;
   justify-self: center;
 
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-align: center;
 }
 
 #albums {
@@ -112,8 +139,46 @@ main a {
   text-align: right;
 }
 
+form.profile {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1em;
+  max-width: 20em;
+}
+
+form.profile button {
+  grid-column-start: 2;
+}
+
 footer {
   background-color: black;
   padding: 1em;
   color: white;
+}
+
+#messages article {
+  margin: 1em 0;
+  padding: 1em;
+}
+
+#messages article.success {
+  background-color: #DFF2BF;
+}
+
+#messages article.warning {
+  background-color: #FEEFB3;
+}
+
+#messages article.error {
+  background-color: #FFD2D2;
+}
+
+#messages article.info {
+  background-color: #BDE5F8;
+}
+
+@media only screen and (max-width: 540px) {
+  #albums article {
+    grid-template-columns: auto;
+  }
 }
