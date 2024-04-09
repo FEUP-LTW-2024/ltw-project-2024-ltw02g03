@@ -19,7 +19,8 @@
     }
 
     static function getAlbumTracks(PDO $db, int $id) : array {
-      $stmt = $db->prepare('SELECT TrackId, Name, Milliseconds FROM Track WHERE AlbumId = ?');
+      $stmt = $db->prepare('SELECT TrackId, Name, Milliseconds 
+      FROM Track WHERE AlbumId = ?');
       $stmt->execute(array($id));
   
       $tracks = [];
