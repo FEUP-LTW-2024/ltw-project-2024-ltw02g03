@@ -1,0 +1,108 @@
+<?php
+declare(strict_types=1);
+
+class Cart
+{
+    public int $cartId;
+    public int $userId;
+    public int $itemId;
+    public int $quantity;
+
+    public function __construct(int $cartId, int $userId, int $itemId, int $quantity)
+    {
+        $this->cartId = $cartId;
+        $this->userId = $userId;
+        $this->itemId = $itemId;
+        $this->quantity = $quantity;
+    }
+
+    // Insert a new item into the cart
+    static function insertItem(PDO $db, int $userId, int $itemId, int $quantity): int
+    {
+        $stmt = $db->prepare('
+            INSERT INTO Cart (UserId, ItemId, Quantity)
+            VALUES (?, ?, ?)
+        ');
+
+        $stmt->execute(array($userId, $itemId, $quantity));
+
+        return $db->lastInsertId();
+    }
+
+    // Update the quantity of an item in the cart
+    static function updateItemQuantity(PDO $db, int $cartId, int $quantity): void
+    {
+        $stmt = $db->prepare('
+            UPDATE Cart
+            SET Quantity = ?
+            WHERE CartId = ?
+        ');
+
+        $stmt->execute(array($quantity, $cartId));
+    }
+
+    // Delete an item from the cart
+    static function deleteItem(PDO $db, int $cartId): void
+    {
+        $stmt = $db->prepare('
+            DELETE FROM Cart
+            WHERE CartId = ?
+        ');
+
+        $stmt->execute(array($cartId));
+    }
+
+    // Get all items in the cart of a user
+    static function getItemsByUser(PDO $db, int $userId): array
+    {
+        $stmt = $db->prepare('
+            SELECT *
+            FROM Cart
+            WHERE UserId = ?
+        ');
+
+        $stmt->execute(array($userId));
+
+        $items = array();
+
+        while ($item = $stmt->fetch()) {
+            $items[] = new Cart(
+                $item['CartId'],
+                $item['UserId'],
+                $item['ItemId'],
+                $item['Quantity']
+            );
+        }
+
+        return $items;
+    }
+
+    // Get the total quantity of items in the cart of a user
+    static function getTotalQuantityByUser(PDO $db, int $userId): int
+    {
+        $stmt = $db->prepare('
+            SELECT SUM(Quantity) as TotalQuantity
+            FROM Cart
+            WHERE UserId = ?
+        ');
+
+        $stmt->execute(array($userId));
+
+        $result = $stmt->fetch();
+
+        return $result['TotalQuantity'] ?? 0;
+    }
+
+    // Save an item to the cart
+    static function saveItem(PDO $db, Cart $cart): void {
+    if ($cart->cartId) {
+        // Item exists, update it
+        self::updateItemQuantity($db, $cart->cartId, $cart->quantity);
+    } 
+    else {
+        // Item does not exist, insert it
+        self::insertItem($db, $cart->userId, $cart->itemId, $cart->quantity);
+    }
+}
+}
+?>
