@@ -21,154 +21,182 @@ class Transaction
     // Insert a transaction
     static function insertTransaction(PDO $db, int $buyerId, int $sellerId, int $itemId, string $transactionDate): int
     {
-        $stmt = $db->prepare('
-            INSERT INTO Transaction (BuyerId, SellerId, ItemId, TransactionDate)
-            VALUES (?, ?, ?, ?)
-        ');
+        try {
+            $stmt = $db->prepare('
+                INSERT INTO Transaction (BuyerId, SellerId, ItemId, TransactionDate)
+                VALUES (?, ?, ?, ?)
+            ');
 
-        $stmt->execute(array($buyerId, $sellerId, $itemId, $transactionDate));
+            $stmt->execute(array($buyerId, $sellerId, $itemId, $transactionDate));
 
-        return $db->lastInsertId();
+            return $db->lastInsertId();
+        } catch (PDOException $e) {
+            throw new Exception("Error inserting transaction: " . $e->getMessage());
+        }
     }
 
     // Update a transaction
     static function updateTransaction(PDO $db, int $transactionId, int $buyerId, int $sellerId, int $itemId, string $transactionDate): void
     {
-        $stmt = $db->prepare('
-            UPDATE Transaction
-            SET BuyerId = ?, SellerId = ?, ItemId = ?, TransactionDate = ?
-            WHERE TransactionId = ?
-        ');
+        try {
+            $stmt = $db->prepare('
+                UPDATE Transaction
+                SET BuyerId = ?, SellerId = ?, ItemId = ?, TransactionDate = ?
+                WHERE TransactionId = ?
+            ');
 
-        $stmt->execute(array($buyerId, $sellerId, $itemId, $transactionDate, $transactionId));
+            $stmt->execute(array($buyerId, $sellerId, $itemId, $transactionDate, $transactionId));
+        } catch (PDOException $e) {
+            throw new Exception("Error updating transaction: " . $e->getMessage());
+        }
     }
-
 
     // Delete a transaction
     static function deleteTransaction(PDO $db, int $transactionId): void
     {
-        $stmt = $db->prepare('
-            DELETE FROM Transaction
-            WHERE TransactionId = ?
-        ');
+        try {
+            $stmt = $db->prepare('
+                DELETE FROM Transaction
+                WHERE TransactionId = ?
+            ');
 
-        $stmt->execute(array($transactionId));
+            $stmt->execute(array($transactionId));
+        } catch (PDOException $e) {
+            throw new Exception("Error deleting transaction: " . $e->getMessage());
+        }
     }
 
     // Get a transaction
     static function getTransaction(PDO $db, int $transactionId): Transaction
     {
-        $stmt = $db->prepare('
-            SELECT *
-            FROM Transaction
-            WHERE TransactionId = ?
-        ');
+        try {
+            $stmt = $db->prepare('
+                SELECT *
+                FROM Transaction
+                WHERE TransactionId = ?
+            ');
 
-        $stmt->execute(array($transactionId));
+            $stmt->execute(array($transactionId));
 
-        $transaction = $stmt->fetch();
+            $transaction = $stmt->fetch();
 
-        return new Transaction(
-            $transaction['TransactionId'],
-            $transaction['BuyerId'],
-            $transaction['SellerId'],
-            $transaction['ItemId'],
-            $transaction['TransactionDate']
-        );
-    }
-
-    // Get all transactions
-    static function getAllTransactions(PDO $db): array
-    {
-        $stmt = $db->prepare('
-            SELECT *
-            FROM Transaction
-        ');
-
-        $stmt->execute();
-
-        $transactions = array();
-
-        while ($transaction = $stmt->fetch()) {
-            $transactions[] = new Transaction(
+            return new Transaction(
                 $transaction['TransactionId'],
                 $transaction['BuyerId'],
                 $transaction['SellerId'],
                 $transaction['ItemId'],
                 $transaction['TransactionDate']
             );
+        } catch (PDOException $e) {  
+            throw new Exception("Error fetching transaction: " . $e->getMessage());
         }
+    }
 
-        return $transactions;
+    // Get all transactions
+    static function getAllTransactions(PDO $db): array
+    {
+        try {
+            $stmt = $db->prepare('
+                SELECT *
+                FROM Transaction
+            ');
+
+            $stmt->execute();
+
+            $transactions = array();
+
+            while ($transaction = $stmt->fetch()) {
+                $transactions[] = new Transaction(
+                    $transaction['TransactionId'],
+                    $transaction['BuyerId'],
+                    $transaction['SellerId'],
+                    $transaction['ItemId'],
+                    $transaction['TransactionDate']
+                );
+            }
+
+            return $transactions;
+        } catch (PDOException $e) {      
+            throw new Exception("Error fetching transactions: " . $e->getMessage());
+        }
     }
 
     // Get all transactions for a buyer
-    public static function getBuyerTransactions(PDO $db, int $buyerId): array
-{
-    $stmt = $db->prepare('
-        SELECT *
-        FROM Transaction
-        WHERE BuyerId = ?
-    ');
+    static function getBuyerTransactions(PDO $db, int $buyerId): array
+    {
+        try {
+            $stmt = $db->prepare('
+                SELECT *
+                FROM Transaction
+                WHERE BuyerId = ?
+            ');
 
-    $stmt->execute(array($buyerId));
-    $buyerTransactions = array();
+            $stmt->execute(array($buyerId));
+            $buyerTransactions = array();
 
-    while ($transaction = $stmt->fetch()) {
-        $buyerTransactions[] = new Transaction(
-            $transaction['TransactionId'],
-            $transaction['BuyerId'],
-            $transaction['SellerId'],
-            $transaction['ItemId'],
-            $transaction['TransactionDate']
-        );
+            while ($transaction = $stmt->fetch()) {
+                $buyerTransactions[] = new Transaction(
+                    $transaction['TransactionId'],
+                    $transaction['BuyerId'],
+                    $transaction['SellerId'],
+                    $transaction['ItemId'],
+                    $transaction['TransactionDate']
+                );
+            }
+
+            return $buyerTransactions;
+        } catch (PDOException $e) {    
+            throw new Exception("Error fetching buyer transactions: " . $e->getMessage());
+        }
     }
 
-    return $buyerTransactions;
-}
+    // Get all transactions for a seller
+    static function getSellerTransactions(PDO $db, int $sellerId): array
+    {
+        try {
+            $stmt = $db->prepare('
+                SELECT *
+                FROM Transaction
+                WHERE SellerId = ?
+            ');
 
+            $stmt->execute(array($sellerId));
+            $sellerTransactions = array();
 
-// Get all transactions for a seller
-public static function getSellerTransactions(PDO $db, int $sellerId): array
-{
-    $stmt = $db->prepare('
-        SELECT *
-        FROM Transaction
-        WHERE SellerId = ?
-    ');
+            while ($transaction = $stmt->fetch()) {
+                $sellerTransactions[] = new Transaction(
+                    $transaction['TransactionId'],
+                    $transaction['BuyerId'],
+                    $transaction['SellerId'],
+                    $transaction['ItemId'],
+                    $transaction['TransactionDate']
+                );
+            }
 
-    $stmt->execute(array($sellerId));
-    $sellerTransactions = array();
-
-    while ($transaction = $stmt->fetch()) {
-        $sellerTransactions[] = new Transaction(
-            $transaction['TransactionId'],
-            $transaction['BuyerId'],
-            $transaction['SellerId'],
-            $transaction['ItemId'],
-            $transaction['TransactionDate']
-        );
+            return $sellerTransactions;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching seller transactions: " . $e->getMessage());
+        }
     }
 
-    return $sellerTransactions;
-}
+    // Save a transaction
+    static function saveTransaction(PDO $db, Transaction $transaction): void
+    {
+        try {
+            $stmt = $db->prepare('
+                INSERT INTO Transaction (BuyerId, SellerId, ItemId, TransactionDate)
+                VALUES (?, ?, ?, ?)
+            ');
 
-// Save a transaction
-public static function saveTransaction(PDO $db, Transaction $transaction): void
-{
-    $stmt = $db->prepare('
-        INSERT INTO Transaction (BuyerId, SellerId, ItemId, TransactionDate)
-        VALUES (?, ?, ?, ?)
-    ');
-
-    $stmt->execute(array(
-        $transaction->buyerId,
-        $transaction->sellerId,
-        $transaction->itemId,
-        $transaction->transactionDate
-    ));
-}
-
-
+            $stmt->execute(array(
+                $transaction->buyerId,
+                $transaction->sellerId,
+                $transaction->itemId,
+                $transaction->transactionDate
+            ));
+        } catch (PDOException $e) {
+            throw new Exception("Error saving transaction: " . $e->getMessage());
+        }
+    }
 }
 ?>

@@ -19,90 +19,113 @@ class Cart
     // Insert a new item into the cart
     static function insertItem(PDO $db, int $userId, int $itemId, int $quantity): int
     {
-        $stmt = $db->prepare('
-            INSERT INTO Cart (UserId, ItemId, Quantity)
-            VALUES (?, ?, ?)
-        ');
+        try {
+            $stmt = $db->prepare('
+                INSERT INTO Cart (UserId, ItemId, Quantity)
+                VALUES (?, ?, ?)
+            ');
 
-        $stmt->execute(array($userId, $itemId, $quantity));
+            $stmt->execute(array($userId, $itemId, $quantity));
 
-        return $db->lastInsertId();
+            return $db->lastInsertId();
+        } catch (PDOException $e) {
+            throw new Exception("Error inserting item into cart: " . $e->getMessage());
+        }
     }
 
     // Update the quantity of an item in the cart
     static function updateItemQuantity(PDO $db, int $cartId, int $quantity): void
     {
-        $stmt = $db->prepare('
-            UPDATE Cart
-            SET Quantity = ?
-            WHERE CartId = ?
-        ');
+        try {
+            $stmt = $db->prepare('
+                UPDATE Cart
+                SET Quantity = ?
+                WHERE CartId = ?
+            ');
 
-        $stmt->execute(array($quantity, $cartId));
+            $stmt->execute(array($quantity, $cartId));
+        } catch (PDOException $e) {
+            throw new Exception("Error updating item quantity in cart: " . $e->getMessage());
+        }
     }
 
     // Delete an item from the cart
     static function deleteItem(PDO $db, int $cartId): void
     {
-        $stmt = $db->prepare('
-            DELETE FROM Cart
-            WHERE CartId = ?
-        ');
+        try {
+            $stmt = $db->prepare('
+                DELETE FROM Cart
+                WHERE CartId = ?
+            ');
 
-        $stmt->execute(array($cartId));
+            $stmt->execute(array($cartId));
+        } catch (PDOException $e) {
+            throw new Exception("Error deleting item from cart: " . $e->getMessage());
+        }
     }
 
     // Get all items in the cart of a user
     static function getItemsByUser(PDO $db, int $userId): array
     {
-        $stmt = $db->prepare('
-            SELECT *
-            FROM Cart
-            WHERE UserId = ?
-        ');
+        try {
+            $stmt = $db->prepare('
+                SELECT *
+                FROM Cart
+                WHERE UserId = ?
+            ');
 
-        $stmt->execute(array($userId));
+            $stmt->execute(array($userId));
 
-        $items = array();
+            $items = array();
 
-        while ($item = $stmt->fetch()) {
-            $items[] = new Cart(
-                $item['CartId'],
-                $item['UserId'],
-                $item['ItemId'],
-                $item['Quantity']
-            );
+            while ($item = $stmt->fetch()) {
+                $items[] = new Cart(
+                    $item['CartId'],
+                    $item['UserId'],
+                    $item['ItemId'],
+                    $item['Quantity']
+                );
+            }
+
+            return $items;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching items from cart: " . $e->getMessage());
         }
-
-        return $items;
     }
 
     // Get the total quantity of items in the cart of a user
     static function getTotalQuantityByUser(PDO $db, int $userId): int
     {
-        $stmt = $db->prepare('
-            SELECT SUM(Quantity) as TotalQuantity
-            FROM Cart
-            WHERE UserId = ?
-        ');
+        try {
+            $stmt = $db->prepare('
+                SELECT SUM(Quantity) as TotalQuantity
+                FROM Cart
+                WHERE UserId = ?
+            ');
 
-        $stmt->execute(array($userId));
+            $stmt->execute(array($userId));
 
-        $result = $stmt->fetch();
+            $result = $stmt->fetch();
 
-        return $result['TotalQuantity'] ?? 0;
+            return $result['TotalQuantity'] ?? 0;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching total quantity from cart: " . $e->getMessage());
+        }
     }
 
     // Save an item to the cart
     static function saveItem(PDO $db, Cart $cart): void {
-    if ($cart->cartId) {
-        // Item exists, update it
-        self::updateItemQuantity($db, $cart->cartId, $cart->quantity);
-    } 
-    else {
-        // Item does not exist, insert it
-        self::insertItem($db, $cart->userId, $cart->itemId, $cart->quantity);
+        try {
+            if ($cart->cartId) {
+                // Item exists, update it
+                self::updateItemQuantity($db, $cart->cartId, $cart->quantity);
+            } else {
+                // Item does not exist, insert it
+                self::insertItem($db, $cart->userId, $cart->itemId, $cart->quantity);
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error saving item to cart: " . $e->getMessage());
+        }
     }
-}
 }
 ?>
