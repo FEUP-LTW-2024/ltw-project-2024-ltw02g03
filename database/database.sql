@@ -2,10 +2,10 @@
 
 DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS Item;
-DROP TABLE IF EXISTS Transaction;
+DROP TABLE IF EXISTS Payment;
 DROP TABLE IF EXISTS Cart;
 DROP TABLE IF EXISTS ProductCategory;
-DROP TABLE IF EXISTS Message;
+DROP TABLE IF EXISTS Communication;
 DROP TABLE IF EXISTS ItemCategory;
 DROP TABLE IF EXISTS ItemBrand;
 DROP TABLE IF EXISTS ItemCondition;
@@ -36,7 +36,7 @@ CREATE TABLE User
     Country NVARCHAR(40),
     PostalCode NVARCHAR(10),
     Phone NVARCHAR(24),
-    ImageUrl NVARCHAR(255)
+    ImageUrl NVARCHAR(255),
     Admin BOOLEAN NOT NULL,
     
     CONSTRAINT PK_User PRIMARY KEY  (UserId)
@@ -72,15 +72,15 @@ CREATE TABLE Item
     
 );
 
--- Transaction Table
-CREATE TABLE Transaction
+-- Payment Table
+CREATE TABLE Payment
 (
-    TransactionId INTEGER  NOT NULL,
+    PaymentId INTEGER  NOT NULL,
     BuyerId INTEGER,
     SellerId INTEGER,
     ItemId INTEGER,
-    TransactionDate DATE DEFAULT CURRENT_DATE,
-    CONSTRAINT PK_Transaction PRIMARY KEY  (TransactionId),
+    PaymentDate DATE DEFAULT CURRENT_DATE,
+    CONSTRAINT PK_Payment PRIMARY KEY  (PaymentId),
     FOREIGN KEY (BuyerId) REFERENCES User (UserId) 
         ON DELETE NO ACTION ON UPDATE NO ACTION,
     FOREIGN KEY (SellerId) REFERENCES User (UserId) 
@@ -103,13 +103,13 @@ CREATE TABLE Cart
         ON DELETE CASCADE ON UPDATE NO ACTION
 );
 
--- Message Table
-CREATE TABLE Message
+-- Communication Table
+CREATE TABLE Communication
 (
-    MessageId INTEGER PRIMARY KEY,
+    CommunicationId INTEGER PRIMARY KEY,
     SenderId INTEGER,
     ReceiverId INTEGER,
-    MessageText NVARCHAR(200),
+    CommunicationText NVARCHAR(200),
     SendDate DATE DEFAULT CURRENT_DATE,
     FOREIGN KEY (SenderId) REFERENCES User (UserId) 
         ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -130,41 +130,41 @@ CREATE TABLE ProductCategory
 -- Item-Category Table
 CREATE TABLE ItemCategory
 (
-   ItemId INTEGER
-   CategoryId INTEGER
+   ItemId INTEGER,
+   CategoryId INTEGER,
    FOREIGN KEY (ItemId) REFERENCES Item (ItemId) 
         ON DELETE CASCADE ON UPDATE NO ACTION
    FOREIGN KEY (CategoryId) REFERENCES ProductCategory (CategoryId) 
         ON DELETE CASCADE ON UPDATE NO ACTION   
-)
+);
 
 -- Item-Brand Table
-Create TABLE ItemBrand
+CREATE TABLE ItemBrand
 (
    BrandId INTEGER PRIMARY KEY,
    BrandName NVARCHAR(100) NOT NULL
-)
+);
 
 -- Item-Condition Table
-Create TABLE ItemCondition
+CREATE TABLE ItemCondition
 (
    ConditionId INTEGER PRIMARY KEY,
    ConditionName NVARCHAR(100) NOT NULL
-)
+);
 
 -- Item-Size Table
-Create TABLE ItemSize
+CREATE TABLE ItemSize
 (
    SizeId INTEGER PRIMARY KEY,
    SizeName NVARCHAR(100) NOT NULL
-)
+);
 
 -- Item-Model Table
-Create TABLE ItemModel
+CREATE TABLE ItemModel
 (
    ModelId INTEGER PRIMARY KEY,
    ModelName NVARCHAR(100) NOT NULL
-)
+);
 CREATE TABLE ItemImage
 (
     ImageId INTEGER PRIMARY KEY,
@@ -190,13 +190,13 @@ CREATE TABLE Review (
     FOREIGN KEY (ItemId) REFERENCES Item (ItemId) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
--- TransactionHistory Table
-CREATE TABLE TransactionHistory (
-    TransactionId INTEGER PRIMARY KEY,
+-- PaymentHistory Table
+CREATE TABLE PaymentHistory (
+    PaymentId INTEGER PRIMARY KEY,
     BuyerId INTEGER,
     SellerId INTEGER,
     ItemId INTEGER,
-    TransactionDate DATE DEFAULT CURRENT_DATE,
+    PaymentDate DATE DEFAULT CURRENT_DATE,
     FOREIGN KEY (BuyerId) REFERENCES User (UserId) ON DELETE NO ACTION ON UPDATE NO ACTION,
     FOREIGN KEY (SellerId) REFERENCES User (UserId) ON DELETE NO ACTION ON UPDATE NO ACTION,
     FOREIGN KEY (ItemId) REFERENCES Item (ItemId) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -215,9 +215,6 @@ CREATE TABLE Notification (
 /*******************************************************************************
    Create Foreign Keys
 ********************************************************************************/
-CREATE INDEX IFK_AlbumArtistId ON Album (ArtistId);
-
-CREATE INDEX IFK_TrackAlbumId ON Track (AlbumId);
 
 /*******************************************************************************
    Populate Tables
