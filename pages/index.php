@@ -8,13 +8,11 @@
 
 
   
-  require_once(__DIR__ . '/../database/customer.class.php');
   require_once(__DIR__ . '/../database/item.class.php');
-  require_once(__DIR__ . '/../database/track.class.php');
   require_once(__DIR__ . '/../database/user.class.php');
 
   require_once(__DIR__ . '/../templates/common.tpl.php');
-  require_once(__DIR__ . '/../templates/customer.tpl.php');
+
 
   $db = getDatabaseConnection();
 

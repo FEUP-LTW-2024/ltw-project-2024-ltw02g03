@@ -79,7 +79,7 @@ class Item {
         $this->listingDate = $listingDate;
     }
 
-    // Get all items
+    // Get item by Id
     static function getItem(PDO $db, int $id) : array {
         try {
             $stmt = $db->prepare('

@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1); ?>
 
-<?php function drawProfileForm(Customer $customer) { ?>
+<?php function drawProfileForm(Customer $user) { ?>
 <h2>Profile</h2>
 <form action="../actions/action_edit_profile.php" method="post" class="profile">
 

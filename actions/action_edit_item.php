@@ -7,24 +7,24 @@
   if (!$session->isLoggedIn()) die(header('Location: /'));
 
   require_once(__DIR__ . '/../database/connection.db.php');
-  require_once(__DIR__ . '/../database/album.class.php');
+  require_once(__DIR__ . '/../database/item.class.php');
 
   if (trim($_POST['title']) === '') {
-    $session->addMessage('error', 'Album title cannot be empty');
+    $session->addMessage('error', 'Item title cannot be empty');
     die(header('Location: ' . $_SERVER['HTTP_REFERER']));
   }
 
   $db = getDatabaseConnection();
 
-  $album = Album::getAlbum($db, intval($_POST['id']));
+  $item = Item::getItem($db, $_POST['id']);
 
-  if ($album) {
-    $album->title = $_POST['title'];
-    $album->save($db);
-    $session->addMessage('success', 'Album title updated');
-    header('Location: ../pages/album.php?id=' . $_POST['id']);
+  if ($item) {
+    $item->title = $_POST['title'];
+    $item->saveItem($db);
+    $session->addMessage('success', 'Item title updated');
+    header('Location: ../pages/item.php?id=' . $_POST['id']);
   } else {
-    $session->addMessage('error', 'Album does not exist');
+    $session->addMessage('error', 'Item does not exist');
     header('Location: ' . $_SERVER['HTTP_REFERER']);
   }
 
