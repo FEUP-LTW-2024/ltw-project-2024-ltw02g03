@@ -52,11 +52,46 @@ class User {
         $this->imageUrl = $imageUrl;
         $this->admin = $admin;
     }
+
+    // Get the full name of the user
+    function name() {
+        return $this->firstName . ' ' . $this->lastName;
+      }
     
+    // Get a User
+    static function getUser(PDO $db, int $id) : User{
+        $stmt= $db->prepare('SELECT * 
+        FROM User 
+        WHERE UserId = ?
+        ');
+        $stmt->execute([$id]);
+        $user = $stmt->fetch();
+        return new User(
+            $user['UserId'],
+            $user['FirstName'],
+            $user['LastName'],
+            $user['Username'],
+            $user['Email'],
+            $user['Password'],
+            $user['JoinDate'],
+            $user['Address'],
+            $user['City'],
+            $user['District'],
+            $user['Country'],
+            $user['PostalCode'],
+            $user['Phone'],
+            $user['ImageUrl'],
+            $user['Admin']
+        );
+    }
+
+
     // Get all users
     static function getUsers(PDO $db, int $count) : array {
         try {
-            $stmt = $db->prepare('SELECT UserId, FirstName, LastName, Username, Email, Password, JoinDate, Address, City, District, Country, PostalCode, Phone, ImageUrl, Admin FROM User LIMIT ?');
+            $stmt = $db->prepare('SELECT UserId, FirstName, LastName, Username, Email, Password, JoinDate, Address, City, District, Country, PostalCode, Phone, ImageUrl, Admin 
+            FROM User LIMIT ?
+            ');
             $stmt->execute([$count]);
             
             
@@ -121,6 +156,45 @@ class User {
             throw new Exception("Error searching users: " . $e->getMessage());
         }
     }
+
+    // Get user with password
+    static function getUserWithPassword(PDO $db, string $email, string $password) : ?User {
+        try {
+            $stmt = $db->prepare('SELECT UserId, FirstName, LastName, Username, Email, Password, JoinDate, Address, City, District, Country, PostalCode, Phone, ImageUrl, Admin 
+            FROM User 
+            WHERE lower(Email) = ? AND Password = ?
+            ');
+            //adaptar com o metodo indicado
+            $stmt->execute([strtolower($email), sha1($password)]);
+    
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            if ($user) {
+                return new User(
+                    $user['UserId'],
+                    $user['FirstName'],
+                    $user['LastName'],
+                    $user['Username'],
+                    $user['Email'],
+                    $user['Password'],
+                    $user['JoinDate'],
+                    $user['Address'],
+                    $user['City'],
+                    $user['District'],
+                    $user['Country'],
+                    $user['PostalCode'],
+                    $user['Phone'],
+                    $user['ImageUrl'],
+                    $user['Admin']
+                );
+            } else {
+                return null;
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching user: " . $e->getMessage());
+        }
+    }
+
 
     // Get a user by ID
     static function getUserById(PDO $db, int $userId) : ?User {

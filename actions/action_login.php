@@ -5,14 +5,13 @@
   $session = new Session();
 
   require_once(__DIR__ . '/../database/connection.db.php');
-  require_once(__DIR__ . '/../database/customer.class.php');
+  require_once(__DIR__ . '/../database/user.class.php');
 
   $db = getDatabaseConnection();
 
-  $customer = Customer::getCustomerWithPassword($db, $_POST['email'], $_POST['password']);
-
-  if ($customer) {
-    $session->setId($customer->id);
+  $user=User::getUserWithPassword($db, $_POST['email'], $_POST['password']);
+  if ($user) {
+    $session->setId($user->id);
     $session->setName($customer->name());
     $session->addMessage('success', 'Login successful!');
   } else {
