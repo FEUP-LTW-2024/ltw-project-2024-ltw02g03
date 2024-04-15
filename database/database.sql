@@ -40,48 +40,7 @@ CREATE TABLE User
     CONSTRAINT PK_User PRIMARY KEY  (UserId)
 );
 
-/*
 
-
-CREATE TABLE Customer
-(
-    CustomerId INTEGER  NOT NULL,
-    FirstName NVARCHAR(40)  NOT NULL,
-    LastName NVARCHAR(20)  NOT NULL,
-    Company NVARCHAR(80),
-    Address NVARCHAR(70),
-    City NVARCHAR(40),
-    State NVARCHAR(40),
-    Country NVARCHAR(40),
-    PostalCode NVARCHAR(10),
-    Phone NVARCHAR(24),
-    Fax NVARCHAR(24),
-    Email NVARCHAR(60) NOT NULL,
-    Password NVARCHAR(40) NOT NULL,
-    CONSTRAINT PK_Customer PRIMARY KEY  (CustomerId)
-);
-
-CREATE TABLE Track
-(
-    TrackId INTEGER  NOT NULL,
-    Name NVARCHAR(200)  NOT NULL,
-    AlbumId INTEGER,
-    MediaTypeId INTEGER  NOT NULL,
-    GenreId INTEGER,
-    Composer NVARCHAR(220),
-    Milliseconds INTEGER  NOT NULL,
-    Bytes INTEGER,
-    UnitPrice NUMERIC(10,2)  NOT NULL,
-    CONSTRAINT PK_Track PRIMARY KEY  (TrackId),
-    FOREIGN KEY (AlbumId) REFERENCES Album (AlbumId) 
-		ON DELETE NO ACTION ON UPDATE NO ACTION,
-    FOREIGN KEY (GenreId) REFERENCES Genre (GenreId) 
-		ON DELETE NO ACTION ON UPDATE NO ACTION,
-    FOREIGN KEY (MediaTypeId) REFERENCES MediaType (MediaTypeId) 
-		ON DELETE NO ACTION ON UPDATE NO ACTION
-);
-
-*/
 
 
 CREATE TABLE User
@@ -172,9 +131,7 @@ CREATE TABLE ProductCategory
 /*******************************************************************************
    Create Foreign Keys
 ********************************************************************************/
-CREATE INDEX IFK_AlbumArtistId ON Album (ArtistId);
 
-CREATE INDEX IFK_TrackAlbumId ON Track (AlbumId);
 
 /*******************************************************************************
    Populate Tables
