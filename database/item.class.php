@@ -201,7 +201,7 @@ class Item {
     }
 
     // Get item condition
-    static function getItemCondition(PDO $db, int $id) : array {
+    static function getItemCondition(PDO $db, int $id) : string {
         try {
             $stmt = $db->prepare('
                 SELECT ItemId, ConditionId, ConditionName
@@ -210,10 +210,10 @@ class Item {
                 WHERE ItemId = ?
             ');
             $stmt->execute(array($id));
-            $conditions = array();
+            
 
             while ($condition = $stmt->fetch()) {
-                $conditions[] = new Condition($condition['ConditionId'], $condition['ConditionName']);
+                $conditions = new Condition($condition['ConditionId'], $condition['ConditionName']);
             }
 
             return $conditions;
@@ -224,21 +224,23 @@ class Item {
 
     // Get item size
     static function getItemSize(PDO $db, int $id) : array {
+        echo "ola";
         try {
             $stmt = $db->prepare('
-                SELECT ItemId, SizeId, SizeName
+                SELECT ItemId, ItemSize.SizeId, SizeName
                 FROM ItemSize 
                 JOIN Item ON ItemSize.SizeId = Item.SizeId
                 WHERE ItemId = ?
             ');
             $stmt->execute(array($id));
-            $sizes = array();
+            //$sizes = array();
+            
 
-            while ($size = $stmt->fetch()) {
-                $sizes[] = new Size($size['SizeId'], $size['SizeName']);
-            }
+            $size = $stmt->fetch();
+            //$sizes = new Size($size['SizeId'], $size['SizeName']);
+            
 
-            return $sizes;
+            return $size;
         } catch (PDOException $e) {
             throw new Exception("Error fetching item sizes: " . $e->getMessage());
         }
