@@ -11,6 +11,8 @@ DROP TABLE IF EXISTS ItemBrand;
 DROP TABLE IF EXISTS ItemCondition;
 DROP TABLE IF EXISTS ItemSize;
 DROP TABLE IF EXISTS ItemModel;
+DROP TABLE IF EXISTS ItemImage;
+DROP TABLE IF EXISTS ProductImage;
 
 
 
@@ -167,14 +169,21 @@ CREATE TABLE ItemModel
    ModelName NVARCHAR(100) NOT NULL
 );
 
--- Item-Image Table
-CREATE TABLE ItemImage
+CREATE TABLE ProductImage
 (
     ImageId INTEGER PRIMARY KEY,
+    ImageUrl NVARCHAR(255)
+);
+CREATE TABLE ItemImage
+(
     ItemId INTEGER,
-    ImageUrl NVARCHAR(255),
+    ImageId INTEGER,
     FOREIGN KEY (ItemId) REFERENCES Item (ItemId) 
         ON DELETE CASCADE ON UPDATE NO ACTION
+    FOREIGN KEY (ImageId) REFERENCES ProductImage (ImageId)
+        ON DELETE CASCADE ON UPDATE NO ACTION
+
+    
 );
 
 
@@ -300,10 +309,20 @@ VALUES
 (5, 'Superstar');
 
 -- Inserir dados de exemplo na tabela ItemImage
-INSERT INTO ItemImage (ImageId, ItemId, ImageUrl)
+INSERT INTO ItemImage (ItemId, ImageId)
 VALUES
-(1, 1, 'https://picsum.photos/240/270?business~'),
-(2, 2, 'https://picsum.photos/240/270?business~'),
-(3, 3, 'https://picsum.photos/240/270?business~'),
-(4, 4, 'https://picsum.photos/240/270?business~'),
-(5, 5, 'https://picsum.photos/240/270?business~');
+(1, 1),(1, 2),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5);
+
+
+-- Inserir dados de exemplo na tabela ProductImage
+INSERT INTO ProductImage(ImageId,ImageUrl)
+VALUES
+(1, 'Docs/samsung-galaxy-s20-fe-5g-g781-128gb-dual-sim-lavanda.jpg'),
+(2, 'https://picsum.photos/240/270?business~'),
+(3, 'https://picsum.photos/240/270?business~'),
+(4, 'https://picsum.photos/240/270?business~'),
+(5, 'https://picsum.photos/240/270?business~');

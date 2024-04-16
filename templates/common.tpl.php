@@ -83,35 +83,33 @@ function drawHeader(Session $session) { ?>
 <?php
 function drawProducts($db) {
     try {
-        $items = Item::getItems($db, 2);
-
-   
-
+        $items = Item::getItems($db, 5);
+        
+        
         if ($items) {
-            foreach($items as $row) {
-              echo $row['itemId'];
-                //$conditions = Item::getItemCondition($db, $row['ItemId']);
-                //$brands = Item::getItemBrand($db, $row['ItemId']);
-                $sizes = Item::getItemSize($db, $row['itemId']);
-                $models = Item::getItemModel($db, $row['itemId']);
-                $image=Item::getItemImage($db, $row['itemId']);
-                ?>
-                <article id="index-product">
-                <img id="img-product" src="<?= $image ?>" alt="">
-                    <h1><?= htmlspecialchars($row['Title']) ?></h1>
-                    <h2><?= htmlspecialchars($row['Description']) ?></h2>
-                    <p><?= htmlspecialchars($row['Price']) ?>€</p>
-                   
-                    <button class="add-cart-button">Adicionar ao carrinho</button>
-                </article>
-                <?php
-            }
+          foreach($items as $row) {
+            
+            $condition = Item::getItemCondition($db, $row->itemId);
+            $brand = Item::getItemBrand($db, $row->itemId);            
+            $image = Item::getItemImage($db, $row->itemId);
+            
+            ?>
+            <article id="index-product">
+              <img id="img-product" src="<?= $image[0]->imageUrl ?>" alt="" style="width: 50%; height: auto;">
+              <h1><?= htmlspecialchars($row->title) ?></h1>
+              <h2><?= htmlspecialchars($row->description) ?></h2>
+              <p><?= number_format($row->price, 2) ?>€</p>
+              <p>Condition: <?= htmlspecialchars($condition->conditionName) ?></p>
+              <p>Brand: <?= htmlspecialchars($brand->brandName) ?></p>
+              <button class="add-cart-button">Adicionar ao carrinho</button>
+            </article>
+            <?php
+        }
         } else {
-            // Handle case where there are no items in the database
             echo "<p>No items found.</p>";
         }
-    } catch (PDOException $e) {
-        // Handle any database errors
+    } 
+    catch (PDOException $e) {
         echo "Error fetching items: " . $e->getMessage();
     }
 }
