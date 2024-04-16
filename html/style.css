@@ -104,10 +104,10 @@ li a {
     background-color: rgb(230, 230, 230);
     border-radius: 10em;
 }
-/*
+    
 #profile-button:hover + #login-register-anchor{
     display: inline-block;
-}*/
+}
 
 #login-register-anchor.visible {
     display: inline-block;
@@ -124,6 +124,7 @@ li a {
 #recomended {
     align-items:center;
     text-align: center;
+    margin-top: 6em;
 }
 
 #recomended h1 {
@@ -188,3 +189,124 @@ li a {
     color: rgb(232, 244, 255);
 }
 
+
+/* CSS para o Login */
+
+#login {
+    display: grid; 
+    grid-template-rows: 3em auto;
+    font-family: Poppins;
+    width: fit-content;
+    margin: 7em auto;
+    row-gap: 2em;
+    margin-bottom: 14em;
+}
+
+#login h1 {
+    font-weight: 600;
+    font-size: 2em;
+    margin: auto;
+}
+
+#register {
+    display: grid; 
+    grid-template-rows: 3em auto;
+    font-family: Poppins;
+    width: fit-content;
+    margin: 7em auto;
+    row-gap: 2em;
+    margin-bottom: 14em;
+}
+#register h1 {
+    font-weight: 600;
+    margin: auto;
+}
+form {
+    display: block;
+    background-color: white;
+    padding: 2em;
+    width: 18em;
+}
+label {
+    width: 100%;
+    font-family: Poppins;
+}
+input {
+    width: 100%;
+    border: none;
+    border-bottom: solid black 1px;
+    margin-bottom: 2em;
+    outline: none;
+}
+
+button{
+    width: auto;
+    padding: 1em;
+    font-family: Poppins;
+    font-size: 0.8em;
+    color: white;
+    background-color: black;
+    border: none;
+    padding: 1em 2em;
+    border-radius: 2em;
+    font-size: 0.9em;
+}
+
+body {
+    background-color: rgb(231, 231, 231);
+}
+
+#flex-login-regis {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+}
+
+#flex-login-regis > a {
+    text-align: center; 
+}
+
+
+
+/* CSS para o menu flutuante 
+
+#profile-menu {
+    position: absolute;
+    top: 6%; /* Ajuste conforme necessário 
+    
+    right: 2%; /* Garante que o menu comece na borda esquerda 
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    width: 10%; 
+}
+
+
+#profile-menu.hidden {
+    display: none;
+}
+
+#profile-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#profile-menu ul li {
+    margin-bottom: 5px;
+}
+
+#profile-menu ul li a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    padding: 5px 10px;
+    transition: background-color 0.3s;
+}
+
+#profile-menu ul li a:hover {
+    background-color: #f0f0f0;
+}
+*/

@@ -14,6 +14,7 @@ function drawHeader(Session $session) { ?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="html/style.css">
+    <script src="../html/script_test.js" defer></script>
 </head>
 <body>
 
@@ -36,19 +37,21 @@ function drawHeader(Session $session) { ?>
             <img src="/Docs/img/9025034_shopping_cart_light_icon.png" alt="" width="30">
         </button>  
         <button id="profile-button">
+
             <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
         </button> 
+        <a id="login-register-anchor" href="/pages/login.php">Login/Register</a>
     </div>
 </header>
 
 <?php } ?>
 
-<?php function drawBody(Session $session, $db) { ?>
+<?php function drawBody(Session $session, $db, int $limit) { ?>
 <section id="recomended">
     <h1>Produtos Recomendados</h1>  
-    <h2>15 produtos</h2>
+    <h2><?php echo $limit; ?> produtos</h2>
     <div id="index-products">
-        <?php drawProducts($db); ?>
+        <?php drawProducts($db, $limit); ?>
     </div>
 </section>
 
@@ -64,14 +67,15 @@ function drawHeader(Session $session) { ?>
 <?php } ?>
 
 <?php function drawFooter() { ?>
-</main>
+  </main>
 
-<footer id="footer-page">
-    <p>2024 &copy; EcoExchange</p>
-</footer>
-</body>
-</html>
-<?php } ?>
+    <footer id="footer-page">
+        <p>2024 &copy; EcoExchange</p>
+    </footer>
+
+    </body>
+    </html>
+  <?php } ?>
 
 <?php function drawLogoutForm(Session $session) { ?>
 <form action="../actions/action_logout.php" method="post" class="logout">
@@ -81,9 +85,9 @@ function drawHeader(Session $session) { ?>
 <?php } ?>
 
 <?php
-function drawProducts($db) {
+function drawProducts($db,int $limit) {
     try {
-        $items = Item::getItems($db, 5);
+        $items = Item::getItems($db, $limit);
         
         
         if ($items) {

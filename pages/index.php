@@ -20,7 +20,7 @@
 
   drawHeader($session);
 
-  drawBody($session, $db);
+  drawBody($session, $db, 10);
 
   drawFooter();
 ?>
