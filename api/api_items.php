@@ -9,7 +9,7 @@
 
   $db = getDatabaseConnection();
 
-  $artists = Artist::searchArtists($db, $_GET['search'], 8);
+  $item = Item::getItems($db, $_GET['search'], 8);
 
-  echo json_encode($artists);
+  echo json_encode($item );
 ?>
