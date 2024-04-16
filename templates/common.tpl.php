@@ -69,6 +69,25 @@ function drawHeader(Session $session) { ?>
 <footer id="footer-page">
     <p>2024 &copy; EcoExchange</p>
 </footer>
+<div id="profile-menu" class="hidden">
+    <ul>
+        <li><a href="#">Editar Perfil</a></li>
+        <li><a href="#">Configurações</a></li>
+        <li><a href="#">Sair</a></li>
+    </ul>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var profileButton = document.getElementById('profile-button');
+        var profileMenu = document.getElementById('profile-menu');
+
+        profileButton.addEventListener('click', function () {
+            profileMenu.classList.toggle('hidden');
+        });
+    });
+</script>
+
 </body>
 </html>
 <?php } ?>

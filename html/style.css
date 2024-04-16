@@ -163,3 +163,47 @@ li a {
     padding: 1em;
     color: rgb(232, 244, 255);
 }
+
+/* CSS para o menu flutuantE */
+#profile-menu {
+    position: absolute;
+    top: calc(100% + 10px); /* Abre para baixo */
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 9999;
+    display: none; /* Inicia oculto */
+}
+
+#profile-button {
+    position: relative; /* Necessário para o posicionamento absoluto do menu */
+}
+
+#profile-button:hover #profile-menu {
+    display: block; /* Mostra o menu quando o botão é hover */
+}
+
+#profile-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#profile-menu ul li {
+    margin-bottom: 5px;
+}
+
+#profile-menu ul li a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    padding: 5px 10px;
+    transition: background-color 0.3s;
+}
+
+#profile-menu ul li a:hover {
+    background-color: #f0f0f0;
+}
