@@ -53,11 +53,11 @@ class Model {
 
 class Image {
     public int $imageId;
-    public string $imagePath;
+    public string $imageUrl;
 
-    public function __construct(int $imageId, string $imagePath) {
+    public function __construct(int $imageId, string $imageUrl) {
         $this->imageId = $imageId;
-        $this->imagePath = $imagePath;
+        $this->imageUrl = $imageUrl;
     }
 }
 
@@ -67,7 +67,6 @@ class Item {
     public string $title;
     public string $description;
     public float $price;
-    public string $condition;
     public string $listingDate;
 
     public function __construct(int $itemId, int $sellerId,  string $title, string $description, float $price, string $listingDate) {
@@ -134,18 +133,18 @@ class Item {
         }
     }
     static function searchItems(PDO $db, string $search, int $count) : array {
-        $stmt = $db->prepare('SELECT ItemId, Name, Description, Price, Condition, ListingDate 
+        $stmt = $db->prepare('SELECT ItemId, Name, Description, Price, ListingDate 
         FROM Item WHERE Name LIKE ? LIMIT ?');
         $stmt->execute(array($search . '%', $count));
     
         $item = array();
         while ($item = $stmt->fetch()) {
           $items[] = new Item(
-            $item['ArtistId'],
+            $item['ItemId'],
+            $item['SellerId'],
             $item['Name'],
             $item['Description'],
             $item['Price'],
-            $item['Condition'],
             $item['ListingDate']
 
           );
@@ -178,110 +177,109 @@ class Item {
     }
 
     // Get item brand
-    public static function getItemBrand(PDO $db, int $id) : array {
-        try {
-            $stmt = $db->prepare('
-                SELECT BrandId, BrandName
-                FROM ItemBrand 
-                JOIN Item ON ItemBrand.BrandId = Item.BrandId
-                WHERE ItemId = ?
-                
-            ');
-            $stmt->execute(array($id));
-            $brands = array();
-
-            while ($brand = $stmt->fetch()) {
-                $brands[] = new Brand($brand['BrandId'], $brand['BrandName']);
-            }
-
-            return $brands;
-        } catch (PDOException $e) {
-            throw new Exception("Error fetching item brands: " . $e->getMessage());
-        }
-    }
-
-    // Get item condition
-    static function getItemCondition(PDO $db, int $id) : string {
-        try {
-            $stmt = $db->prepare('
-                SELECT ItemId, ConditionId, ConditionName
-                FROM ItemCondition 
-                JOIN Item ON ItemCondition.ConditionId = Item.ConditionId
-                WHERE ItemId = ?
-            ');
-            $stmt->execute(array($id));
+public static function getItemBrand(PDO $db, int $id) : ?Brand {
+    try {
+        $stmt = $db->prepare('
+            SELECT ItemBrand.BrandId, BrandName
+            FROM ItemBrand 
+            JOIN Item ON ItemBrand.BrandId = Item.BrandId
+            WHERE Item.ItemId = ?
             
+        ');
+        $stmt->execute(array($id));
+        $brand = $stmt->fetch();
 
-            while ($condition = $stmt->fetch()) {
-                $conditions = new Condition($condition['ConditionId'], $condition['ConditionName']);
-            }
-
-            return $conditions;
-        } catch (PDOException $e) {
-            throw new Exception("Error fetching item conditions: " . $e->getMessage());
+        if ($brand) {
+            return new Brand($brand['BrandId'], $brand['BrandName']);
+        } else {
+            return null;
         }
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching item brands: " . $e->getMessage());
     }
+}
 
-    // Get item size
-    static function getItemSize(PDO $db, int $id) : array {
-        echo "ola";
-        try {
-            $stmt = $db->prepare('
-                SELECT ItemId, ItemSize.SizeId, SizeName
-                FROM ItemSize 
-                JOIN Item ON ItemSize.SizeId = Item.SizeId
-                WHERE ItemId = ?
-            ');
-            $stmt->execute(array($id));
-            //$sizes = array();
-            
+// Get item condition
+static function getItemCondition(PDO $db, int $id) : ?Condition {
+    try {
+        $stmt = $db->prepare('
+            SELECT ItemCondition.ConditionId, ConditionName
+            FROM ItemCondition 
+            JOIN Item ON ItemCondition.ConditionId = Item.ConditionId
+            WHERE Item.ItemId = ?
+        ');
+        $stmt->execute(array($id));
+        $condition = $stmt->fetch();
 
-            $size = $stmt->fetch();
-            //$sizes = new Size($size['SizeId'], $size['SizeName']);
-            
-
-            return $size;
-        } catch (PDOException $e) {
-            throw new Exception("Error fetching item sizes: " . $e->getMessage());
+        if ($condition) {
+            return new Condition($condition['ConditionId'], $condition['ConditionName']);
+        } else {
+            return null;
         }
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching item conditions: " . $e->getMessage());
     }
+}
 
-    // Get item model
-    static function getItemModel(PDO $db, int $id) : array {
-        try {
-            $stmt = $db->prepare('
-                SELECT ItemId, ModelId, ModelName
-                FROM ItemModel 
-                JOIN Item ON ItemModel.ModelId = Item.ModelId
-                WHERE ItemId = ?
-            ');
-            $stmt->execute(array($id));
-            $models = array();
+// Get item size
+static function getItemSize(PDO $db, int $id) : ?Size {
+    try {
+        $stmt = $db->prepare('
+            SELECT ItemSize.SizeId, SizeName
+            FROM ItemSize 
+            JOIN Item ON ItemSize.SizeId = Item.SizeId
+            WHERE Item.ItemId = ?
+        ');
+        $stmt->execute(array($id));
+        $size = $stmt->fetch();
 
-            while ($model = $stmt->fetch()) {
-                $models[] = new Model($model['ModelId'], $model['ModelName']);
-            }
-
-            return $models;
-        } catch (PDOException $e) {
-            throw new Exception("Error fetching item models: " . $e->getMessage());
+        if ($size) {
+            return new Size($size['SizeId'], $size['SizeName']);
+        } else {
+            return null;
         }
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching item sizes: " . $e->getMessage());
+    }
+}
+
+// Get item model
+static function getItemModel(PDO $db, int $id) : ?Model {
+    try {
+        $stmt = $db->prepare('
+            SELECT ItemModel.ModelId, ModelName
+            FROM ItemModel 
+            JOIN Item ON ItemModel.ModelId = Item.ModelId
+            WHERE Item.ItemId = ?
+            
+        ');
+        $stmt->execute(array($id));
+        $model = $stmt->fetch();
+
+        if ($model) {
+            return new Model($model['ModelId'], $model['ModelName']);
+        } else {
+            return null;
+        }
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching item models: " . $e->getMessage());
+    }
     }
 
     // Get item image
     static function getItemImage(PDO $db, int $id) : array {
         try {
             $stmt = $db->prepare('
-                SELECT ItemId, ImageId, ImagePath
+                SELECT ItemImage.ImageId, ImageUrl
                 FROM ItemImage 
-                JOIN Item ON ItemImage.ImageId = Item.ImageId
-                WHERE ItemId = ?
+                JOIN ProductImage ON ItemImage.ImageId = ProductImage.ImageId
+                WHERE ItemImage.ItemId = ?
             ');
             $stmt->execute(array($id));
             $images = array();
 
             while ($image = $stmt->fetch()) {
-                $images[] = new Image($image['ImageId'], $image['ImagePath']);
+                $images[] = new Image($image['ImageId'], $image['ImageUrl']);
             }
 
             return $images;
@@ -290,15 +288,26 @@ class Item {
         }
     }
 
-    // Save item
-    static function  saveItem(PDO $db, int $sellerId, string $title, string $description, float $price, string $condition, string $listingDate) : string {
+    // Save item 
+    static function saveItem(PDO $db, int $sellerId, string $title, string $description, float $price, string $listingDate, array $imageUrls) : string {
         try {
             $stmt = $db->prepare('
-                INSERT INTO Item (SellerId, Title, Description, Price, `Condition`, ListingDate)
-                VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO Item (SellerId, Title, Description, Price, ListingDate)
+                VALUES (?, ?, ?, ?, ?)
             ');
-            $stmt->execute(array($sellerId, $title, $description, $price, $condition, $listingDate));
-            return $db->lastInsertId();
+            $stmt->execute(array($sellerId, $title, $description, $price, $listingDate));
+            $itemId = $db->lastInsertId();
+
+            foreach ($imageUrls as $imageUrl) {
+                $stmt = $db->prepare('INSERT INTO ProductImage (ImageUrl) VALUES (?)');
+                $stmt->execute([$imageUrl]);
+                $imageId = $db->lastInsertId();
+
+                $stmt = $db->prepare('INSERT INTO ItemImage (ItemId, ImageId) VALUES (?, ?)');
+                $stmt->execute([$itemId, $imageId]);
+            }
+
+            return $itemId;
         } catch (PDOException $e) {
             throw new Exception("Error saving item: " . $e->getMessage());
         }
