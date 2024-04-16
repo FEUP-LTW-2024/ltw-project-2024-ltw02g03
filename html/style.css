@@ -1,10 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-header {
+body > header {
     background-color: white;
     margin: 0;
-    vertical-align: middle;
     padding: 1.2em;
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Align items vertically */
+    justify-content: space-between; /* Distribute items horizontally */
+}
+
+#header-list {
+    margin: 0;
+}
+
+#utility-wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Align items vertically */
+    gap: 10px; /* Adjust the space between buttons */
 }
 body {
     /*background-color: rgb(225, 225, 225);*/
@@ -27,7 +41,6 @@ a{
 
 #header-list {
     display: inline-block;
-    margin-right: 37em;/*38*/
 }
 
 ul {
@@ -42,6 +55,7 @@ li {
     display: inline-block;
     text-align: center;
     vertical-align: middle;
+    align-items: center;
 }
 
 li a {
@@ -63,19 +77,48 @@ li a {
     background: none;
     padding: 0;
     margin-right: 1em;
+    padding: 0.6em;
+    vertical-align: middle;
+    align-items: center;
+}
+#cart-button:hover, #search-button:hover, #profile-button:hover {
+    background-color: rgb(230, 230, 230);
+    border-radius: 10em;
+}
+#cart-button:active, #search-button:active, #profile-button:active {
+    
+}
+
+#index-products {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+} 
+
+#recomended {
+    align-items:center;
+    text-align: center;
+}
+
+#recomended h1 {
+ display: block;
+ margin: 0;
+ font-size: 2.5em;
 }
 
 #index-product {
     display: inline-block;
-    background-color: rgb(230, 230, 230);
-    width: 17em;
+    background-color: rgb(243, 243, 243);
+    width: 15em;
     height: 35em;
     border-radius: 1.3em;
-    margin-left: 5em;
+    margin: 1em 1em;
     align-items: center;
     vertical-align: middle;
     text-align: center;
-    padding-top: 1em;
+    padding: 1em;
 }
 
 #grid-on-cards {
@@ -90,4 +133,33 @@ li a {
     padding: 1em 2em;
     border-radius: 2em;
     font-size: 0.9em;
+}
+
+#index-product > h2 {
+    font-size: 1em;
+    font-weight: 450;
+    height: 4em;
+}
+
+#index-product > h1 {
+    font-size: 1.3em;
+}
+
+#index-product p:nth-of-type(1){
+    font-weight: 600;
+    font-size: 1.5em;
+    color: rgb(49, 146, 226);
+    margin: 0.2em;
+    
+}
+
+#index-product p:nth-of-type(2){
+    margin-bottom: 2em;
+    margin-top: 0.2em;
+}
+
+#footer-page {
+    background-color: rgb(120, 153, 180);
+    padding: 1em;
+    color: rgb(232, 244, 255);
 }
