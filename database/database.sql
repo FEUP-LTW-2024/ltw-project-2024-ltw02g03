@@ -166,6 +166,8 @@ CREATE TABLE ItemModel
    ModelId INTEGER PRIMARY KEY,
    ModelName NVARCHAR(100) NOT NULL
 );
+
+-- Item-Image Table
 CREATE TABLE ItemImage
 (
     ImageId INTEGER PRIMARY KEY,
@@ -225,7 +227,18 @@ INSERT INTO User (UserId, FirstName, LastName, Username, Email, Password, Addres
 VALUES
 (1, 'John', 'Doe', 'johndoe', 'johndoe@example.com', 'password123', '123 Main St', 'Anytown', 'Anydistrict', 'AnyCountry', '12345', '123-456-7890', 'https://example.com/avatar1.jpg', 0),
 (2, 'Jane', 'Smith', 'janesmith', 'janesmith@example.com', 'password456', '456 Oak St', 'Othertown', 'Otherdistrict', 'OtherCountry', '54321', '987-654-3210', 'https://example.com/avatar2.jpg', 0),
-(3, 'Admin', 'Admin', 'admin', 'admin@example.com', 'admin123', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
+(3, 'Admin', 'Admin', 'admin', 'admin@example.com', 'admin123', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(4, 'Maria', 'Silva', 'mariasilva', 'mariasilva@example.com', 'password789', '789 Elm St', 'Somewhere', 'Somedistrict', 'SomeCountry', '67890', '555-123-4567', 'https://example.com/avatar3.jpg', 0),
+(5, 'Carlos', 'Santos', 'carlossantos', 'carlossantos@example.com', 'passwordabc', '101 Pine St', 'Anywhere', 'Anydistrict', 'AnyCountry', '54321', '123-555-7890', 'https://example.com/avatar4.jpg', 0);
+
+-- Inserir dados de exemplo na tabela Item
+INSERT INTO Item (ItemId, SellerId, Title, Description, Price, ListingDate, ImageId, BrandId, ConditionId, SizeId, ModelId)
+VALUES
+(1, 1, 'Samsung Galaxy S20', 'Brand new Samsung Galaxy S20 smartphone', 799.99, CURRENT_DATE, 1, 1, 1, 2, 1),
+(2, 1, 'Nike Air Max 270', 'Nike Air Max 270 shoes', 129.99, CURRENT_DATE, 2, 3, 1, 3, 2),
+(3, 2, 'Apple MacBook Pro', 'Used MacBook Pro in good condition', 1499.99, CURRENT_DATE, 3, 2, 3, 1, 3),
+(4, 2, 'Nike Air Force 1', 'Classic Nike Air Force 1 shoes', 99.99, CURRENT_DATE, 4, 3, 1, 2, 1),
+(5, 3, 'Adidas Superstar', 'Adidas Superstar sneakers', 79.99, CURRENT_DATE, 5, 4, 1, 3, 1);
 
 -- Inserir dados de exemplo na tabela ProductCategory
 INSERT INTO ProductCategory (CategoryId, CategoryName)
@@ -233,7 +246,19 @@ VALUES
 (1, 'Electronics'),
 (2, 'Clothing'),
 (3, 'Books'),
-(4, 'Furniture');
+(4, 'Furniture'),
+(5, 'Home Appliances'),
+(6, 'Jewelry');
+
+-- Inserir dados de exemplo na tabela ItemCategory
+INSERT INTO ItemCategory (ItemId, CategoryId)
+VALUES
+(1, 1),(1,2),
+(2, 2),
+(3, 1),
+(4, 2),
+(5, 2);
+
 
 -- Inserir dados de exemplo na tabela ItemBrand
 INSERT INTO ItemBrand (BrandId, BrandName)
@@ -241,7 +266,11 @@ VALUES
 (1, 'Samsung'),
 (2, 'Apple'),
 (3, 'Nike'),
-(4, 'Adidas');
+(4, 'Adidas'),
+(5, 'Sony'),
+(6, 'Rolex');
+
+
 
 -- Inserir dados de exemplo na tabela ItemCondition
 INSERT INTO ItemCondition (ConditionId, ConditionName)
@@ -249,11 +278,32 @@ VALUES
 (1, 'New'),
 (2, 'Used - Like New'),
 (3, 'Used - Good'),
-(4, 'Used - Fair');
+(4, 'Used - Fair'),
+(5, 'Bad');
 
 -- Inserir dados de exemplo na tabela ItemSize
 INSERT INTO ItemSize (SizeId, SizeName)
 VALUES
-(1, 'Small'),
-(2, 'Medium'),
-(3, 'Large');
+(1, 'Extra Small'),
+(2, 'Small'),
+(3, 'Medium'),
+(4, 'Large'),
+(5, 'Extra Large');
+
+-- Inserir dados de exemplo na tabela ItemModel
+INSERT INTO ItemModel (ModelId, ModelName)
+VALUES
+(1, 'Galaxy S20'),
+(2, 'Air Max 270'),
+(3, 'MacBook Pro'),
+(4, 'Air Force 1'),
+(5, 'Superstar');
+
+-- Inserir dados de exemplo na tabela ItemImage
+INSERT INTO ItemImage (ImageId, ItemId, ImageUrl)
+VALUES
+(1, 1, 'https://picsum.photos/240/270?business~'),
+(2, 2, 'https://picsum.photos/240/270?business~'),
+(3, 3, 'https://picsum.photos/240/270?business~'),
+(4, 4, 'https://picsum.photos/240/270?business~'),
+(5, 5, 'https://picsum.photos/240/270?business~');

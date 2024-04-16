@@ -106,6 +106,55 @@ class Item {
         }
     }
 
+    // Get x Items
+    static function getItems(PDO $db, int $limit) : array {
+        try {
+            $stmt = $db->prepare('
+                SELECT ItemId, SellerId, Title, Description, Price, ListingDate
+                FROM Item
+                LIMIT :limit
+            ');
+            $stmt->bindValue(':limit', $limit, PDO::PARAM_INT); // Bind do valor do limite
+            $stmt->execute();
+            $items = array();
+
+            while ($item = $stmt->fetch()) {
+                $items[] = new Item(
+                    $item['ItemId'],
+                    $item['SellerId'],
+                    $item['Title'],
+                    $item['Description'],
+                    $item['Price'],
+                    $item['ListingDate']
+                );
+            }
+            return $items;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching items: " . $e->getMessage());
+        }
+    }
+    static function searchItems(PDO $db, string $search, int $count) : array {
+        $stmt = $db->prepare('SELECT ItemId, Name, Description, Price, Condition, ListingDate 
+        FROM Item WHERE Name LIKE ? LIMIT ?');
+        $stmt->execute(array($search . '%', $count));
+    
+        $item = array();
+        while ($item = $stmt->fetch()) {
+          $items[] = new Item(
+            $item['ArtistId'],
+            $item['Name'],
+            $item['Description'],
+            $item['Price'],
+            $item['Condition'],
+            $item['ListingDate']
+
+          );
+        }
+    
+        return $items;
+      }
+
+
     // Get item category
     static function getItemCategory(PDO $db, int $id) : array {
         try {
@@ -240,7 +289,7 @@ class Item {
     }
 
     // Save item
-    static function  saveItem(PDO $db, int $sellerId, string $title, string $description, float $price, string $condition, string $listingDate) : int {
+    static function  saveItem(PDO $db, int $sellerId, string $title, string $description, float $price, string $condition, string $listingDate) : string {
         try {
             $stmt = $db->prepare('
                 INSERT INTO Item (SellerId, Title, Description, Price, `Condition`, ListingDate)

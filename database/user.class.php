@@ -86,43 +86,6 @@ class User {
     }
 
 
-    // Get all users
-    static function getUsers(PDO $db, int $count) : array {
-        try {
-            $stmt = $db->prepare('SELECT UserId, FirstName, LastName, Username, Email, Password, JoinDate, Address, City, District, Country, PostalCode, Phone, ImageUrl, Admin 
-            FROM User LIMIT ?
-            ');
-            $stmt->execute([$count]);
-            
-            
-            $admin = (bool) $user['Admin'];
-            $users = [];
-            while ($user = $stmt->fetch()) {
-                $users[] = new User(
-                    $user['UserId'],
-                    $user['FirstName'],
-                    $user['LastName'],
-                    $user['Username'],
-                    $user['Email'],
-                    $user['Password'],
-                    $user['JoinDate'],
-                    $user['Address'],
-                    $user['City'],
-                    $user['District'],
-                    $user['Country'],
-                    $user['PostalCode'],
-                    $user['Phone'],
-                    $user['ImageUrl'],
-                    $admin
-                );
-            }
-    
-            return $users;
-        } catch (PDOException $e) {
-            throw new Exception("Error fetching users: " . $e->getMessage());
-        }
-    }
-
 
 
     static function searchUsers(PDO $db, string $search, int $count) : array {
@@ -160,16 +123,12 @@ class User {
     // Get user with password
     static function getUserWithPassword(PDO $db, string $email, string $password) : ?User {
         try {
-            $stmt = $db->prepare('SELECT UserId, FirstName, LastName, Username, Email, Password, JoinDate, Address, City, District, Country, PostalCode, Phone, ImageUrl, Admin 
-            FROM User 
-            WHERE lower(Email) = ? AND Password = ?
-            ');
-            //adaptar com o metodo indicado
-            $stmt->execute([strtolower($email), sha1($password)]);
+            $stmt = $db->prepare('SELECT UserId, FirstName, LastName, Username, Email, Password, JoinDate, Address, City, District, Country, PostalCode, Phone, ImageUrl, Admin FROM User WHERE lower(Email) = ?');
+            $stmt->execute([strtolower($email)]);
     
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
-            if ($user) {
+            if ($user && password_verify($password, $user['Password'])) {
                 return new User(
                     $user['UserId'],
                     $user['FirstName'],
@@ -192,6 +151,19 @@ class User {
             }
         } catch (PDOException $e) {
             throw new Exception("Error fetching user: " . $e->getMessage());
+        }
+    }
+
+    // Register a new user
+    static function registerUser(PDO $db, string $firstName, string $lastName, string $username, string $email, string $password,string $joinDate, ?string $address, ?string $city, ?string $district, ?string $country, ?string $postalCode, ?string $phone, ?string $imageUrl, bool $admin) : string{
+        try {
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $db->prepare('INSERT INTO User (FirstName, LastName, Username, Email, Password,JoinDate Address, City, District, Country, PostalCode, Phone, ImageUrl, Admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+            $stmt->execute([$firstName, $lastName, $username, $email, $hashedPassword, $joinDate, $address, $city, $district, $country, $postalCode, $phone, $imageUrl, $admin]);
+    
+            return $db->lastInsertId();
+        } catch (PDOException $e) {
+            throw new Exception("Error registering user: " . $e->getMessage());
         }
     }
 
@@ -230,19 +202,6 @@ class User {
         }
     }  
 
-    // Insert a new user
-    static function insertUser(PDO $db, string $firstName, string $lastName, string $username, string $email, string $password, ?string $address, ?string $city, ?string $district, ?string $country, ?string $postalCode, ?string $phone, ?string $imageUrl, bool $admin) : int {
-        try {
-            $joinDate = date("Y-m-d");
-            $stmt = $db->prepare('INSERT INTO User (FirstName, LastName, Username, Email, Password, JoinDate, Address, City, District, Country, PostalCode, Phone, ImageUrl, Admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-            $stmt->execute([$firstName, $lastName, $username, $email, $password, $joinDate, $address, $city, $district, $country, $postalCode, $phone, $imageUrl, $admin]);
-    
-            return $db->lastInsertId();
-        } catch (PDOException $e) {
-            throw new Exception("Error inserting user: " . $e->getMessage());
-        }
-    }
-
     // Update a user
     static function updateUser(PDO $db, int $userId, string $firstName, string $lastName, string $username, string $email, string $password, ?string $address, ?string $city, ?string $district, ?string $country, ?string $postalCode, ?string $phone, ?string $imageUrl, bool $admin) : void {
         try {
@@ -262,17 +221,6 @@ class User {
         }
     }
 
-    // Save a user
-   static function saveUser(PDO $db, string $firstName, string $lastName, string $username, string $email, string $password, ?string $address, ?string $city, ?string $district, ?string $country, ?string $postalCode, ?string $phone, ?string $imageUrl, bool $admin) : int {
-        try {
-            $stmt = $db->prepare('INSERT INTO User (FirstName, LastName, Username, Email, Password, Address, City, District, Country, PostalCode, Phone, ImageUrl, Admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-            $stmt->execute([$firstName, $lastName, $username, $email, $password, $address, $city, $district, $country, $postalCode, $phone, $imageUrl, $admin]);
-    
-            return $db->lastInsertId();
-        } catch (PDOException $e) {
-            throw new Exception("Error saving user: " . $e->getMessage());
-        }
-    }
 
 }
 ?>

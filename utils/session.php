@@ -40,5 +40,8 @@
     public function getMessages() {
       return $this->messages;
     }
+    public function addAdmin(bool $admin) {
+      $_SESSION['admin'] = $admin;
+    }
   }
 ?>
