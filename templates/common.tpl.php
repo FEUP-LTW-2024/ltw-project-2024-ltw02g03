@@ -83,27 +83,25 @@ function drawHeader(Session $session) { ?>
 <?php
 function drawProducts($db) {
     try {
-        $stmt = $db->prepare('SELECT * FROM Item');
-        $stmt->execute();
-        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $items = Item::getItems($db, 2);
+
+   
 
         if ($items) {
-            foreach ($items as $row) {
-                // Retrieve additional information about the item
-                $conditions = Item::getItemCondition($db, $row['ItemId']);
-                $brands = Item::getItemBrand($db, $row['ItemId']);
-                $sizes = Item::getItemSize($db, $row['ItemId']);
-                $models = Item::getItemModel($db, $row['ItemId']);
-
-                // Output the item HTML
+            foreach($items as $row) {
+              echo $row['itemId'];
+                //$conditions = Item::getItemCondition($db, $row['ItemId']);
+                //$brands = Item::getItemBrand($db, $row['ItemId']);
+                $sizes = Item::getItemSize($db, $row['itemId']);
+                $models = Item::getItemModel($db, $row['itemId']);
+                $image=Item::getItemImage($db, $row['itemId']);
                 ?>
                 <article id="index-product">
-                    <img id="img-product" src="https://picsum.photos/240/270?business" alt="">
+                <img id="img-product" src="<?= $image ?>" alt="">
                     <h1><?= htmlspecialchars($row['Title']) ?></h1>
                     <h2><?= htmlspecialchars($row['Description']) ?></h2>
                     <p><?= htmlspecialchars($row['Price']) ?>€</p>
-                    <p><strong>Condição:</strong> <?= htmlspecialchars($conditions[0]->conditionName) ?></p>
-                    <!-- Assuming there's only one condition per item -->
+                   
                     <button class="add-cart-button">Adicionar ao carrinho</button>
                 </article>
                 <?php
