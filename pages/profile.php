@@ -14,9 +14,9 @@
 
   $db = getDatabaseConnection();
 
-  $customer = Customer::getCustomer($db, $session->getId());
+  $user = User::getUser($db, $session->getId());
 
   drawHeader($session);
-  drawProfileForm($customer);
+  drawProfileForm($user);
   drawFooter();
 ?>
