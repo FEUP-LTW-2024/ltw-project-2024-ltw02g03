@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 body > header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
     background-color: white;
     margin: 0;
     padding: 1.2em;
@@ -8,6 +12,10 @@ body > header {
     flex-direction: row;
     align-items: center; /* Align items vertically */
     justify-content: space-between; /* Distribute items horizontally */
+}
+
+main {
+    padding-top: 6em;
 }
 
 #header-list {
@@ -37,6 +45,16 @@ header>h1 {
 a{
     text-decoration: none;
     color: black;
+}
+
+#login-register-anchor {
+    display: none;
+    position: fixed;
+    right: 2em;
+    top: 3.7em;
+    padding: 1em;
+    background-color: rgb(194, 226, 255);
+    border-radius: 2em;
 }
 
 #header-list {
@@ -81,12 +99,18 @@ li a {
     vertical-align: middle;
     align-items: center;
 }
+
 #cart-button:hover, #search-button:hover, #profile-button:hover {
     background-color: rgb(230, 230, 230);
     border-radius: 10em;
 }
-#cart-button:active, #search-button:active, #profile-button:active {
-    
+/*
+#profile-button:hover + #login-register-anchor{
+    display: inline-block;
+}*/
+
+#login-register-anchor.visible {
+    display: inline-block;
 }
 
 #index-products {
@@ -207,3 +231,5 @@ li a {
 #profile-menu ul li a:hover {
     background-color: #f0f0f0;
 }
+
+
