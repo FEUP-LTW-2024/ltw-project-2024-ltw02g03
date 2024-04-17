@@ -13,7 +13,7 @@ function drawHeader(Session $session) { ?>
     <title>EcoExhange</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="html/style.css">
+    <link rel="stylesheet" href="../html/style.css">
     <script src="../html/script_test.js" defer></script>
 </head>
 <body>
@@ -36,6 +36,7 @@ function drawHeader(Session $session) { ?>
         <button id="cart-button">
             <img src="/Docs/img/9025034_shopping_cart_light_icon.png" alt="" width="30">
         </button>  
+        <a id="cart-register-anchor" href="/pages/cart.php">Login/Register</a>
         <button id="profile-button">
 
             <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
