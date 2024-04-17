@@ -7,6 +7,7 @@ require_once(__DIR__ . '/../database/user.class.php');
 
 
 function drawHeader(Session $session) { ?>
+
     <!DOCTYPE html>
     <html lang="en-US">
     <head>
@@ -93,36 +94,37 @@ function drawHeader(Session $session) { ?>
 <?php } ?>
 
 <?php
-function drawProducts($db,int $limit) {
+function drawProducts($db, int $limit) {
     try {
         $items = Item::getItems($db, $limit);
         
-        
         if ($items) {
-          foreach($items as $row) {
-            
-            $condition = Item::getItemCondition($db, $row->itemId);
-            $brand = Item::getItemBrand($db, $row->itemId);            
-            $image = Item::getItemImage($db, $row->itemId);
-            
-            ?>
-            <article id="index-product">
-              <img id="img-product" src="<?= $image[0]->imageUrl ?>" alt="" style="width: 50%; height: auto;">
-              <h1><?= htmlspecialchars($row->title) ?></h1>
-              <h2><?= htmlspecialchars($row->description) ?></h2>
-              <p><?= number_format($row->price, 2) ?>€</p>
-              <p>Condition: <?= htmlspecialchars($condition->conditionName) ?></p>
-              <p>Brand: <?= htmlspecialchars($brand->brandName) ?></p>
-              <button class="add-cart-button">Adicionar ao carrinho</button>
-            </article>
-            <?php
-        }
+            foreach($items as $row) {
+                $condition = Item::getItemCondition($db, $row->itemId);
+                $brand = Item::getItemBrand($db, $row->itemId);            
+                $image = Item::getItemImage($db, $row->itemId);
+                
+                ?>
+                <article id="index-product">
+                    <img id="img-product" src="<?= $image[0]->imageUrl ?>" alt="" style="width: 50%; height: auto;">
+                    <h1><?= htmlspecialchars($row->title) ?></h1>
+                    <h2><?= htmlspecialchars($row->description) ?></h2>
+                    <p><?= number_format($row->price, 2) ?>€</p>
+                    <p>Condition: <?= htmlspecialchars($condition->conditionName) ?></p>
+                    <p>Brand: <?= htmlspecialchars($brand->brandName) ?></p>
+                    <form action="../actions/add_to_cart.php" method="post" class="add-to-cart-form">
+                        <input type="hidden" name="item_id" value="<?= $row->itemId ?>">
+                        <button type="submit" class="add-cart-button">Add to Cart</button> 
+                    </form>
+                </article>
+                <?php
+            }
         } else {
             echo "<p>No items found.</p>";
         }
-    } 
-    catch (PDOException $e) {
+    } catch (PDOException $e) {
         echo "Error fetching items: " . $e->getMessage();
     }
 }
+
 ?>

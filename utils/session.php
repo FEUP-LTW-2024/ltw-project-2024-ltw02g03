@@ -43,5 +43,11 @@
       public function addAdmin(bool $admin) {
         $_SESSION['admin'] = $admin;
       }
+    
+    public function setMessage(string $text, string $type = 'info') {
+      $_SESSION['messages'][] = array('type' => $type, 'text' => $text);
     }
-  ?>
+  
+  }
+?>
+
