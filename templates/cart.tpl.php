@@ -8,6 +8,7 @@ require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/user.class.php');
 function drawCart(Session $session,$db) { ?>  
     <main>
+
             <section id="cart">
               <div class="cart-items">
                 <div class="cart-item">
@@ -68,5 +69,6 @@ function drawCart(Session $session,$db) { ?>
               </div>
             </section>
           </main>
+
 
 <?php } ?>
