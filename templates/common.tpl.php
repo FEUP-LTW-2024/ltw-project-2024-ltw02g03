@@ -19,7 +19,7 @@ function drawHeader(Session $session) { ?>
 <body>
 
 <header>
-    <h1><a href="#">EcoExchange</a></h1>
+    <h1><a href="/pages">EcoExchange</a></h1>
     <div id="header-list">
         <ul>
             <li><a>Eletrodomésticos</a></li>
@@ -33,9 +33,11 @@ function drawHeader(Session $session) { ?>
         <button id="search-button">
             <img src="/Docs/img/9024781_gender_neuter_light_icon.png" alt="" width="30">
         </button> 
+        <a href="/pages/cart.php">
         <button id="cart-button">
             <img src="/Docs/img/9025034_shopping_cart_light_icon.png" alt="" width="30">
-        </button>  
+        </button> 
+        </a>
         <a id="cart-register-anchor" href="/pages/cart.php">Login/Register</a>
         <button id="profile-button">
 

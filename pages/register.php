@@ -8,7 +8,7 @@
 
   $db = getDatabaseConnection();
 
-  require_once(__DIR__ . '/../templates/cart.tpl.php');
+  require_once(__DIR__ . '/../templates/login.tpl.php');
   require_once(__DIR__ . '/../templates/common.tpl.php');
 
 
@@ -17,6 +17,6 @@
   
 
   drawHeader($session);
-  drawCart($session, $db);
+  drawRegisterForm($session, $db);
   drawFooter();
 ?>
