@@ -23,10 +23,14 @@ main {
 }
 
 #utility-wrap {
-    display: flex;
-    flex-direction: row;
-    align-items: center; /* Align items vertically */
-    gap: 10px; /* Adjust the space between buttons */
+    position: fixed;
+    
+     
+    gap: 5%;
+    display: inline;
+    right: inherit;
+    height: auto;
+    vertical-align: middle;
 }
 body {
     /*background-color: rgb(225, 225, 225);*/
@@ -51,7 +55,7 @@ a{
     display: none;
     position: fixed;
     right: 2em;
-    top: 3.7em;
+    top: 3.2em;
     padding: 1em;
     background-color: rgb(194, 226, 255);
     border-radius: 2em;
@@ -83,12 +87,7 @@ li a {
     padding: 0;
 }
 
-#utility-wrap {
-    display: inline;
-    align-items: center;
-    height: auto;
-    vertical-align: middle;
-}
+
 
 #cart-button, #search-button, #profile-button {
     border: none;
@@ -365,35 +364,30 @@ body {
 
 
 
-/* CSS para o menu flutuante 
-
-#profile-menu {
+/* CSS para a seção de mensagens */
+#messages {
     position: absolute;
-    top: 6%; /* Ajuste conforme necessário 
-    
-    right: 2%; /* Garante que o menu comece na borda esquerda 
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    width: 10%; 
+    top: 2.5em; /* Ajuste conforme necessário */
+    right: 1em; /* Ajuste conforme necessário */
+    z-index: 1000; /* Garante que as mensagens fiquem sobrepostas a outros elementos */
 }
 
-
-#profile-menu.hidden {
-    display: none;
+#messages article {
+    margin-bottom: 0.5em; /* Espaçamento entre as mensagens */
+    padding: 0.5em 1em; /* Espaçamento interno das mensagens */
+    border-radius: 0.5em; /* Borda arredondada */
 }
 
-#profile-menu ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+.success {
+    background-color: #4CAF50; /* Verde para mensagens de sucesso */
+    color: white;
 }
 
-#profile-menu ul li {
-    margin-bottom: 5px;
+.error {
+    background-color: #f44336; /* Vermelho para mensagens de erro */
+    color: white;
 }
+
 
 #profile-menu ul li a {
     display: block;
@@ -406,7 +400,7 @@ body {
 #profile-menu ul li a:hover {
     background-color: #f0f0f0;
 }
-*/
+
 
 
 /*---------post.css----------*/
@@ -497,3 +491,4 @@ body {
 #date-post {
     text-align: end;
 }
+
