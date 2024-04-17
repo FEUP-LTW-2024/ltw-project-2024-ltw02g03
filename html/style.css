@@ -227,6 +227,23 @@ form {
     padding: 2em;
     width: 18em;
 }
+
+form.add-to-cart-form {
+    display: block;
+    background-color: rgb(243, 243, 243);
+    padding: 2em;
+    width: auto;
+}
+
+form.add-to-cart-form button.add-cart-button {
+    background-color: blue; 
+    color: white; 
+    border: none;
+    padding: 0.5em 1em; 
+    cursor: pointer; 
+
+}
+
 label {
     width: 100%;
     font-family: Poppins;
@@ -345,6 +362,7 @@ body {
   align-self: center;
   font-family: Poppins;
 }
+
 
 
 /* CSS para o menu flutuante 
