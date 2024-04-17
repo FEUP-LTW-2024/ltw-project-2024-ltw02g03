@@ -20,9 +20,34 @@ function drawLoginForm(Session $session,$db) { ?>
                 </label>
                 <div id="flex-login-regis">
                     <button formaction="#" formmethod="post">Login</button>
-                    <a href="register.html">Register</a>  
+                    <a href="register.php">Register</a>  
                 </div>
             </form>
         </section>
     </main>
 <?php } ?>
+
+
+<?php function drawRegisterForm(Session $session,$db) { ?>   
+    <main>
+          <section id="login">
+            <h1>Register</h1>
+            <form>
+              <label>
+                Email <input type="text" name="username">
+              </label>
+              <label>
+                Password <input type="password" name="password">
+              </label>
+              <label>
+                Repeat Password <input type="password" name="password">
+              </label>
+              <div id="flex-login-regis">
+                <button formaction="#" formmethod="post">Register</button>
+                <a href="login.php">Login</a>  
+              </div>
+            </form>
+          </section>
+        </main>
+<?php } ?>
+

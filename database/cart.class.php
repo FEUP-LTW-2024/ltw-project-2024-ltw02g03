@@ -17,7 +17,7 @@ class Cart
     }
 
     // Insert a new item into the cart
-    static function insertItem(PDO $db, int $userId, int $itemId, int $quantity): int
+    static function insertItem(PDO $db, int $userId, int $itemId, int $quantity): string
     {
         try {
             $stmt = $db->prepare('
