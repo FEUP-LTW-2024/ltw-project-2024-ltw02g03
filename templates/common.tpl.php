@@ -59,7 +59,6 @@ function drawHeader(Session $session) { ?>
     </header>
     
     <?php } ?>
-    
 
 <?php function drawBody(Session $session, $db, int $limit) { ?>
 <section id="recomended">
