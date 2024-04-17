@@ -407,3 +407,93 @@ body {
     background-color: #f0f0f0;
 }
 */
+
+
+/*---------post.css----------*/
+
+#post {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+#user-aside {
+    grid-row: 1 / 3;
+    grid-column: 2 / 3;
+    margin: 1em;
+}
+
+#user-post {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    background-color: white;
+    border-radius: 1em;
+    margin: 1em;
+}
+
+#specs-post {
+    background-color: white;
+    border-radius: 1em;
+}
+
+#specs-post p {
+    font-size: 1.5em;
+    font-weight: 500;
+    padding: 1em;
+}
+
+#price-post {
+    background-color: white;
+    padding: 1em;
+    border-radius: 1em;
+    margin-bottom: 1em;
+}
+
+#product-img-post {
+    display: flex;
+    justify-content: space-evenly; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 40em;
+
+}
+
+.img-button {
+    background-color: rgb(187, 187, 187);
+    
+    border-radius: 50%;
+}
+
+#product-img-post img {
+    height: 85%;
+}
+
+#description-post {
+    padding: 1em;
+    margin: 1em;
+    background-color: rgb(194, 226, 255);
+    border-radius: 1em;
+}
+
+#product-title-post {
+    font-size: 2rem; /* Set the font size of the h1 element */
+}
+
+#description-post-h2 {
+    font-size: 2em;
+}
+
+#description-post p {
+    font-size: 1.2em;
+}
+
+#brand-price-post {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#date-post {
+    text-align: end;
+}
