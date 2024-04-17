@@ -322,7 +322,7 @@ VALUES
 INSERT INTO ProductImage(ImageId,ImageUrl)
 VALUES
 (1, 'Docs/samsung-galaxy-s20-fe-5g-g781-128gb-dual-sim-lavanda.jpg'),
-(2, 'https://picsum.photos/240/270?business~'),
-(3, 'https://picsum.photos/240/270?business~'),
-(4, 'https://picsum.photos/240/270?business~'),
-(5, 'https://picsum.photos/240/270?business~');
+(2, 'Docs/1-nike-air-max-270.jpg'),
+(3, 'Docs/Apple_16-inch-MacBook-Pro_111319_big.jpg.large.jpg'),
+(4, 'Docs/sapatilhas-air-force-1-07-1nfJ59.jpg'),
+(5, 'Docs/adidas-superstar-gore-tex-core-black-white-if6162-658e93bd76e79.jpg');
