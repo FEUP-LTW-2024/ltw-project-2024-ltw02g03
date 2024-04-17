@@ -236,7 +236,7 @@ INSERT INTO User (UserId, FirstName, LastName, Username, Email, Password, Addres
 VALUES
 (1, 'John', 'Doe', 'johndoe', 'johndoe@example.com', 'password123', '123 Main St', 'Anytown', 'Anydistrict', 'AnyCountry', '12345', '123-456-7890', 'https://example.com/avatar1.jpg', 0),
 (2, 'Jane', 'Smith', 'janesmith', 'janesmith@example.com', 'password456', '456 Oak St', 'Othertown', 'Otherdistrict', 'OtherCountry', '54321', '987-654-3210', 'https://example.com/avatar2.jpg', 0),
-(3, 'Admin', 'Admin', 'admin', 'admin@example.com', 'admin123', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(3, 'Admin', 'Admin', 'admin', 'admin@example.com', '$2y$10$E/kh5qRzGdBofI4D3O1.L.Yc2vISpqjDKbZX2CSETRo57I8SVEgeG', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
 (4, 'Maria', 'Silva', 'mariasilva', 'mariasilva@example.com', 'password789', '789 Elm St', 'Somewhere', 'Somedistrict', 'SomeCountry', '67890', '555-123-4567', 'https://example.com/avatar3.jpg', 0),
 (5, 'Carlos', 'Santos', 'carlossantos', 'carlossantos@example.com', 'passwordabc', '101 Pine St', 'Anywhere', 'Anydistrict', 'AnyCountry', '54321', '123-555-7890', 'https://example.com/avatar4.jpg', 0);
 
