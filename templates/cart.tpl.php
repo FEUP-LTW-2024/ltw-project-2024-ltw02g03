@@ -4,71 +4,76 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../database/connection.db.php');
-require_once(__DIR__ . '/../database/item.class.php');
-require_once(__DIR__ . '/../database/user.class.php');
-function drawCart(Session $session,$db) { ?>  
-    <main>
+require_once(__DIR__ . '/../database/cart.class.php');
+require_once(__DIR__ . '/../database/item.class.php'); 
 
-            <section id="cart">
-              <div class="cart-items">
-                <div class="cart-item">
-                  <div class="img-name-condition">
-                    <img class="img-product-cart" src="https://picsum.photos/240/270?business" alt="" height="100">
-                    <div class="name-condition">
-                      <h1>Frigorifico Samsung</h1>
-                      <p><strong>Condição:</strong> Usado</p>
-                    </div>
-                  </div>
-                  <p><strong>Brand:</strong> Samsung</p>
-                  <p>129,99€</p>
-                  <button id="profile-button">
-                    <img src="/Docs/img/8664938_trash_can_delete_remove_icon.png" alt="" width="20">
-                  </button> 
-                  
-                  
-                </div>
-                <div class="cart-item">
-                  <div class="img-name-condition">
-                    <img class="img-product-cart" src="https://picsum.photos/240/270?business" alt="" height="100">
-                    <div class="name-condition">
-                      <h1>Frigorifico Samsung</h1>
-                      <p><strong>Condição:</strong> Usado</p>
-                    </div>
-                  </div>
-                  <p><strong>Brand:</strong> Samsung</p>
-                  <p>129,99€</p>
-                  <button id="profile-button">
-                    <img src="/Docs/img/8664938_trash_can_delete_remove_icon.png" alt="" width="20">
-                  </button> 
-                  
-                  
-                </div>
-                <div class="cart-item">
-                  <div class="img-name-condition">
-                    <img class="img-product-cart" src="https://picsum.photos/240/270?business" alt="" height="100">
-                    <div class="name-condition">
-                      <h1>Frigorifico Samsung</h1>
-                      <p><strong>Condição:</strong> Usado</p>
-                    </div>
-                  </div>
-                  <p><strong>Brand:</strong> Samsung</p>
-                  <p>129,99€</p>
-                  <button id="profile-button">
-                    <img src="/Docs/img/8664938_trash_can_delete_remove_icon.png" alt="" width="20">
-                  </button> 
-                  
-                  
-                </div>
-              </div>
-              <div class="cart-total">
-                <h1>Total Price:</h1> 
-                <p class="total-price">100.00€</p>
-                <button id="add-cart-button">
-                  Pay
-                </button> 
-              </div>
-            </section>
-          </main>
+function drawCart(Session $session, $db)
+{
+    try {
+        if (!$session->isLoggedIn()) {
+            header('Location: /pages/login.php');
+            exit();
+        }
 
+        $userId = $session->getId();
 
-<?php } ?>
+        $cartItems = Cart::getItemsByUser($db, $userId);
+        
+        $totalPrice = 0;
+      
+        if (!empty($cartItems)) {
+            ?>
+            <main>
+                <section id="cart">
+                    <div class="cart-items">
+                        <?php foreach ($cartItems as $cartItem) : ?>
+                            
+                            <?php
+                            $image = Item::getItemImage($db, $cartItem->itemId)[0]; 
+                            $item= Item::getItem($db, $cartItem->itemId)[0];
+                            $totalPrice += $item->price;
+                            
+                            $brand = Item::getItemBrand($db, $item->itemId);
+                            $brandName = $brand->brandName;
+
+                            $condition = Item::getItemCondition($db, $item->itemId);
+                            $condition->conditionName;
+                           
+                            
+                            ?>
+                            <div class="cart-item">
+                            <div class="img-name-condition">
+                              <img id="img-product-cart" src="../<?= $image->imageUrl ?>" alt="<?= $item->title ?>" style="max-width: 200px; height: auto;">
+                                <div class="name-condition">
+                                    <h1><?= htmlspecialchars($item->title) ?></h1>
+                                    <p><strong>Condition:</strong> <?= htmlspecialchars($condition->conditionName) ?></p>
+                                </div>
+                            </div>
+                            <p><strong>Brand:</strong> <?= htmlspecialchars($brandName) ?> </p>
+                            <p><?= $item->price ?>€</p>
+                                <form action="../actions/remove_from_cart.php" method="post">
+                                  <input type="hidden" name="cart_id" value="<?= $cartItem->cartId ?>">
+                                  <button type="submit">Remove</button>
+                                </form>
+
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="cart-total">
+                        <h1>Total Price:</h1>
+                        <p class="total-price"><?= number_format($totalPrice, 2) ?>€</p>
+                        <form action="/checkout.php" method="post">
+                            <button type="submit">Pay</button>
+                        </form>
+                    </div>
+                </section>
+            </main>
+        <?php
+        } else {
+            echo "No items in the cart.";
+        }
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+?>
