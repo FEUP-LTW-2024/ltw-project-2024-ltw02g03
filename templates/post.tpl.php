@@ -31,13 +31,13 @@ function drawPost(Session $session,$db) { ?>
                 </div>
 
                 <div id="specs-post">
-                    <p>Brand:</p> 
+                    <p class="spec-type">Brand:</p> 
                     <p class="spec">MSI</p>
-                    <p>Condition:</p> 
+                    <p class="spec-type">Condition:</p> 
                     <p class="spec">Factory New</p>
-                    <p>Size:</p> 
+                    <p class="spec-type">Size:</p> 
                     <p class="spec">Large</p>
-                    <p>Model:</p> 
+                    <p class="spec-type">Model:</p> 
                     <p class="spec">G32yk200</p>
                 </div>
                 
@@ -45,15 +45,17 @@ function drawPost(Session $session,$db) { ?>
 
             <div id="description-post">
                 
-                    
-                <h2 id="description-post-h2">Description</h2>
+                <div>
+                        <h2 id="description-post-h2">Description</h2>
                         
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                    when an unknown printer took a galley of type and scrambled it to make a type 
-                    specimen book. It has survived not only five centuries, but also the leap into
-                    electronic
-                </p>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                            when an unknown printer took a galley of type and scrambled it to make a type 
+                            specimen book. It has survived not only five centuries, but also the leap into
+                            electronic
+                        </p>
+                </div>
+                
                 <p id="date-post">12/04/2023</p>
             </div>
 
