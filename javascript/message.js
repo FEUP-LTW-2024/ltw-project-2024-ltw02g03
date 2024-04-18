@@ -1,6 +1,5 @@
 
 
-// Função para exibir a mensagem
 function removeMessage() {
 
     

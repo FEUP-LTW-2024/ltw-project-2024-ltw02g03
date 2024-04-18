@@ -10,8 +10,8 @@ body > header {
     padding: 1.2em;
     display: flex;
     flex-direction: row;
-    align-items: center; /* Align items vertically */
-    justify-content: space-between; /* Distribute items horizontally */
+    align-items: center;
+    justify-content: space-between; 
 }
 
 main {
@@ -286,28 +286,28 @@ body {
 /* CSS para o carrinho */
 #cart {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* Two columns with 2/3 and 1/3 of the width */
+    grid-template-columns: 2fr 1fr; 
     grid-template-rows: auto;
   }
   
   .cart-items {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
+    flex-direction: column; 
     justify-content: space-evenly;
     background-color: white;
     border-radius: 1em;
     margin: 1em;
-    padding: 20px; /* Set padding for the items container */
-    grid-column: 1; /* Place items in the first column */
-    grid-row: 1; /* Place items in the first row */
+    padding: 20px;
+    grid-column: 1; 
+    grid-row: 1; 
   }
   
   .cart-total {
     background-color: rgb(212, 226, 230);
-    padding: 20px; /* Set padding for the total container */
+    padding: 20px; 
     border-radius: 1em;
-    grid-column: 2; /* Place total in the second column */
-    grid-row: 1; /* Place total in the first row */
+    grid-column: 2; 
+    grid-row: 1; 
     margin: 1em;
     display: flex;
     flex-direction: column;
@@ -315,7 +315,7 @@ body {
   }
   
   .total-price {
-    margin-left: auto; /* Push the total price to the right */
+    margin-left: auto; 
     margin: 1em;
   }
   
@@ -329,7 +329,7 @@ body {
   }
 
   .cart-item:not(:last-child) {
-    margin-bottom: 1em; /* Adjust margin as needed */
+    margin-bottom: 1em; 
   }
 
 .img-name-condition {
@@ -367,24 +367,24 @@ body {
 /* CSS para a seção de mensagens */
 #messages {
     position: absolute;
-    top: 2.5em; /* Ajuste conforme necessário */
-    right: 1em; /* Ajuste conforme necessário */
-    z-index: 1000; /* Garante que as mensagens fiquem sobrepostas a outros elementos */
+    top: 2.5em; 
+    right: 1em; 
+    z-index: 1000; 
 }
 
 #messages article {
-    margin-bottom: 0.5em; /* Espaçamento entre as mensagens */
-    padding: 0.5em 1em; /* Espaçamento interno das mensagens */
-    border-radius: 0.5em; /* Borda arredondada */
+    margin-bottom: 0.5em; 
+    padding: 0.5em 1em; 
+    border-radius: 0.5em; 
 }
 
 .success {
-    background-color: #4CAF50; /* Verde para mensagens de sucesso */
+    background-color: #4CAF50;
     color: white;
 }
 
 .error {
-    background-color: #f44336; /* Vermelho para mensagens de erro */
+    background-color: #f44336;
     color: white;
 }
 
@@ -420,8 +420,8 @@ body {
 #user-post {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    justify-content: center; 
+    align-items: center; 
     background-color: white;
     border-radius: 1em;
     margin: 1em;
@@ -447,8 +447,8 @@ body {
 
 #product-img-post {
     display: flex;
-    justify-content: space-evenly; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    justify-content: space-evenly; 
+    align-items: center; 
     height: 40em;
 
 }
@@ -471,7 +471,7 @@ body {
 }
 
 #product-title-post {
-    font-size: 2rem; /* Set the font size of the h1 element */
+    font-size: 2rem;
 }
 
 #description-post-h2 {
