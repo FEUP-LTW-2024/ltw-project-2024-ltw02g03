@@ -15,6 +15,7 @@ function drawHeader(Session $session) { ?>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../html/style.css">
+        <link rel="icon" href="../Docs/img/Eco.png" type="image/png">
         <script src="../javascript/login_script.js" defer></script>
         <script src="../javascript/message.js" defer></script>
     </head>
