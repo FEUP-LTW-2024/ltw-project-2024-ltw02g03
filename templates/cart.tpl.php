@@ -27,17 +27,30 @@ function drawCart(Session $session, $db)
                 <section id="cart">
                     <div class="cart-items">
                         <?php foreach ($cartItems as $cartItem) : ?>
+                            
                             <?php
                             $image = Item::getItemImage($db, $cartItem->itemId)[0]; 
                             $item= Item::getItem($db, $cartItem->itemId)[0];
                             $totalPrice += $item->price;
+                            
+                            $brand = Item::getItemBrand($db, $item->itemId);
+                            $brandName = $brand->brandName;
+
+                            $condition = Item::getItemCondition($db, $item->itemId);
+                            $condition->conditionName;
+                           
+                            
                             ?>
                             <div class="cart-item">
+                            <div class="img-name-condition">
                               <img id="img-product-cart" src="../<?= $image->imageUrl ?>" alt="<?= $item->title ?>" style="max-width: 200px; height: auto;">
                                 <div class="name-condition">
                                     <h1><?= htmlspecialchars($item->title) ?></h1>
-                                    <p><strong>Price:</strong> <?= $item->price ?>€</p>
+                                    <p><strong>Condition:</strong> <?= htmlspecialchars($condition->conditionName) ?></p>
                                 </div>
+                            </div>
+                            <p><strong>Brand:</strong> <?= htmlspecialchars($brandName) ?> </p>
+                            <p><?= $item->price ?>€</p>
                                 <form action="../actions/remove_from_cart.php" method="post">
                                   <input type="hidden" name="cart_id" value="<?= $cartItem->cartId ?>">
                                   <button type="submit">Remove</button>

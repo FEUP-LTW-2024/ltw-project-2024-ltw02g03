@@ -96,7 +96,8 @@ class Item {
                     $item['Title'],
                     $item['Description'],
                     $item['Price'],
-                    $item['ListingDate']
+                    $item['ListingDate'],
+
                 );
             }
             return $items;
@@ -312,5 +313,6 @@ static function getItemModel(PDO $db, int $id) : ?Model {
             throw new Exception("Error saving item: " . $e->getMessage());
         }
     }
+
 }
 ?>
