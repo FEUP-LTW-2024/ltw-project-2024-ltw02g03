@@ -95,7 +95,7 @@ CREATE TABLE Payment
 -- Shopping Cart Table
 CREATE TABLE Cart
 (
-    CartId INTEGER  NOT NULL,
+    CartId INTEGER  NOT NULL AUTOINCREMENT,
     UserId INTEGER,
     ItemId INTEGER,
     Quantity INTEGER,

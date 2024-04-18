@@ -15,7 +15,7 @@ class Cart
         $this->itemId = $itemId;
         $this->quantity = $quantity;
     }
-
+    
     // Insert a new item into the cart
     static function insertItem(PDO $db, int $userId, int $itemId, int $quantity): string
     {
@@ -25,13 +25,16 @@ class Cart
                 VALUES (?, ?, ?)
             ');
 
+            // Execute a query com os valores dos parâmetros
             $stmt->execute(array($userId, $itemId, $quantity));
 
+            // Retorne o ID do último registro inserido
             return $db->lastInsertId();
         } catch (PDOException $e) {
             throw new Exception("Error inserting item into cart: " . $e->getMessage());
         }
     }
+
 
     // Update the quantity of an item in the cart
     static function updateItemQuantity(PDO $db, int $cartId, int $quantity): void
