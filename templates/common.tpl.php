@@ -44,7 +44,11 @@ function drawHeader(Session $session) { ?>
             <button id="profile-button">
                 <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
             </button> 
+            <?php if (!$session->isLoggedIn()) { ?>
             <a id="login-register-anchor" href="/pages/login.php">Login/Register</a>
+            <?php } else { ?>
+            <a id="login-register-anchor" href="/actions/action_logout.php">Logout</a>
+            <?php } ?>
         </div>
         
     <div id="message-container">
