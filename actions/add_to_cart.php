@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         $lastId= Cart::insertItem($db, $userId, $itemId, 1); 
         $session->setMessage("Item successfully added to cart.", "success");
-        header("Location: /pages/cart.php");
+        header("Location: /pages");
         exit();
 
     } catch (Exception $e) {
