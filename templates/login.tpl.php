@@ -11,7 +11,7 @@ function drawLoginForm(Session $session,$db) { ?>
     <main>
         <section id="login">
             <h1>Login</h1>
-            <form action="../actions/action_login.php" method="post"> 
+            <form class="form-log" action="../actions/action_login.php" method="post"> 
                 <label>
                     Email <input type="text" name="email">
                 </label>
@@ -32,7 +32,7 @@ function drawLoginForm(Session $session,$db) { ?>
     <main>
           <section id="login">
             <h1>Register</h1>
-            <form>
+            <form class="form-log">
               <label>
                 Email <input type="text" name="username">
               </label>

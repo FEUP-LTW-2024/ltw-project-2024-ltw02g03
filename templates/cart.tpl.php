@@ -51,7 +51,7 @@ function drawCart(Session $session, $db)
                             </div>
                             <p><strong>Brand:</strong> <?= htmlspecialchars($brandName) ?> </p>
                             <p><?= $item->price ?>€</p>
-                                <form action="../actions/remove_from_cart.php" method="post">
+                                <form class="cart-form" action="../actions/remove_from_cart.php" method="post">
                                   <input type="hidden" name="cart_id" value="<?= $cartItem->cartId ?>">
                                   <button type="submit">Remove</button>
                                 </form>
@@ -62,8 +62,8 @@ function drawCart(Session $session, $db)
                     <div class="cart-total">
                         <h1>Total Price:</h1>
                         <p class="total-price"><?= number_format($totalPrice, 2) ?>€</p>
-                        <form action="/checkout.php" method="post">
-                            <button type="submit">Pay</button>
+                        <form id="cart-form" action="/checkout.php" method="post">
+                            <button id="pay-cart-button" type="submit">Pay</button>
                         </form>
                     </div>
                 </section>
