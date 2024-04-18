@@ -10,7 +10,6 @@ require_once(__DIR__ . '/../database/cart.class.php');
 $session = new Session();
 $db = getDatabaseConnection();
 
-// Verifique se o usuário está autenticado
 if (!$session->isLoggedIn()) {
     header('Location: /pages/login.php');
     exit();
@@ -20,9 +19,7 @@ if (!$session->isLoggedIn()) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $itemId = intval($_POST['item_id']);
     $userId = $session->getId();
-    
 
-    
 
     try {
         
