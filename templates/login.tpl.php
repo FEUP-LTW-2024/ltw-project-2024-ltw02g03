@@ -11,15 +11,15 @@ function drawLoginForm(Session $session,$db) { ?>
     <main>
         <section id="login">
             <h1>Login</h1>
-            <form>
+            <form action="../actions/action_login.php" method="post"> 
                 <label>
-                    Email <input type="text" name="username">
+                    Email <input type="text" name="email">
                 </label>
                 <label>
                     Password <input type="password" name="password">
                 </label>
                 <div id="flex-login-regis">
-                    <button formaction="#" formmethod="post">Login</button>
+                    <button type="submit">Login</button>
                     <a href="register.php">Register</a>  
                 </div>
             </form>

@@ -10,11 +10,8 @@ $session = new Session();
 $db = getDatabaseConnection();
 
 // Check if the request method is POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (!isset($_SESSION['user_id'])) {
-        header("Location: /pages/login.php");
-        exit();
-    }
+if (!$session->isLoggedIn()) die(header('Location: /pages/login.php'));
+
 
     $itemId = $_POST['item_id'];
     $userId = $_SESSION['user_id'];

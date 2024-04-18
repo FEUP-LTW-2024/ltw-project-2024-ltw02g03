@@ -125,10 +125,11 @@ class User {
         try {
             $stmt = $db->prepare('SELECT UserId, FirstName, LastName, Username, Email, Password, JoinDate, Address, City, District, Country, PostalCode, Phone, ImageUrl, Admin FROM User WHERE lower(Email) = ?');
             $stmt->execute([strtolower($email)]);
-    
+
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+            
             if ($user && password_verify($password, $user['Password'])) {
+                $admin = (bool) $user['Admin'];
                 return new User(
                     $user['UserId'],
                     $user['FirstName'],
@@ -144,7 +145,7 @@ class User {
                     $user['PostalCode'],
                     $user['Phone'],
                     $user['ImageUrl'],
-                    $user['Admin']
+                    $admin
                 );
             } else {
                 return null;
@@ -158,7 +159,7 @@ class User {
     static function registerUser(PDO $db, string $firstName, string $lastName, string $username, string $email, string $password,string $joinDate, ?string $address, ?string $city, ?string $district, ?string $country, ?string $postalCode, ?string $phone, ?string $imageUrl, bool $admin) : string{
         try {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $db->prepare('INSERT INTO User (FirstName, LastName, Username, Email, Password,JoinDate Address, City, District, Country, PostalCode, Phone, ImageUrl, Admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+            $stmt = $db->prepare('INSERT INTO User (FirstName, LastName, Username, Email, Password, JoinDate, Address, City, District, Country, PostalCode, Phone, ImageUrl, Admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
             $stmt->execute([$firstName, $lastName, $username, $email, $hashedPassword, $joinDate, $address, $city, $district, $country, $postalCode, $phone, $imageUrl, $admin]);
     
             return $db->lastInsertId();

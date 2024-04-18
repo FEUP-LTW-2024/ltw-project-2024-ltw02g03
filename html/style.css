@@ -10,8 +10,8 @@ body > header {
     padding: 1.2em;
     display: flex;
     flex-direction: row;
-    align-items: center; /* Align items vertically */
-    justify-content: space-between; /* Distribute items horizontally */
+    align-items: center;
+    justify-content: space-between; 
 }
 
 main {
@@ -23,10 +23,14 @@ main {
 }
 
 #utility-wrap {
-    display: flex;
-    flex-direction: row;
-    align-items: center; /* Align items vertically */
-    gap: 10px; /* Adjust the space between buttons */
+    position: fixed;
+    
+     
+    gap: 5%;
+    display: inline;
+    right: inherit;
+    height: auto;
+    vertical-align: middle;
 }
 body {
     /*background-color: rgb(225, 225, 225);*/
@@ -51,7 +55,7 @@ a{
     display: none;
     position: fixed;
     right: 2em;
-    top: 3.7em;
+    top: 3.2em;
     padding: 1em;
     background-color: rgb(194, 226, 255);
     border-radius: 2em;
@@ -83,12 +87,7 @@ li a {
     padding: 0;
 }
 
-#utility-wrap {
-    display: inline;
-    align-items: center;
-    height: auto;
-    vertical-align: middle;
-}
+
 
 #cart-button, #search-button, #profile-button {
     border: none;
@@ -287,28 +286,28 @@ body {
 /* CSS para o carrinho */
 #cart {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* Two columns with 2/3 and 1/3 of the width */
+    grid-template-columns: 2fr 1fr; 
     grid-template-rows: auto;
   }
   
   .cart-items {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
+    flex-direction: column; 
     justify-content: space-evenly;
     background-color: white;
     border-radius: 1em;
     margin: 1em;
-    padding: 20px; /* Set padding for the items container */
-    grid-column: 1; /* Place items in the first column */
-    grid-row: 1; /* Place items in the first row */
+    padding: 20px;
+    grid-column: 1; 
+    grid-row: 1; 
   }
   
   .cart-total {
     background-color: rgb(212, 226, 230);
-    padding: 20px; /* Set padding for the total container */
+    padding: 20px; 
     border-radius: 1em;
-    grid-column: 2; /* Place total in the second column */
-    grid-row: 1; /* Place total in the first row */
+    grid-column: 2; 
+    grid-row: 1; 
     margin: 1em;
     display: flex;
     flex-direction: column;
@@ -316,7 +315,7 @@ body {
   }
   
   .total-price {
-    margin-left: auto; /* Push the total price to the right */
+    margin-left: auto; 
     margin: 1em;
   }
   
@@ -330,7 +329,7 @@ body {
   }
 
   .cart-item:not(:last-child) {
-    margin-bottom: 1em; /* Adjust margin as needed */
+    margin-bottom: 1em; 
   }
 
 .img-name-condition {
@@ -365,35 +364,30 @@ body {
 
 
 
-/* CSS para o menu flutuante 
-
-#profile-menu {
+/* CSS para a seção de mensagens */
+#messages {
     position: absolute;
-    top: 6%; /* Ajuste conforme necessário 
-    
-    right: 2%; /* Garante que o menu comece na borda esquerda 
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    width: 10%; 
+    top: 2.5em; 
+    right: 1em; 
+    z-index: 1000; 
 }
 
-
-#profile-menu.hidden {
-    display: none;
+#messages article {
+    margin-bottom: 0.5em; 
+    padding: 0.5em 1em; 
+    border-radius: 0.5em; 
 }
 
-#profile-menu ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+.success {
+    background-color: #4CAF50;
+    color: white;
 }
 
-#profile-menu ul li {
-    margin-bottom: 5px;
+.error {
+    background-color: #f44336;
+    color: white;
 }
+
 
 #profile-menu ul li a {
     display: block;
@@ -406,7 +400,7 @@ body {
 #profile-menu ul li a:hover {
     background-color: #f0f0f0;
 }
-*/
+
 
 
 /*---------post.css----------*/
@@ -426,8 +420,8 @@ body {
 #user-post {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    justify-content: center; 
+    align-items: center; 
     background-color: white;
     border-radius: 1em;
     margin: 1em;
@@ -453,8 +447,8 @@ body {
 
 #product-img-post {
     display: flex;
-    justify-content: space-evenly; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    justify-content: space-evenly; 
+    align-items: center; 
     height: 40em;
 
 }
@@ -477,7 +471,7 @@ body {
 }
 
 #product-title-post {
-    font-size: 2rem; /* Set the font size of the h1 element */
+    font-size: 2rem;
 }
 
 #description-post-h2 {
@@ -497,3 +491,4 @@ body {
 #date-post {
     text-align: end;
 }
+
