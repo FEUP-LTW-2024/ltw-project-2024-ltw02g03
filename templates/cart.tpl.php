@@ -4,71 +4,74 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../database/connection.db.php');
-require_once(__DIR__ . '/../database/item.class.php');
-require_once(__DIR__ . '/../database/user.class.php');
-function drawCart(Session $session,$db) { ?>  
-    <main>
+require_once(__DIR__ . '/../database/cart.class.php');
+require_once(__DIR__ . '/../database/item.class.php'); 
 
-            <section id="cart">
-              <div class="cart-items">
-                <div class="cart-item">
-                  <div class="img-name-condition">
-                    <img class="img-product-cart" src="https://picsum.photos/240/270?business" alt="" height="100">
-                    <div class="name-condition">
-                      <h1>Frigorifico Samsung</h1>
-                      <p><strong>Condição:</strong> Usado</p>
-                    </div>
-                  </div>
-                  <p><strong>Brand:</strong> Samsung</p>
-                  <p>129,99€</p>
-                  <button id="profile-button">
-                    <img src="/Docs/img/8664938_trash_can_delete_remove_icon.png" alt="" width="20">
-                  </button> 
-                  
-                  
-                </div>
-                <div class="cart-item">
-                  <div class="img-name-condition">
-                    <img class="img-product-cart" src="https://picsum.photos/240/270?business" alt="" height="100">
-                    <div class="name-condition">
-                      <h1>Frigorifico Samsung</h1>
-                      <p><strong>Condição:</strong> Usado</p>
-                    </div>
-                  </div>
-                  <p><strong>Brand:</strong> Samsung</p>
-                  <p>129,99€</p>
-                  <button id="profile-button">
-                    <img src="/Docs/img/8664938_trash_can_delete_remove_icon.png" alt="" width="20">
-                  </button> 
-                  
-                  
-                </div>
-                <div class="cart-item">
-                  <div class="img-name-condition">
-                    <img class="img-product-cart" src="https://picsum.photos/240/270?business" alt="" height="100">
-                    <div class="name-condition">
-                      <h1>Frigorifico Samsung</h1>
-                      <p><strong>Condição:</strong> Usado</p>
-                    </div>
-                  </div>
-                  <p><strong>Brand:</strong> Samsung</p>
-                  <p>129,99€</p>
-                  <button id="profile-button">
-                    <img src="/Docs/img/8664938_trash_can_delete_remove_icon.png" alt="" width="20">
-                  </button> 
-                  
-                  
-                </div>
-              </div>
-              <div class="cart-total">
-                <h1>Total Price:</h1> 
-                <p class="total-price">100.00€</p>
-                <button id="add-cart-button">
-                  Pay
-                </button> 
-              </div>
-            </section>
-          </main>
+function drawCart(Session $session, $db)
+{
+    try {
+        // Verifica se o usuário está autenticado
+        if (!$session->isLoggedIn()) {
+            // Redireciona para a página de login se não estiver autenticado
+            header('Location: /pages/login.php');
+            exit();
+        }
 
+        // Obtém o ID do usuário atual
+        $userId = $session->getId();
 
-<?php } ?>
+        // Obtém todos os itens do carrinho do usuário atual
+        $cartItems = Cart::getItemsByUser($db, $userId);
+        
+        $totalPrice = 0;
+      
+        // Se houver itens no carrinho, exiba-os na página
+        if (!empty($cartItems)) {
+            ?>
+            <main>
+                <section id="cart">
+                    <div class="cart-items">
+                        <?php foreach ($cartItems as $cartItem) : ?>
+                            <?php
+                            // Para cada item no carrinho, obtenha as informações do item real
+                            $image = Item::getItemImage($db, $cartItem->itemId)[0]; 
+                            $item= Item::getItem($db, $cartItem->itemId)[0];
+                            $totalPrice += $item->price;
+                            ?>
+                            <div class="cart-item">
+                              <img id="img-product-cart" src="../<?= $image->imageUrl ?>" alt="<?= $item->title ?>" style="max-width: 200px; height: auto;">
+                                <div class="name-condition">
+                                    <h1><?= htmlspecialchars($item->title) ?></h1>
+                                    <p><strong>Price:</strong> <?= $item->price ?>€</p>
+                                </div>
+                                <!-- Adicione outros detalhes do item aqui, como marca, condição, etc. -->
+                                <!-- Exemplo: botão para remover o item do carrinho -->
+                                <form action="../actions/remove_from_cart.php" method="post">
+                                  <input type="hidden" name="cart_id" value="<?= $cartItem->cartId ?>">
+                                  <button type="submit">Remove</button>
+                                </form>
+
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <!-- Exemplo: exibindo o total do carrinho e botão de pagamento -->
+                    <div class="cart-total">
+                        <h1>Total Price:</h1>
+                        <p class="total-price"><?= number_format($totalPrice, 2) ?>€</p>
+                        <form action="/checkout.php" method="post">
+                            <button type="submit">Pay</button>
+                        </form>
+                    </div>
+                </section>
+            </main>
+        <?php
+        } else {
+            // Se não houver itens no carrinho, exiba uma mensagem indicando isso
+            echo "No items in the cart.";
+        }
+    } catch (Exception $e) {
+        // Em caso de erro, exiba uma mensagem de erro
+        echo "Error: " . $e->getMessage();
+    }
+}
+?>
