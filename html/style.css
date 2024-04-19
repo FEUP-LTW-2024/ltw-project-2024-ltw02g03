@@ -18,19 +18,14 @@ main {
     padding-top: 6em;
 }
 
+
+
 #header-list {
     margin: 0;
 }
 
 #utility-wrap {
-    position: fixed;
-    
-     
-    gap: 5%;
-    display: inline;
-    right: inherit;
-    height: auto;
-    vertical-align: middle;
+    display: inline-block;
 }
 body {
     /*background-color: rgb(225, 225, 225);*/
@@ -124,6 +119,10 @@ li a {
     height: 40%;
     display: flex;
     justify-content: center;
+}
+
+#profile-button {
+    margin-right: 0;
 }
 
 #img-product img {

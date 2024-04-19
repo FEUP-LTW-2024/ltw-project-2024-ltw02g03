@@ -52,18 +52,18 @@ function drawHeader(Session $session) { ?>
             <?php } ?>
         </div>
         
-    <div id="message-container">
-        <section id="messages">
-        <?php foreach ($session->getMessages() as $message) { ?>
-            <article class="<?= $message['type'] ?>",>
-                <?= $message['text'] ?>
-            </article>
-            
-        <?php } ?>
-    </section>
-</div>
+           
     </header>
-    
+     <div id="message-container">
+                <section id="messages">
+                <?php foreach ($session->getMessages() as $message) { ?>
+                    <article class="<?= $message['type'] ?>",>
+                        <?= $message['text'] ?>
+                    </article>
+                    
+                <?php } ?>
+            </section>
+        </div>
     <?php } ?>
 
 <?php function drawBody(Session $session, $db, int $limit) { ?>
