@@ -159,6 +159,7 @@ li a {
     font-size: 0.9em;
 }
 
+
 #index-product > h2 {
     font-size: 1em;
     font-weight: 450;
@@ -242,6 +243,9 @@ form.add-to-cart-form button.add-cart-button {
     cursor: pointer; 
 
 }
+form.add-to-cart-form button.add-cart-button:hover {
+    background-color: rgb(0, 26, 143); 
+}
 
 label {
     width: 100%;
@@ -280,6 +284,48 @@ body {
 
 #flex-login-regis > a {
     text-align: center; 
+}
+
+/* Style for search form */
+#search-tab {
+    display: none;
+    position: fixed;
+    top: 4em; 
+    right: 1em; 
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 1em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000; 
+}
+
+#search-tab form {
+    display: flex;
+    align-items: center;
+}
+
+#search-tab input[type="text"] {
+    flex: 1;
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 0.5em;
+    font-size: 1em;
+}
+
+#search-tab button[type="submit"] {
+    background-color: blue; 
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+#search-tab button[type="submit"]:hover {
+    background-color: rgb(0, 26, 143); 
 }
 
 
