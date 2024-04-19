@@ -313,6 +313,37 @@ static function getItemModel(PDO $db, int $id) : ?Model {
             throw new Exception("Error saving item: " . $e->getMessage());
         }
     }
+    // Get items by title
+static function searchItemsByTitle(PDO $db, string $title, int $count) : array {
+    try {
+        $stmt = $db->prepare('
+            SELECT ItemId, SellerId, Title, Description, Price, ListingDate
+            FROM Item
+            WHERE Title LIKE ? 
+            LIMIT ?
+        ');
+        $stmt->bindValue(1, '%' . $title . '%', PDO::PARAM_STR);
+        $stmt->bindValue(2, $count, PDO::PARAM_INT);
+        $stmt->execute();
+        $items = array();
+
+        while ($item = $stmt->fetch()) {
+            $items[] = new Item(
+                $item['ItemId'],
+                $item['SellerId'],
+                $item['Title'],
+                $item['Description'],
+                $item['Price'],
+                $item['ListingDate']
+            );
+        }
+
+        return $items;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching items by title: " . $e->getMessage());
+    }
+}
+
 
 }
 ?>
