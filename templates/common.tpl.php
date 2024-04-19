@@ -111,7 +111,9 @@ function drawProducts($db, int $limit) {
                 
                 ?>
                 <article id="index-product">
-                    <img id="img-product" src="<?= $image[0]->imageUrl ?>" alt="" style="width: 50%; height: auto;">
+                    <div id=img-product>
+                        <img id="" src="<?= $image[0]->imageUrl ?>" alt="" style="width: 50%; height: auto;">
+                    </div>
                     <h1><?= htmlspecialchars($row->title) ?></h1>
                     <h2><?= htmlspecialchars($row->description) ?></h2>
                     <p><?= number_format($row->price, 2) ?>€</p>

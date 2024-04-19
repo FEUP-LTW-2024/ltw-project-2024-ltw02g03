@@ -13,7 +13,7 @@ function drawProfile(Session $session,$db) { ?>
             <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" height="100">
             <div>
                 <h1>John Doe</h1>
-                <h2>Portugal, GUarda, Guarda</h2>
+                <h2>Portugal, Guarda, Guarda</h2>
             </div>
 
         </div>
