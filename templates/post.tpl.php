@@ -19,7 +19,11 @@ function drawPost(Session $session,$db) { ?>
               <aside id="user-aside">
                 <div id="price-post">
                     <h2 id="product-title-post">Monitor 140hz</p>
-                    <h1>1000€</h1>
+                    <div id="post-price-button">
+                        <h1>1000€</h1>
+                    <button id="cart-button-post">Add to cart</button>
+                    </div>
+                    
                 </div>
                 
                 <div id="user-post">
