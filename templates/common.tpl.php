@@ -53,27 +53,28 @@ function drawHeader(Session $session) { ?>
             <?php } ?>
         </div>
         
-    <div id="message-container">
-        <section id="messages">
-        <?php foreach ($session->getMessages() as $message) { ?>
-            <article class="<?= $message['type'] ?>",>
-                <?= $message['text'] ?>
-            </article>
-            
-        <?php } ?>
-    </section>
-</div>
-</header>
+           
+    </header>
+     <div id="message-container">
+                <section id="messages">
+                <?php foreach ($session->getMessages() as $message) { ?>
+                    <article class="<?= $message['type'] ?>",>
+                        <?= $message['text'] ?>
+                    </article>
+                    
+                <?php } ?>
+            </section>
+        </div>
 
-<!-- Search tab -->
-<div id="search-tab" style="display: none;">
-    <form action="/pages/search.php" method="GET" id="search-form">
-        <input type="text" name="query" placeholder="Search for products...">
-        <button type="submit">Search</button>
-    </form>
-</div>
+    <!-- Search tab -->
+    <div id="search-tab" style="display: none;">
+        <form action="/pages/search.php" method="GET" id="search-form">
+            <input type="text" name="query" placeholder="Search for products...">
+            <button type="submit">Search</button>
+        </form>
+    </div>
 
-<?php } ?>
+    <?php } ?>
 
 <?php function drawBody(Session $session, $db, int $limit) { ?>
 <section id="recomended">
@@ -118,7 +119,9 @@ function drawProducts($db, int $limit) {
                 
                 ?>
                 <article id="index-product">
-                    <img id="img-product" src="<?= $image[0]->imageUrl ?>" alt="" style="width: 50%; height: auto;">
+                    <div id=img-product>
+                        <img id="" src="<?= $image[0]->imageUrl ?>" alt="" style="width: 50%; height: auto;">
+                    </div>
                     <h1><?= htmlspecialchars($row->title) ?></h1>
                     <h2><?= htmlspecialchars($row->description) ?></h2>
                     <p><?= number_format($row->price, 2) ?>€</p>
