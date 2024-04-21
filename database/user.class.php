@@ -59,31 +59,43 @@ class User {
       }
     
     // Get a User
-    static function getUser(PDO $db, int $id) : User{
-        $stmt= $db->prepare('SELECT * 
-        FROM User 
-        WHERE UserId = ?
-        ');
-        $stmt->execute([$id]);
-        $user = $stmt->fetch();
-        return new User(
-            $user['UserId'],
-            $user['FirstName'],
-            $user['LastName'],
-            $user['Username'],
-            $user['Email'],
-            $user['Password'],
-            $user['JoinDate'],
-            $user['Address'],
-            $user['City'],
-            $user['District'],
-            $user['Country'],
-            $user['PostalCode'],
-            $user['Phone'],
-            $user['ImageUrl'],
-            $user['Admin']
-        );
+    static function getUser(PDO $db, int $id) : ?User {
+        try {
+            $stmt = $db->prepare('SELECT * 
+                                  FROM User 
+                                  WHERE UserId = ?');
+            $stmt->execute([$id]);
+    
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            $admin = (bool) $user['Admin'];
+            if ($user) {
+                return new User(
+                    $user['UserId'],
+                    $user['FirstName'],
+                    $user['LastName'],
+                    $user['Username'],
+                    $user['Email'],
+                    $user['Password'],
+                    $user['JoinDate'],
+                    $user['Address'],
+                    $user['City'],
+                    $user['District'],
+                    $user['Country'],
+                    $user['PostalCode'],
+                    $user['Phone'],
+                    $user['ImageUrl'],
+                    $admin
+                );
+            } else {
+                return null; 
+            }
+        } catch (PDOException $e) {
+            
+            throw new Exception("Error fetching user: " . $e->getMessage());
+            
+        }
     }
+    
 
 
 
@@ -94,7 +106,9 @@ class User {
             $stmt->execute([$search . '%', $search . '%', $count]);
     
             $users = [];
+
             while ($user = $stmt->fetch()) {
+                $admin = (bool) $user['Admin'];
                 $users[] = new User(
                     $user['UserId'],
                     $user['FirstName'],
@@ -110,7 +124,7 @@ class User {
                     $user['PostalCode'],
                     $user['Phone'],
                     $user['ImageUrl'],
-                    $user['Admin']
+                    $admin
                 );
             }
     
@@ -176,7 +190,7 @@ class User {
             $stmt->execute([$userId]);
     
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+            $admin = (bool) $user['Admin'];
             if ($user) {
                 return new User(
                     $user['UserId'],
@@ -193,7 +207,7 @@ class User {
                     $user['PostalCode'],
                     $user['Phone'],
                     $user['ImageUrl'],
-                    $user['Admin']
+                    $admin
                 );
             } else {
                 return null;

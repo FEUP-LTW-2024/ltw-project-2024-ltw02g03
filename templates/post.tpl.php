@@ -22,8 +22,10 @@ function drawPost(Session $session, $db, int $itemId) {
         $brand = Item::getItemBrand($db, $itemId);    
         $image = Item::getItemImage($db, $itemId);
         $size = Item::getItemSize($db, $itemId);
-        //$user = User::getUser($db, $item->sellerId);
+        $sellerId = $item->sellerId;
+        $user = User::getUser($db, $sellerId);
         
+   
         ?>
         <main>
             <section id="post">
@@ -45,10 +47,21 @@ function drawPost(Session $session, $db, int $itemId) {
                     </div>
                     <div id="user-post">
                         <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="100">
-                        <h1><?= htmlspecialchars($item->sellerUsername) ?></h1>
-                        <h2><?= htmlspecialchars($item->contactNumber) ?></h2>
-                        <h3><?= htmlspecialchars($item->sellerLocation) ?></h3>
+                        <div class="user-info">
+                            <h1>Username: <?= htmlspecialchars($user->username) ?></h1>
+                            <div class="location-info">
+                                <h2>Location:</h2>
+                                <p><?= htmlspecialchars($user->address) ?></p>
+                                <p><?= htmlspecialchars($user->city) ?></p>
+                                <p><?= htmlspecialchars($user->district) ?></p>
+                                <p><?= htmlspecialchars($user->country) ?></p>
+                            </div>
+                            <h2>Phone: <?= htmlspecialchars($user->phone) ?></h2>
+                            <h2>Email: <?= htmlspecialchars($user->email) ?></h2>
+                        </div>
                     </div>
+
+                    
                     <div id="specs-post">
                         <p class="spec-type">Brand:</p> 
                         <p class="spec"><?= htmlspecialchars($brand->brandName) ?></p>
