@@ -79,7 +79,7 @@ class Item {
     }
 
     // Get item by Id
-    static function getItem(PDO $db, int $id) : array {
+    static function getItem(PDO $db, int $id) : ?Item {
         try {
             $stmt = $db->prepare('
                 SELECT ItemId, SellerId, Title, Description, Price, ListingDate
@@ -87,24 +87,29 @@ class Item {
                 WHERE ItemId = ?
             ');
             $stmt->execute(array($id));
-            $items = array();
-
-            while ($item = $stmt->fetch()) {
-                $items[] = new Item(
-                    $item['ItemId'],
-                    $item['SellerId'],
-                    $item['Title'],
-                    $item['Description'],
-                    $item['Price'],
-                    $item['ListingDate'],
-
-                );
+    
+            // Fetch the item
+            $item = $stmt->fetch();
+    
+            // Check if item exists
+            if (!$item) {
+                return null;
             }
-            return $items;
+    
+            // Return a new Item object
+            return new Item(
+                $item['ItemId'],
+                $item['SellerId'],
+                $item['Title'],
+                $item['Description'],
+                $item['Price'],
+                $item['ListingDate']
+            );
         } catch (PDOException $e) {
-            throw new Exception("Error fetching items: " . $e->getMessage());
+            throw new Exception("Error fetching item: " . $e->getMessage());
         }
     }
+    
 
     // Get x Items
     static function getItems(PDO $db, int $limit) : array {

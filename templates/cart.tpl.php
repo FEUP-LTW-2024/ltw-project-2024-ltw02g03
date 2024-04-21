@@ -30,7 +30,7 @@ function drawCart(Session $session, $db)
                             
                             <?php
                             $image = Item::getItemImage($db, $cartItem->itemId)[0]; 
-                            $item= Item::getItem($db, $cartItem->itemId)[0];
+                            $item= Item::getItem($db, $cartItem->itemId);
                             $totalPrice += $item->price;
                             
                             $brand = Item::getItemBrand($db, $item->itemId);

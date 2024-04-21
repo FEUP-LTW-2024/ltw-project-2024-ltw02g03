@@ -112,26 +112,30 @@ function drawProducts($db, int $limit) {
         $items = Item::getItems($db, $limit);
         
         if ($items) {
+            
             foreach($items as $row) {
+                
                 $condition = Item::getItemCondition($db, $row->itemId);
                 $brand = Item::getItemBrand($db, $row->itemId);            
                 $image = Item::getItemImage($db, $row->itemId);
                 
                 ?>
-                <article id="index-product">
-                    <div id=img-product>
-                        <img id="" src="<?= $image[0]->imageUrl ?>" alt="" style="width: 50%; height: auto;">
-                    </div>
-                    <h1><?= htmlspecialchars($row->title) ?></h1>
-                    <h2><?= htmlspecialchars($row->description) ?></h2>
-                    <p><?= number_format($row->price, 2) ?>€</p>
-                    <p>Condition: <?= htmlspecialchars($condition->conditionName) ?></p>
-                    <p>Brand: <?= htmlspecialchars($brand->brandName) ?></p>
-                    <form action="../actions/add_to_cart.php" method="post" class="add-to-cart-form">
-                        <input type="hidden" name="item_id" value="<?= $row->itemId ?>">
-                        <button type="submit" class="add-cart-button">Add to Cart</button> 
-                    </form>
-                </article>
+                <a href="/pages/post.php?id=<?= $row->itemId ?>" class="item-link">
+                    <article id="index-product">
+                        <div id=img-product>
+                            <img id="" src="<?= $image[0]->imageUrl ?>" alt="" style="width: 50%; height: auto;">
+                        </div>
+                        <h1><?= htmlspecialchars($row->title) ?></h1>
+                        <h2><?= htmlspecialchars($row->description) ?></h2>
+                        <p><?= number_format($row->price, 2) ?>€</p>
+                        <p>Condition: <?= htmlspecialchars($condition->conditionName) ?></p>
+                        <p>Brand: <?= htmlspecialchars($brand->brandName) ?></p>
+                        <form action="../actions/add_to_cart.php" method="post" class="add-to-cart-form">
+                            <input type="hidden" name="item_id" value="<?= $row->itemId ?>">
+                            <button type="submit" class="add-cart-button">Add to Cart</button> 
+                        </form>
+                    </article>
+                </a>
                 <?php
             }
         } else {
