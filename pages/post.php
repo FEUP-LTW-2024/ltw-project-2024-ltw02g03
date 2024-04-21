@@ -14,9 +14,16 @@
 
   $db = getDatabaseConnection();
 
-  
+  if (!isset($_GET['id']) || empty($_GET['id'])) {
+    $session->addMessage('error', 'Invalid Item!');
 
+    header("Location: /pages");
+    exit();
+}
+
+$itemId = $_GET['id'];
+  
   drawHeader($session);
-  drawPost($session, $db);
+  drawPost($session, $db, (int) $itemId);
   drawFooter();
 ?>

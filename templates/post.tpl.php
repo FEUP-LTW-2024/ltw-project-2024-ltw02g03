@@ -6,67 +6,72 @@ require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/user.class.php');
-function drawPost(Session $session,$db) { ?>  
-    <main>
 
-        <section id="post">
-            <div id="product-img-post">
-                <button class="img-button"><</button>
-                <img src="https://picsum.photos/240/270?business" alt="">
-                <button class="img-button">></button>  
-            </div>
+function drawPost(Session $session, $db, int $itemId) { 
+    
+    try {
+        $item = Item::getItem($db, $itemId);
+        
+          
+        if (!$item) {
+            echo "<p>Item not found.</p>";
+            return;
+        }
 
-              <aside id="user-aside">
-                <div id="price-post">
-                    <h2 id="product-title-post">Monitor 140hz</p>
-                    <div id="post-price-button">
-                        <h1>1000€</h1>
-                    <button id="cart-button-post">Add to cart</button>
+        $condition = Item::getItemCondition($db, $itemId);
+        $brand = Item::getItemBrand($db, $itemId);    
+        $image = Item::getItemImage($db, $itemId);
+        $size = Item::getItemSize($db, $itemId);
+        
+        
+        ?>
+        <main>
+            <section id="post">
+                <div id="product-img-post">
+                    <button class="img-button"><</button>
+                    <img src="../<?= $image[0]->imageUrl ?>" alt="">
+                    <button class="img-button">></button>  
+                </div>
+                <aside id="user-aside">
+                    <div id="price-post">
+                        <h2 id="product-title-post"><?= htmlspecialchars($item->title) ?></h2>
+                        <div id="post-price-button">
+                            <h1><?= number_format($item->price, 2) ?>€</h1>
+                            <form action="../actions/add_to_cart.php" method="post" class="add-to-cart-form">
+                            <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
+                            <button type="submit" class="add-cart-button">Add to Cart</button> 
+                        </form>
+                        </div>
                     </div>
-                    
-                </div>
-                
-                <div id="user-post">
-                    <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="100">
-                    <h1>Username</h1>
-                    <h2>+351 966 555 555</h2>
-                    <h3>Portugal</h3>
-                    <h3>Guarda, Guarda</h3>
-                </div>
-
-                <div id="specs-post">
-                    <p class="spec-type">Brand:</p> 
-                    <p class="spec">MSI</p>
-                    <p class="spec-type">Condition:</p> 
-                    <p class="spec">Factory New</p>
-                    <p class="spec-type">Size:</p> 
-                    <p class="spec">Large</p>
-                    <p class="spec-type">Model:</p> 
-                    <p class="spec">G32yk200</p>
-                </div>
-                
-            </aside>
-
-            <div id="description-post">
-                
-                <div>
+                    <div id="user-post">
+                        <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="100">
+                        <h1><?= htmlspecialchars($item->sellerUsername) ?></h1>
+                        <h2><?= htmlspecialchars($item->contactNumber) ?></h2>
+                        <h3><?= htmlspecialchars($item->sellerLocation) ?></h3>
+                    </div>
+                    <div id="specs-post">
+                        <p class="spec-type">Brand:</p> 
+                        <p class="spec"><?= htmlspecialchars($brand->brandName) ?></p>
+                        <p class="spec-type">Condition:</p> 
+                        <p class="spec"><?= htmlspecialchars($condition->conditionName) ?></p>
+                        <p class="spec-type">Size:</p> 
+                        <p class="spec"><?= htmlspecialchars($item->size) ?></p>
+                        <p class="spec-type">Model:</p> 
+                        <p class="spec"><?= htmlspecialchars($item->model) ?></p>
+                    </div>
+                </aside>
+                <div id="description-post">
+                    <div>
                         <h2 id="description-post-h2">Description</h2>
-                        
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                            when an unknown printer took a galley of type and scrambled it to make a type 
-                            specimen book. It has survived not only five centuries, but also the leap into
-                            electronic
-                        </p>
+                        <p><?= htmlspecialchars($item->description) ?></p>
+                    </div>
+                    <p id="date-post"><?= $item->postDate ?></p>
                 </div>
-                
-                <p id="date-post">12/04/2023</p>
-            </div>
-
-              
-              
-        </section>
-    </main>
-
-
-<?php } ?>
+            </section>
+        </main>
+        <?php
+    } catch (PDOException $e) {
+        echo "Error fetching item details: " . $e->getMessage();
+    }
+}
+?>
