@@ -22,7 +22,7 @@ function drawPost(Session $session, $db, int $itemId) {
         $brand = Item::getItemBrand($db, $itemId);    
         $image = Item::getItemImage($db, $itemId);
         $size = Item::getItemSize($db, $itemId);
-        
+        //$user = User::getUser($db, $item->sellerId);
         
         ?>
         <main>
@@ -37,9 +37,9 @@ function drawPost(Session $session, $db, int $itemId) {
                         <h2 id="product-title-post"><?= htmlspecialchars($item->title) ?></h2>
                         <div id="post-price-button">
                             <h1><?= number_format($item->price, 2) ?>€</h1>
-                            <form action="../actions/add_to_cart.php" method="post" class="add-to-cart-form">
+                            <form action="../actions/add_to_cart.php" method="post" >
                             <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
-                            <button type="submit" class="add-cart-button">Add to Cart</button> 
+                            <button type="submit" class="cart-button-post">Add to Cart</button> 
                         </form>
                         </div>
                     </div>
