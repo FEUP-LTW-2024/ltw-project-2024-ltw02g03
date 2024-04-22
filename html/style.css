@@ -15,7 +15,7 @@ body > header {
 }
 
 main {
-    padding-top: 6em;
+    min-height: 45em;
 }
 
 
@@ -27,11 +27,7 @@ main {
 #utility-wrap {
     display: inline-block;
 }
-body {
-    /*background-color: rgb(225, 225, 225);*/
-    margin: 0;
-    font-family: Roboto;
-}
+
 
 header>h1 {
     margin: 0;
@@ -208,7 +204,7 @@ li a {
     grid-template-rows: 3em auto;
     font-family: Poppins;
     width: fit-content;
-    margin: 7em auto;
+    margin: 15em auto  0em auto;
     row-gap: 2em;
     margin-bottom: 14em;
 }
@@ -284,7 +280,11 @@ button{
 }
 
 body {
+    margin: 0;
+    font-family: Roboto;
     background-color: rgb(231, 231, 231);
+    margin-top: 6em;
+    
 }
 
 #flex-login-regis {
@@ -603,8 +603,12 @@ body {
 
 .img-button {
     background-color: rgb(187, 187, 187);
-    
-    border-radius: 50%;
+    height: 4em;
+    width: 4em;
+    border-radius: 2em;
+    padding: 0;
+    font-size: 1em;
+
 }
 
 #product-img-post img {
@@ -730,4 +734,51 @@ body {
     border-radius: 1em;
     margin: 1em;
     padding: 1em;
+}
+
+/*--------search.css---------*/
+
+#main-search {
+    display: flex;
+    flex-direction: column;
+    margin: 1em;
+}
+
+.search-item {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    margin: 1em 0;
+    margin-top: 0;
+    justify-content: space-between;
+    border-radius: 4px;
+}
+
+.img-title-condition {
+    display: flex;
+    flex-direction: row;
+}
+
+.price-search {
+    vertical-align: middle;
+    align-self: center;
+    font-size: 2em;
+    color: rgb(92, 190, 255);
+    font-weight: 500;
+    margin-right: 2em;
+}
+
+.title-cond {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-left: 2em;
+}
+
+.date-search {
+    font-size: 1em;
+}
+
+.search-item img {
+    margin: 0.5em;
 }
