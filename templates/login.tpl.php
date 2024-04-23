@@ -28,26 +28,25 @@ function drawLoginForm(Session $session,$db) { ?>
 <?php } ?>
 
 
-<?php function drawRegisterForm(Session $session,$db) { ?>   
+<?php function drawRegisterForm(Session $session) { ?>   
     <main>
           <section id="login">
             <h1>Register</h1>
-            <form class="form-log">
+            <form action="/actions/action_register.php" method="post" class="form-log">
               <label>
-                Email <input type="text" name="username">
+                Email <input type="text" name="email"> 
               </label>
               <label>
-                Password <input type="password" name="password">
+                Password <input type="password" name="password"> 
               </label>
               <label>
-                Repeat Password <input type="password" name="password">
+                Repeat Password <input type="password" name="repeat_password"> 
               </label>
               <div id="flex-login-regis">
-                <button formaction="#" formmethod="post">Register</button>
+                <button type="submit">Register</button> 
                 <a href="login.php">Login</a>  
               </div>
             </form>
           </section>
         </main>
 <?php } ?>
-

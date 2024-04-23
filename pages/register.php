@@ -6,7 +6,6 @@
   
   require_once(__DIR__ . '/../database/connection.db.php');
 
-  $db = getDatabaseConnection();
 
   require_once(__DIR__ . '/../templates/login.tpl.php');
   require_once(__DIR__ . '/../templates/common.tpl.php');
