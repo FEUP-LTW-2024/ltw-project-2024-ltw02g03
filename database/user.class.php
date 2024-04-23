@@ -235,6 +235,33 @@ class User {
             throw new Exception("Error deleting user: " . $e->getMessage());
         }
     }
+  // Fetch presented products by user
+  public static function fetchPresentedProducts(PDO $db, int $userId): array {
+    try {
+        $stmt = $db->prepare('
+            SELECT ItemId, SellerId, Title, Description, Price, ListingDate
+            FROM Item
+            WHERE SellerId = ?
+        ');
+        $stmt->execute([$userId]);
+        $products = [];
+
+        while ($product = $stmt->fetch()) {
+            $products[] = new Item(
+                $product['ItemId'],
+                $product['SellerId'],
+                $product['Title'],
+                $product['Description'],
+                $product['Price'],
+                $product['ListingDate']
+            );
+        }
+
+        return $products;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching presented products: " . $e->getMessage());
+    }
+}
 
 
 }
