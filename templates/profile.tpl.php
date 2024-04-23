@@ -7,68 +7,64 @@ require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/user.class.php');
 
-function drawProfile(Session $session,$db) { ?>   
-    <main id="profilepage">
-        <div id="profile-img-infos">
+function drawProfile(Session $session, $db)
+{
+    try {
+        // Redirect if user is not logged in
+        if (!$session->isLoggedIn()) {
+            header('Location: /pages/login.php');
+            exit();
+        }
+
+        // Get user ID from session
+        $userId = $session->getId();
+
+        // Get user data
+        $user = User::getUser($db, $userId);
+
+        // Fetch presented products by the user
+        $presentedProducts = User::fetchPresentedProducts($db, $userId);
+        //$image = User::getUserImage($db, $userId)[0];
+        // Start rendering HTML
+    
+        ?>
+        <main id="profilepage">
+            <div id="profile-img-infos">
             <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" height="100">
-            <div id="profilepage-name-loc">
-                <h1>John Doe</h1>
-                <h2>Portugal, Guarda, Guarda</h2>
+                <div id="profilepage-name-loc">
+                    <h1><?= htmlspecialchars($user->name()) ?></h1>
+                    <h2><?= htmlspecialchars($user->city) ?>, <?= htmlspecialchars($user->district) ?>, <?= htmlspecialchars($user->country) ?></h2>
+                </div>
             </div>
-
-        </div>
-        <div id="left-profile-page">
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-        </div>
-        <div>
-            <h1>Presented Products</h1>
-            <div id="profile-page-items">
-                <article class="profilepage-item">
-                    <img class="profilepage-img-item" src="../Docs/samsung-galaxy-s20-fe-5g-g781-128gb-dual-sim-lavanda.jpg" alt="" width="100">
-                    <div>
-                        <h1>TV 140hz 1ms QHD</h1>
-                        <h2>140.00€</h2>
-                    </div>
-                
-                </article>
-                <article class="profilepage-item">
-                    <img class="profilepage-img-item" src="../Docs/samsung-galaxy-s20-fe-5g-g781-128gb-dual-sim-lavanda.jpg" alt="" width="100">
-                    <div>
-                        <h1>TV 140hz 1ms QHD</h1>
-                        <h2>140.00€</h2>
-                    </div>
-                
-                </article>
-                <article class="profilepage-item">
-                    <img class="profilepage-img-item" src="../Docs/samsung-galaxy-s20-fe-5g-g781-128gb-dual-sim-lavanda.jpg" alt="" width="100">
-                    <div>
-                        <h1>TV 140hz 1ms QHD</h1>
-                        <h2>140.00€</h2>
-                    </div>
-                
-                </article>
-                <article class="profilepage-item">
-                    <img class="profilepage-img-item" src="../Docs/samsung-galaxy-s20-fe-5g-g781-128gb-dual-sim-lavanda.jpg" alt="" width="100">
-                    <div>
-                        <h1>TV 140hz 1ms QHD</h1>
-                        <h2>140.00€</h2>
-                    </div>
-                
-                </article>
-                <article class="profilepage-item">
-                    <img class="profilepage-img-item" src="../Docs/samsung-galaxy-s20-fe-5g-g781-128gb-dual-sim-lavanda.jpg" alt="" width="100">
-                    <div>
-                        <h1>TV 140hz 1ms QHD</h1>
-                        <h2>140.00€</h2>
-                    </div>
-                
-                </article>
-
-
-               
-                
-               
+            <div id="left-profile-page">
+                <p>description</p>
             </div>
-        </div>
-    </main>
-<?php } ?>
+            <div>
+                <h1>Presented Products</h1>
+                <div id="profile-page-items">
+                    <?php foreach ($presentedProducts as $product) : ?>
+                        <article class="profilepage-item">
+                            <?php
+                            // Assuming you have a method to get the image URL of the product
+                            $image = Item::getItemImage($db, $product->itemId)[0];
+                            ?>
+                             <a href="/pages/post.php?id=<?= $product->itemId ?>" class="item-link">
+                            <img class="profilepage-img-item" src="../<?=$image->imageUrl?>" alt="" width="100">
+                            
+                            <div>
+                                <h1><?= htmlspecialchars($product->title) ?></h1>
+                                <h2><?= htmlspecialchars($product->price) ?>€</h2>
+                            </div>
+                    </a>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </main>
+    <?php
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+?>
