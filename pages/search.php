@@ -11,9 +11,12 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
 require_once(__DIR__ . '/../templates/search.tpl.php');
 
 $db = getDatabaseConnection();
+$searchQuery = $_GET['query'];
+$items = Item::getItemsbyName($db, $searchQuery, 8); 
+
 
 drawHeader($session);
-drawSearchedProducts();
+drawSearchedProducts($db,$items,$searchQuery);
 drawFooter();
 
 ?>

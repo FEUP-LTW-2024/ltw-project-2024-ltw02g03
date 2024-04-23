@@ -109,6 +109,35 @@ class Item {
             throw new Exception("Error fetching item: " . $e->getMessage());
         }
     }
+    static function getItemsbyName(PDO $db, string $get , int $limit): array{
+        try {
+            $stmt = $db->prepare('
+                SELECT ItemId, SellerId, Title, Description, Price, ListingDate
+                FROM Item
+                WHERE Title LIKE ? 
+                LIMIT ?
+            ');
+            $stmt->bindValue(1, '%' . $get . '%', PDO::PARAM_STR);
+            $stmt->bindValue(2, $limit, PDO::PARAM_INT);
+            $stmt->execute();
+            $items = array();
+    
+            while ($item = $stmt->fetch()) {
+                $items[] = new Item(
+                    $item['ItemId'],
+                    $item['SellerId'],
+                    $item['Title'],
+                    $item['Description'],
+                    $item['Price'],
+                    $item['ListingDate']
+                );
+            }
+    
+            return $items;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching items by name: " . $e->getMessage());
+        }
+    }
     
 
     // Get x Items

@@ -18,6 +18,7 @@ function drawHeader(Session $session) { ?>
         <link rel="icon" href="../Docs/img/Eco.png" type="image/png">
         <script src="../javascript/login_script.js" defer></script>
         <script src="../javascript/message.js" defer></script>
+        <script src="../javascript/script.js" defer></script>
     </head>
     <body>
     
@@ -66,7 +67,7 @@ function drawHeader(Session $session) { ?>
             </section>
         </div>
 
-    <!-- Search tab -->
+    
     <div id="search-tab" style="display: none;">
         <form action="/pages/search.php" method="GET" id="search-form">
             <input type="text" name="query" placeholder="Search for products...">
