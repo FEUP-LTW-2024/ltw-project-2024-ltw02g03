@@ -22,34 +22,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: /pages/register.php");
         exit();
     }
+
     $joinDate = date("Y-m-d"); 
-    // Outros campos opcionais
-    $address = $_POST['address'] ?? null;
-    $city = $_POST['city'] ?? null;
-    $district = $_POST['district'] ?? null;
-    $country = $_POST['country'] ?? null;
-    $postalCode = $_POST['postalCode'] ?? null;
-    $phone = $_POST['phone'] ?? null;
-    $imageUrl = $_POST['imageUrl'] ?? null;
+
+    // Campos opcionais
+    $address = $_POST['address'] !== '' ? $_POST['address'] : null;
+    $city = $_POST['city'] !== '' ? $_POST['city'] : null;
+    $district = $_POST['district'] !== '' ? $_POST['district'] : null;
+    $country = $_POST['country'] !== '' ? $_POST['country'] : null;
+    $postalCode = $_POST['postalCode'] !== '' ? $_POST['postalCode'] : null;
+    $phone = $_POST['phone'] !== '' ? $_POST['phone'] : null;
+    $imageUrl = $_POST['imageUrl'] !== '' ? $_POST['imageUrl'] : null;
     $admin = false;
 
-    try {
-        
-        $userId = User::registerUser($db, $firstName, $lastName, $username, $email, $password, $joinDate, $address, $city, $district, $country, $postalCode, $phone, $imageUrl, $admin);
-        $session->addMessage('success', 'Register successful!');
+   
+
+try {
+    $userId = User::registerUser($db, $firstName, $lastName, $username, $email, $password, $joinDate, $address, $city, $district, $country, $postalCode, $phone, $imageUrl, $admin);
+    
+    if (User::loginUser($db, $email, $password)) {
+        $session->addMessage('success', 'Register successful! You are now logged in.');
         header("Location: /pages"); 
         exit();
-    
-    } catch (Exception $e) {
-        $session->addMessage('error', 'Invalid form submission!');
-        header("Location: /pages/register.php");
 
+    } else {
+        $session->addMessage('error', 'Login failed after registration.');
+        header("Location: /pages/login.php");
         exit();
     }
-} else {
-   
+    
+} catch (Exception $e) {
+    $session->addMessage('error', 'Invalid form submission!');
     header("Location: /pages/register.php");
     exit();
 }
 
+} else {
+    header("Location: /pages/register.php");
+    exit();
+}
 ?>

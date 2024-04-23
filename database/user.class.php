@@ -182,6 +182,20 @@ class User {
         }
     }
 
+    // Login a user
+    static function loginUser(PDO $db, string $email, string $password) : bool {
+        try {
+            $user = User::getUserWithPassword($db, $email, $password);
+            if ($user) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error logging in user: " . $e->getMessage());
+        }
+    }
+
 
     // Get a user by ID
     static function getUserById(PDO $db, int $userId) : ?User {

@@ -27,12 +27,12 @@ function drawLoginForm(Session $session,$db) { ?>
     </main>
 <?php } ?>
 
-<?php 
-function drawRegisterForm(Session $session, $db) { ?>   
+
+<?php function drawRegisterForm(Session $session, $db) { ?>   
     <main>
         <section id="login">
             <h1>Register</h1>
-            <form class="form-log">
+            <form class="form-log" action="/actions/action_register.php" method="post">
                 <h1>User</h1>
                 <div class="input-group">
                     <label for="email">Email</label>
@@ -45,15 +45,19 @@ function drawRegisterForm(Session $session, $db) { ?>
                 <div class="name-group">
                     <div class="input-group">
                         <label for="first-name">First Name</label>
-                        <input type="text" id="first-name" name="first-name" required>
+                        <input type="text" id="first-name" name="firstName" required>
                     </div>
                     <div class="input-group">
                         <label for="last-name">Last Name</label>
-                        <input type="text" id="last-name" name="last-name" required>
+                        <input type="text" id="last-name" name="lastName" required>
                     </div>
                 </div>
                 <div class="location-group">
                     <h1>Location</h1>
+                    <div class="input-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" name="address">
+                    </div>
                     <div class="input-group">
                         <label for="city">City</label>
                         <input type="text" id="city" name="city">
@@ -68,7 +72,7 @@ function drawRegisterForm(Session $session, $db) { ?>
                     </div>
                     <div class="input-group">
                         <label for="postal-code">Postal Code</label>
-                        <input type="text" id="postal-code" name="postal-code">
+                        <input type="text" id="postal-code" name="postalCode">
                     </div>
                     <div class="input-group">
                         <label for="phone">Phone Number</label>
@@ -83,16 +87,14 @@ function drawRegisterForm(Session $session, $db) { ?>
                     </div>
                     <div class="input-group">
                         <label for="repeat-password">Repeat Password</label>
-                        <input type="password" id="repeat-password" name="repeat-password" required>
+                        <input type="password" id="repeat-password" name="repeat_password" required>
                     </div>
                 </div>
                 <div id="flex-login-regis">
-                    <button type="submit" formaction="#" formmethod="post">Register</button>
+                    <button type="submit">Register</button>
                     <a href="login.php">Login</a>  
                 </div>
             </form>
         </section>
     </main>
 <?php } ?>
-
-
