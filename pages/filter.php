@@ -8,6 +8,8 @@ require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/user.class.php');
 require_once(__DIR__ . '/../templates/common.tpl.php');
+require_once(__DIR__ . '/../templates/search.tpl.php');
+
 
 function getTotalProductsCount($db) {
     try {
@@ -21,19 +23,17 @@ function getTotalProductsCount($db) {
 }
 
 $db = getDatabaseConnection();
-
+$totalProducts = getTotalProductsCount($db);
 if(isset($_GET['category'])) {
-    $category = $_GET['category'];
-    echo $category;
+    $categoryName = $_GET['category'];
 } else {
-    $category = null;
+    $categoryName = null;
 }
 
-$totalProducts = getTotalProductsCount($db);
+$items = Item::getItemsByCategoryName($db, $totalProducts,$categoryName);
 
-drawHeader($session);
 
-drawBody($session, $db, $totalProducts, $category);
 
-drawFooter();
+drawFilteredProducts($db, $totalProducts,$items, $categoryName);
+
 ?>

@@ -45,8 +45,8 @@ a{
 #login-register-anchor {
     display: none;
     position: fixed;
-    right: 2em;
     top: 3.2em;
+    right: 2em;
     padding: 1em;
     background-color: rgb(194, 226, 255);
     border-radius: 2em;
@@ -95,11 +95,11 @@ li a {
     border-radius: 10em;
 }
     
-#profile-button:hover + #login-register-anchor{
+#profile-button:hover + #login-register-anchor + #logout-anchor{
     display: inline-block;
 }
 
-#login-register-anchor.visible {
+#login-register-anchor.visible , #logout-anchor.visible {
     display: inline-block;
 }
 
@@ -130,7 +130,7 @@ li a {
 #recomended {
     align-items:center;
     text-align: center;
-    margin-top: 6em;
+    padding-top: 4em;
 }
 
 #recomended h1 {
@@ -782,3 +782,6 @@ body {
 .search-item img {
     margin: 0.5em;
 }
+
+
+
