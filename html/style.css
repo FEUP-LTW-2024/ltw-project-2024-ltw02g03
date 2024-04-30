@@ -1,5 +1,77 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+@media (max-width: 30em) {
+    body > header {
+      display: block;
+    }
+  
+    body > header h1 {
+      font-size: 1.5em;  
+    } 
+  
+    body > header h2 {
+      display: none;
+    }
+  
+    #menu .hamburger {
+      display: block;
+      background-color: #2a2f33;
+      color: white;
+      padding: 1em;
+    }
+  
+    #menu .hamburger:before {
+      content:'\2630';
+    }
+  
+    #menu ul {
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+      color: white;
+    }
+  
+    #hamburger:checked + .hamburger + ul li{
+      max-height: 1em;
+      padding: 1em;
+      opacity: 1;
+    }
+  
+    #hamburger:checked + .hamburger:before {
+      content:'\2715';
+    }
+  
+    #menu li {
+      max-height: 0;
+      padding: 0 1em;
+      background-color: #edeff0;
+      text-align: left;
+      opacity: 0;
+      transition: all .3s ease-in-out;
+    }
+    
+
+    #news .tags {
+      display: none;  
+    }
+  
+    #news header {
+      color: black;
+      max-width: 100%;
+      font-size: 1em;
+      padding: 1em;
+      position: static;
+    }
+  
+    #news header h1 {
+      text-shadow: none;
+    }
+  
+    #news header a{
+      color: black;
+    }
+  }
+  
 body > header {
     position: fixed;
     top: 0;
@@ -42,7 +114,7 @@ a{
     color: black;
 }
 
-#login-register-anchor {
+/*#login-register-anchor {
     display: none;
     position: fixed;
     top: 3.2em;
@@ -51,6 +123,66 @@ a{
     background-color: rgb(194, 226, 255);
     border-radius: 2em;
 }
+
+#profile-anchor {
+    display: none;
+    position: fixed;
+    right: 2em;
+    top: 3.2em;
+    padding: 1em;
+    background-color: rgb(194, 226, 255);
+    border-radius: 2em;
+}
+*/
+#login-register {
+    display: none;
+    position: fixed;
+    right: 1em;
+    top: 3.2em;
+    padding: 1.5em;
+    background-color: rgb(194, 226, 255);
+    border-radius: 2em;
+
+}
+#profile-button:hover + #login-register {
+    display: flex;
+    flex-direction: column;
+}
+
+
+#login-register.visible {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/*#logout-anchor {
+    display: none;
+    position: fixed;
+    right: 2em;
+    top: 3.2em;
+    padding: 1em;
+    background-color: rgb(194, 226, 255);
+    border-radius: 2em;
+}
+
+#profile-button:hover ~ #logout-anchor{
+    display: inline-block;
+}
+
+#logout-anchor.visible {
+    display: inline-block;
+}
+
+#profile-button:hover ~ #profile-anchor{
+    display: inline-block;
+}
+
+#profile-anchor.visible {
+    display: inline-block;
+}
+*/
+
 
 #header-list {
     display: inline-block;
@@ -94,14 +226,14 @@ li a {
     background-color: rgb(230, 230, 230);
     border-radius: 10em;
 }
-    
-#profile-button:hover + #login-register-anchor + #logout-anchor{
+ /*   
+#profile-button:hover + #login-register-anchor{
     display: inline-block;
 }
 
 #login-register-anchor.visible , #logout-anchor.visible {
     display: inline-block;
-}
+}*/
 
 #index-products {
     display: flex;

@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
   
   const button = document.querySelector("#profile-button");
-  const link = document.querySelector("#login-register-anchor");
+  const link = document.querySelector("#login-register");
   
   button.addEventListener("mouseenter", function() {
     link.classList.add("visible");

@@ -22,8 +22,10 @@ function drawPost(Session $session, $db, int $itemId) {
         $brand = Item::getItemBrand($db, $itemId);    
         $image = Item::getItemImage($db, $itemId);
         $size = Item::getItemSize($db, $itemId);
+        $model = Item::getItemModel($db, $itemId);
         $sellerId = $item->sellerId;
         $user = User::getUser($db, $sellerId);
+        
         
    
         ?>
@@ -51,34 +53,35 @@ function drawPost(Session $session, $db, int $itemId) {
                             <h1>Username: <?= htmlspecialchars($user->username) ?></h1>
                             <div class="location-info">
                                 <h2>Location:</h2>
-                                <p><?= htmlspecialchars($user->address) ?></p>
-                                <p><?= htmlspecialchars($user->city) ?></p>
-                                <p><?= htmlspecialchars($user->district) ?></p>
-                                <p><?= htmlspecialchars($user->country) ?></p>
+                                <p><?= !empty($user->address) ? htmlspecialchars($user->address) : " - " ?></p>
+                                <p><?= !empty($user->city) ? htmlspecialchars($user->city) : " - " ?></p>
+                                <p><?= !empty($user->district) ? htmlspecialchars($user->district) : " - " ?></p>
+                                <p><?= !empty($user->country) ? htmlspecialchars($user->country) : " - " ?></p>
+
                             </div>
-                            <h2>Phone: <?= htmlspecialchars($user->phone) ?></h2>
-                            <h2>Email: <?= htmlspecialchars($user->email) ?></h2>
+                            <h2>Phone: <?= !empty($user->phone) ? htmlspecialchars($user->phone)  : " - "?></h2>
+                            <h2>Email: <?= !empty($user->email) ? htmlspecialchars($user->email) : " - "?></h2>
                         </div>
                     </div>
 
                     
                     <div id="specs-post">
                         <p class="spec-type">Brand:</p> 
-                        <p class="spec"><?= htmlspecialchars($brand->brandName) ?></p>
+                        <p class="spec"><?= !empty($brand->brandName) ? htmlspecialchars($brand->brandName) : " - " ?></p>
                         <p class="spec-type">Condition:</p> 
-                        <p class="spec"><?= htmlspecialchars($condition->conditionName) ?></p>
+                        <p class="spec"><?= !empty($condition->conditionName) ? htmlspecialchars($condition->conditionName) : " - " ?></p>
                         <p class="spec-type">Size:</p> 
-                        <p class="spec"><?= htmlspecialchars($item->size) ?></p>
+                        <p class="spec"><?= !empty($size->sizeName) ? htmlspecialchars($size->sizeName) : " - " ?></p>
                         <p class="spec-type">Model:</p> 
-                        <p class="spec"><?= htmlspecialchars($item->model) ?></p>
+                        <p class="spec"><?= !empty($model->modelName) ? htmlspecialchars($model->modelName) : " - " ?></p>
                     </div>
                 </aside>
                 <div id="description-post">
                     <div>
                         <h2 id="description-post-h2">Description</h2>
-                        <p><?= htmlspecialchars($item->description) ?></p>
+                        <p><?= !empty($item->description) ? htmlspecialchars($item->description) : "No description" ?></p>
                     </div>
-                    <p id="date-post"><?= $item->postDate ?></p>
+                    <p id="date-post"><?= !empty($item->listingDate) ? htmlentities($item->listingDate) : " No Date " ?></p>
                 </div>
             </section>
         </main>
