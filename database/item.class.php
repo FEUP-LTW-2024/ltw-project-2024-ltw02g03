@@ -187,7 +187,39 @@ class Item {
     
         return $items;
       }
-
+    
+      static function getItemsByCategoryName(PDO $db, int $limit, string $categoryName): array {
+        try {
+            $stmt = $db->prepare('
+                SELECT Item.ItemId, SellerId, Title, Description, Price, ListingDate
+                FROM Item
+                JOIN ItemCategory ON Item.ItemId = ItemCategory.ItemId
+                JOIN ProductCategory ON ItemCategory.CategoryId = ProductCategory.CategoryId
+                WHERE ProductCategory.CategoryName = ?
+                LIMIT ?
+            ');
+            $stmt->bindValue(1, $categoryName, PDO::PARAM_STR);
+            $stmt->bindValue(2, $limit, PDO::PARAM_INT);
+            $stmt->execute();
+            $items = array();
+    
+            while ($item = $stmt->fetch()) {
+                $items[] = new Item(
+                    $item['ItemId'],
+                    $item['SellerId'],
+                    $item['Title'],
+                    $item['Description'],
+                    $item['Price'],
+                    $item['ListingDate']
+                );
+            }
+    
+            return $items;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching items by category: " . $e->getMessage());
+        }
+    }
+    
 
     // Get item category
     static function getItemCategory(PDO $db, int $id) : array {

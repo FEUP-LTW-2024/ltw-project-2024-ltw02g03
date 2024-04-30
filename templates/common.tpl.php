@@ -19,6 +19,7 @@ function drawHeader(Session $session) { ?>
         <script src="../javascript/login_script.js" defer></script>
         <script src="../javascript/message.js" defer></script>
         <script src="../javascript/script.js" defer></script>
+        <script src="../javascript/filter_items.js" defer></script>
     </head>
     <body>
     
@@ -26,12 +27,12 @@ function drawHeader(Session $session) { ?>
         <h1><a href="/pages">EcoExchange</a></h1>
         <div id="header-list">
             <ul>
-                <li><a>Electronics</a></li>
-                <li><a>Clothing</a></li>
-                <li><a>Books</a></li>
-                <li><a>Furniture</a></li>
-                <li><a>Appliances</a></li>
-                <li><a>Jewelry</a></li>
+                <li><a href="#" onclick="filterItems('Electronics')">Electronics</a></li>
+                <li><a href="#" onclick="filterItems('Clothing')">Clothing</a></li>
+                <li><a href="#" onclick="filterItems('Books')">Books</a></li>
+                <li><a href="#" onclick="filterItems('Furniture')">Furniture</a></li>
+                <li><a href="#" onclick="filterItems('Home Appliances')">Home Appliances</a></li>
+                <li><a href="#" onclick="filterItems('Jewelry')">Jewelry</a></li>
             </ul>
         </div>
         <div id="utility-wrap">
@@ -51,7 +52,7 @@ function drawHeader(Session $session) { ?>
             <?php if (!$session->isLoggedIn()) { ?>
             <a id="login-register-anchor" href="/pages/login.php">Login/Register</a>
             <?php } else { ?>
-            <a id="profile-anchor" href="/pages/profilepage.php">Profile</a>
+            
             <a id="logout-anchor" href="/actions/action_logout.php">Logout</a>
             </div>
             <?php } ?>
@@ -80,12 +81,12 @@ function drawHeader(Session $session) { ?>
 
     <?php } ?>
 
-<?php function drawBody(Session $session, $db, int $limit) { ?>
+<?php function drawBody(Session $session, $db, int $limit, $category = null) { ?>
 <section id="recomended">
     <h1>Produtos Recomendados</h1>  
     <h2><?php echo $limit; ?> produtos</h2>
     <div id="index-products">
-        <?php drawProducts($db, $limit); ?>
+        <?php drawProducts($db, $limit, $category); ?>
     </div>
 </section>
 
@@ -111,9 +112,11 @@ function drawHeader(Session $session) { ?>
 <?php } ?>
 
 <?php
-function drawProducts($db, int $limit) {
+function drawProducts($db, int $limit, $categoryName = null) {
+    
     try {
-        $items = Item::getItems($db, $limit);
+        
+        $items = $categoryName ? Item::getItemsByCategoryName($db, $limit,$categoryName) : Item::getItems($db, $limit);
         
         if ($items) {
             
