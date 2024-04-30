@@ -69,7 +69,7 @@ function drawFilteredProducts($db,int $limit, array $items,$categoryName) { ?>
                 </article>
             <?php endforeach; ?>
         <?php else : ?>
-            <p>No items found for your search query.</p>
+            <p>No items found for this filter.</p>
         <?php endif; ?>
     </main>
     

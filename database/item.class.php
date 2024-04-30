@@ -219,6 +219,27 @@ class Item {
             throw new Exception("Error fetching items by category: " . $e->getMessage());
         }
     }
+
+    // Get total products count
+    static function getCountbyCategory($db, ?string $categoryName = null) {
+        try {
+            if ($categoryName) {
+                $stmt = $db->prepare('SELECT COUNT(*) AS total FROM Item 
+                                      JOIN ItemCategory ON Item.ItemId = ItemCategory.ItemId
+                                      JOIN ProductCategory ON ItemCategory.CategoryId = ProductCategory.CategoryId
+                                      WHERE ProductCategory.CategoryName = ?
+                                      ');
+                $stmt->execute([$categoryName]);
+            } else {
+                $stmt = $db->query('SELECT COUNT(*) AS total FROM Item');
+            }
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int)$result['total'];
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return 0; 
+        }
+    }
     
 
     // Get item category

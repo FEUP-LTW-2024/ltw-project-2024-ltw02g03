@@ -11,29 +11,22 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
 require_once(__DIR__ . '/../templates/search.tpl.php');
 
 
-function getTotalProductsCount($db) {
-    try {
-        $stmt = $db->query('SELECT COUNT(*) AS total FROM Item');
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return (int)$result['total'];
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
-        return 0; 
-    }
-}
+
 
 $db = getDatabaseConnection();
-$totalProducts = getTotalProductsCount($db);
+
 if(isset($_GET['category'])) {
     $categoryName = $_GET['category'];
 } else {
     $categoryName = null;
 }
 
+$totalProducts = Item::getCountbyCategory($db, $categoryName);
 $items = Item::getItemsByCategoryName($db, $totalProducts,$categoryName);
 
 
 
-drawFilteredProducts($db, $totalProducts,$items, $categoryName);
-
+drawHeader($session);
+drawFilteredProducts($db, $totalProducts, $items, $categoryName);
+drawFooter();
 ?>

@@ -1,12 +1,35 @@
+/*
 function filterItems(category) {
     
-    const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            
-            document.getElementById("index-products").innerHTML = this.responseText;
-        }
-    };
-    xhttp.open("GET", "/pages/filter.php?category=" + category, true);
-    xhttp.send();
+    fetch(`/pages/filter.php?category=${category}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            document.body.innerHTML = data;
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
 }
+
+const headerList = document.getElementById('header-list');
+if (headerList) {
+    headerList.addEventListener('click', function(event) {
+        if (event.target.tagName === 'A') {
+            // Evitar o comportamento padrão de seguir o link
+            event.preventDefault();
+            
+            const category = event.target.textContent.trim();
+            filterItems(category);
+        }
+    });
+}
+*/
+function filterItems(category) {
+    window.location.href = `/pages/filter.php?category=${category}`;
+}
+

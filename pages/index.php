@@ -33,7 +33,7 @@ $totalProducts = getTotalProductsCount($db);
 
 drawHeader($session);
 
-drawBody($session, $db, $totalProducts, $category);
+drawBody($session, $db, $totalProducts);
 
 drawFooter();
 ?>
