@@ -1,4 +1,5 @@
 const searchItems = document.querySelector('#searchitems');
+
 if (searchItems) {
   searchItems.addEventListener('input', async function() {
     const response = await fetch('../api/api_items.php?search=' + this.value);

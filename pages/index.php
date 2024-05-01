@@ -9,8 +9,6 @@ require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/user.class.php');
 require_once(__DIR__ . '/../templates/common.tpl.php');
 
-$db = getDatabaseConnection();
-
 function getTotalProductsCount($db) {
     try {
         $stmt = $db->query('SELECT COUNT(*) AS total FROM Item');
@@ -22,9 +20,20 @@ function getTotalProductsCount($db) {
     }
 }
 
+$db = getDatabaseConnection();
+
+if(isset($_GET['category'])) {
+    $category = $_GET['category'];
+    echo $category;
+} else {
+    $category = null;
+}
+
 $totalProducts = getTotalProductsCount($db);
 
 drawHeader($session);
+
 drawBody($session, $db, $totalProducts);
+
 drawFooter();
 ?>

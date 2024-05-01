@@ -19,6 +19,8 @@ function drawHeader(Session $session) { ?>
         <script src="../javascript/login_script.js" defer></script>
         <script src="../javascript/message.js" defer></script>
         <script src="../javascript/script.js" defer></script>
+        <script src="../javascript/filter_items.js" defer></script>
+        <script src="../javascript/scroll.js" defer></script>
     </head>
     <body>
     
@@ -26,12 +28,12 @@ function drawHeader(Session $session) { ?>
         <h1><a href="/pages">EcoExchange</a></h1>
         <div id="header-list">
             <ul>
-                <li><a>Electronics</a></li>
-                <li><a>Clothing</a></li>
-                <li><a>Books</a></li>
-                <li><a>Furniture</a></li>
-                <li><a>Appliances</a></li>
-                <li><a>Jewelry</a></li>
+                <li><a href="#" onclick="filterItems('Electronics')">Electronics</a></li>
+                <li><a href="#" onclick="filterItems('Clothing')">Clothing</a></li>
+                <li><a href="#" onclick="filterItems('Books')">Books</a></li>
+                <li><a href="#" onclick="filterItems('Furniture')">Furniture</a></li>
+                <li><a href="#" onclick="filterItems('Home Appliances')">Home Appliances</a></li>
+                <li><a href="#" onclick="filterItems('Jewelry')">Jewelry</a></li>
             </ul>
         </div>
         <div id="utility-wrap">
@@ -47,13 +49,16 @@ function drawHeader(Session $session) { ?>
             <button id="profile-button">
                 <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
             </button> 
+            <div id="login-register">
             <?php if (!$session->isLoggedIn()) { ?>
             <a id="login-register-anchor" href="/pages/login.php">Login/Register</a>
             <?php } else { ?>
-            <a id="profile-anchor" href="/pages/profilepage.php">Profile</a>
+            
             <a id="logout-anchor" href="/actions/action_logout.php">Logout</a>
+            </div>
             <?php } ?>
         </div>
+        
         
            
     </header>
@@ -78,28 +83,48 @@ function drawHeader(Session $session) { ?>
 
     <?php } ?>
 
-<?php function drawBody(Session $session, $db, int $limit) { ?>
-<section id="recomended">
-    <h1>Produtos Recomendados</h1>  
-    <h2><?php echo $limit; ?> produtos</h2>
-    <div id="index-products">
-        <?php drawProducts($db, $limit); ?>
-    </div>
-</section>
+<?php function drawBody(Session $session, $db, int $limit, $category = null) { ?>
 
-<main>
+    <div id="filter-box">
+        <h2>Filters</h2>
+        <label for="price-range">Price Range:</label>
+        <input type="range" id="price-range" name="price-range" min="0" max="1000" step="10">
+        <br>
+        <label for="category-select">Category:</label>
+        <select id="category-select">
+            <option value="Electronics">Electronics</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Books">Books</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Home Appliances">Home Appliances</option>
+            <option value="Jewelry">Jewelry</option>
+        </select>
+        <br>
+        <button onclick="applyFilters()">Apply Filters</button>
+    </div>
+    <main>
+    <section id="recomended">
+        <h1>Produtos Recomendados</h1>  
+        <h2><?php echo $limit; ?> produtos</h2>
+        <div id="index-products">
+            <?php drawProducts($db, $limit, $category); ?>
+        </div>
+    </section>
+
+    
 <?php } ?>
 
 <?php function drawFooter() { ?>
-  </main>
+    
 
     <footer id="footer-page">
         <p>2024 &copy; EcoExchange</p>
     </footer>
-
+    <script src="scroll.js"></script>
     </body>
     </html>
-  <?php } ?>
+  <?php } ?>    
+  
 
 <?php function drawLogoutForm(Session $session) { ?>
 <form action="../actions/action_logout.php" method="post" class="logout">
@@ -109,9 +134,11 @@ function drawHeader(Session $session) { ?>
 <?php } ?>
 
 <?php
-function drawProducts($db, int $limit) {
+function drawProducts($db, int $limit, $categoryName = null) {
+    
     try {
-        $items = Item::getItems($db, $limit);
+        
+        $items = $categoryName ? Item::getItemsByCategoryName($db, $limit,$categoryName) : Item::getItems($db, $limit);
         
         if ($items) {
             
@@ -146,9 +173,9 @@ function drawProducts($db, int $limit) {
     } catch (PDOException $e) {
         echo "Error fetching items: " . $e->getMessage();
     }
-}
-
-?>
+    ?>
+    </main>
+<?php }?>
 <script>
 function openSearchTab() {
     var searchTab = document.getElementById("search-tab");

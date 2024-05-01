@@ -187,7 +187,60 @@ class Item {
     
         return $items;
       }
+    
+      static function getItemsByCategoryName(PDO $db, int $limit, string $categoryName): array {
+        try {
+            $stmt = $db->prepare('
+                SELECT Item.ItemId, SellerId, Title, Description, Price, ListingDate
+                FROM Item
+                JOIN ItemCategory ON Item.ItemId = ItemCategory.ItemId
+                JOIN ProductCategory ON ItemCategory.CategoryId = ProductCategory.CategoryId
+                WHERE ProductCategory.CategoryName = ?
+                LIMIT ?
+            ');
+            $stmt->bindValue(1, $categoryName, PDO::PARAM_STR);
+            $stmt->bindValue(2, $limit, PDO::PARAM_INT);
+            $stmt->execute();
+            $items = array();
+    
+            while ($item = $stmt->fetch()) {
+                $items[] = new Item(
+                    $item['ItemId'],
+                    $item['SellerId'],
+                    $item['Title'],
+                    $item['Description'],
+                    $item['Price'],
+                    $item['ListingDate']
+                );
+            }
+    
+            return $items;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching items by category: " . $e->getMessage());
+        }
+    }
 
+    // Get total products count
+    static function getCountbyCategory($db, ?string $categoryName = null) {
+        try {
+            if ($categoryName) {
+                $stmt = $db->prepare('SELECT COUNT(*) AS total FROM Item 
+                                      JOIN ItemCategory ON Item.ItemId = ItemCategory.ItemId
+                                      JOIN ProductCategory ON ItemCategory.CategoryId = ProductCategory.CategoryId
+                                      WHERE ProductCategory.CategoryName = ?
+                                      ');
+                $stmt->execute([$categoryName]);
+            } else {
+                $stmt = $db->query('SELECT COUNT(*) AS total FROM Item');
+            }
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int)$result['total'];
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return 0; 
+        }
+    }
+    
 
     // Get item category
     static function getItemCategory(PDO $db, int $id) : array {

@@ -1,14 +1,13 @@
 document.addEventListener("DOMContentLoaded", function() {
   
   const button = document.querySelector("#profile-button");
-  const link = document.querySelector("#login-register-anchor");
+  const link = document.querySelector("#login-register");
   
   button.addEventListener("mouseenter", function() {
     link.classList.add("visible");
   });
   
   button.addEventListener("mouseleave", function(event) {
-    // Verifica se o mouse entrou no link, se sim, não remova a classe "visible"
     if (!link.contains(event.relatedTarget)) {
       link.classList.remove("visible");
     }
@@ -19,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function() {
   });
   
   link.addEventListener("mouseleave", function(event) {
-    // Verifica se o mouse voltou para o botão, se sim, não remova a classe "visible"
     if (!button.contains(event.relatedTarget)) {
       link.classList.remove("visible");
     }
