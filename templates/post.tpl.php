@@ -102,7 +102,7 @@ function drawPostCreation($session) {
         
         <section class="publish-section">
             <h1>Publish Item</h1>
-            <form action="process_post.php" method="post">
+            <form  method="post">
                 <div class="publish-div">
                     <label>
                         Product Name <input type="text" name="productname"  required>
@@ -150,18 +150,18 @@ function drawPostCreation($session) {
                 <div class="publish-div">
                     <h1>Images</h1>
                     <div class="image-container">
-                        <label class="image-input">
-                            <input type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple="" data-testid="attach-photos-input" data-cy="attach-photos-input" onchange="previewImage(event, 0)"  required>
+                        <label class="image-input" >
+                            <input name="img1" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple="" data-testid="attach-photos-input" data-cy="attach-photos-input" onchange="previewImage(event, 0)"  required>
                             <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
                             <img class="preview-image" id="preview-image-0" src="" alt="">
                         </label>
                         <label class="image-input">
-                            <input type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple="" data-testid="attach-photos-input" data-cy="attach-photos-input" onchange="previewImage(event, 1)">
+                            <input name="img2" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple="" data-testid="attach-photos-input" data-cy="attach-photos-input" onchange="previewImage(event, 1)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
                             <img class="preview-image" id="preview-image-1" src="" alt="">
                         </label>
                         <label class="image-input">
-                            <input type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple="" data-testid="attach-photos-input" data-cy="attach-photos-input" onchange="previewImage(event, 2)">
+                            <input name="img3" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple="" data-testid="attach-photos-input" data-cy="attach-photos-input" onchange="previewImage(event, 2)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
                             <img class="preview-image" id="preview-image-2" src="" alt="">
                         </label>
