@@ -431,6 +431,91 @@ static function searchItemsByTitle(PDO $db, string $title, int $count) : array {
     }
 }
 
+//Get all Brands
+static function getBrands(PDO $db) : array {
+    try {
+        $stmt = $db->query('SELECT BrandName FROM ItemBrand');
+        $brands = array();
+
+        while ($brand = $stmt->fetch()) {
+            $brands[] = $brand['BrandName'];
+        }
+
+        return $brands;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching brands: " . $e->getMessage());
+    }
+
+}
+
+//Get all Conditions
+static function getConditions(PDO $db) : array {
+    try {
+        $stmt = $db->query('SELECT ConditionName FROM ItemCondition');
+        $conditions = array();
+
+        while ($condition = $stmt->fetch()) {
+            $conditions[] =  $condition['ConditionName'];
+        }
+
+        return $conditions;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching conditions: " . $e->getMessage());
+    }
+
+
+}
+
+//Get all Sizes
+static function getSizes(PDO $db) : array {
+    try {
+        $stmt = $db->query('SELECT SizeName FROM ItemSize');
+        $sizes = array();
+
+        while ($size = $stmt->fetch()) {
+            $sizes[] = $size['SizeName'];
+        }
+
+        return $sizes;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching sizes: " . $e->getMessage());
+    }
+
+}
+
+//Get all Models
+static function getModels(PDO $db) : array {
+    try {
+        $stmt = $db->query('SELECT  ModelName FROM ItemModel');
+        $models = array();
+
+        while ($model = $stmt->fetch()) {
+            $models[] = ($model['ModelName']);
+        }
+
+        return $models;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching models: " . $e->getMessage());
+    }
+
+}
+
+//Get all Categories
+static function getCategories(PDO $db) : array {
+    try {
+        $stmt = $db->query('SELECT CategoryName FROM ProductCategory');
+        $categories = array();
+
+        while ($category = $stmt->fetch()) {
+            $categories[] = $category['CategoryName'];
+        }
+
+        return $categories;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching categories: " . $e->getMessage());
+    }
+
+}
 
 }
 ?>
