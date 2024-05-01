@@ -16,6 +16,9 @@ function drawHeader(Session $session) { ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../html/style.css">
         <link rel="icon" href="../Docs/img/Eco.png" type="image/png">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
         <script src="../javascript/login_script.js" defer></script>
         <script src="../javascript/message.js" defer></script>
         <script src="../javascript/script.js" defer></script>
@@ -86,22 +89,43 @@ function drawHeader(Session $session) { ?>
 <?php function drawBody(Session $session, $db, int $limit, $category = null) { ?>
 
     <div id="filter-box">
-        <h2>Filters</h2>
-        <label for="price-range">Price Range:</label>
-        <input type="range" id="price-range" name="price-range" min="0" max="1000" step="10">
-        <br>
-        <label for="category-select">Category:</label>
-        <select id="category-select">
-            <option value="Electronics">Electronics</option>
-            <option value="Clothing">Clothing</option>
-            <option value="Books">Books</option>
-            <option value="Furniture">Furniture</option>
-            <option value="Home Appliances">Home Appliances</option>
-            <option value="Jewelry">Jewelry</option>
-        </select>
-        <br>
-        <button onclick="applyFilters()">Apply Filters</button>
-    </div>
+    <h2>Filters</h2>
+    <label for="price-slider">Price Range:</label>
+    <br>
+    <span id="price-display"><span id="min-price"></span> <span id="max-price"></span></span>
+    <div id="price-slider"></div>
+    
+    <br>
+    <label for="category-select">Category:</label>
+    <select id="category-select">
+        <option value="">Selecione a categoria...</option>
+    </select>
+    <br>
+    <label for="brand-select">Brand:</label>
+    <select id="brand-select">
+        <option value="">Selecione a marca...</option>
+    </select>
+    <br>
+    <label for="condition-select">Condition:</label>
+    <select id="condition-select">
+        <option value="">Selecione a condição...</option>
+    </select>
+    <br>
+    <label for="size-select">Size:</label>
+    <select id="size-select">
+        <option value="">Selecione o tamanho...</option>
+    </select>
+    <br>
+    <label for="model-select">Model:</label>
+    <select id="model-select">
+        <option value="">Selecione o modelo...</option>
+    </select>
+    <br>
+    <button onclick="applyFilters()">Apply Filters</button>
+</div>
+
+
+
     <main>
     <section id="recomended">
         <h1>Produtos Recomendados</h1>  

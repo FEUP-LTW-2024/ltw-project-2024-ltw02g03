@@ -944,3 +944,25 @@ main {
 
 
 
+/* CSS para o slide-bar */
+#price-slider {
+    height: 1em; 
+    margin-top: 1em; 
+}
+
+/* Estilo personalizado para as bolas */
+#price-slider .noUi-handle {
+    width: 1.5em; 
+    height: 1.5em;
+    border-radius: 50%; 
+}
+
+#price-slider .noUi-connect {
+    background: #007bff; 
+}
+
+
+
+select {
+    width: 100%;
+}
