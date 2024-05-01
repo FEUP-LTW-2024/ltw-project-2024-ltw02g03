@@ -23,7 +23,7 @@ function drawSearchedProducts($db, array $items, string $searchQuery) { ?>
                         
                         <div class="img-title-condition">
                             
-                            <img src="../<?= $image->imageUrl ?>" alt="<?= $item->title ?>" style="max-width: 15em; height: auto;">
+                            <img class="search-img" src="../<?= $image->imageUrl ?>" alt="<?= $item->title ?>" style="width: 17em; height: 13em;">
                             <div class="title-cond">
                                 <div>
                                     <h1><?= htmlspecialchars($item->title) ?></h1>
@@ -53,20 +53,22 @@ function drawFilteredProducts($db,int $limit, array $items,$categoryName) { ?>
                 $image = Item::getItemImage($db, $item->itemId)[0]; 
                 $condition = Item::getItemCondition($db, $item->itemId);
                 ?>
-                <article class="search-item">  
-                    <div class="img-title-condition">
-                        
-                        <img src="../<?= $image->imageUrl ?>" alt="<?= $item->title ?>" style="max-width: 15em; height: auto;">
-                        <div class="title-cond">
-                            <div>
-                                <h1><?= htmlspecialchars($item->title) ?></h1>
-                                <h2 class="date-search"><?= $item->listingDate ?></h2>
+                <a href="/pages/post.php?id=<?= $item->itemId ?>">
+                    <article class="search-item">  
+                        <div class="img-title-condition">
+                            
+                            <img class="search-img" src="../<?= $image->imageUrl ?>" alt="<?= $item->title ?>" style="width: 17em; height: 13em;">
+                            <div class="title-cond">
+                                <div>
+                                    <h1><?= htmlspecialchars($item->title) ?></h1>
+                                    <h2 class="date-search"><?= $item->listingDate ?></h2>
+                                </div>
+                                <p><strong>Condition:</strong> <?= htmlspecialchars($condition->conditionName) ?></p>
                             </div>
-                            <p><strong>Condition:</strong> <?= htmlspecialchars($condition->conditionName) ?></p>
                         </div>
-                    </div>
-                    <p class="price-search"><?= number_format($item->price, 2) ?>€</p>
-                </article>
+                        <p class="price-search"><?= number_format($item->price, 2) ?>€</p>
+                    </article>
+                </a>
             <?php endforeach; ?>
         <?php else : ?>
             <p>No items found for this filter.</p>

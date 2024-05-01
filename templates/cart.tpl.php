@@ -43,7 +43,7 @@ function drawCart(Session $session, $db)
                             ?>
                             <div class="cart-item">
                             <div class="img-name-condition">
-                              <img id="img-product-cart" src="../<?= $image->imageUrl ?>" alt="<?= $item->title ?>" style="max-width: 200px; height: auto;">
+                              <img class="img-product-cart" src="../<?= $image->imageUrl ?>" alt="<?= $item->title ?>" style="width: 12em; height: 10em;">
                                 <div class="name-condition">
                                     <h1><?= htmlspecialchars($item->title) ?></h1>
                                     <p><strong>Condition:</strong> <?= htmlspecialchars($condition->conditionName) ?></p>
