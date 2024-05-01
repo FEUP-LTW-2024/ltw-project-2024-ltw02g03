@@ -32,7 +32,7 @@ function drawHeader(Session $session) { ?>
                 <li><a href="#" onclick="filterItems('Clothing')">Clothing</a></li>
                 <li><a href="#" onclick="filterItems('Books')">Books</a></li>
                 <li><a href="#" onclick="filterItems('Furniture')">Furniture</a></li>
-                <li><a href="#" onclick="filterItems('Home Appliances')">Home Appliances</a></li>
+                <li><a href="#" onclick="filterItems('Home Appliances')">Appliances</a></li>
                 <li><a href="#" onclick="filterItems('Jewelry')">Jewelry</a></li>
             </ul>
         </div>
@@ -76,7 +76,7 @@ function drawHeader(Session $session) { ?>
     
     <div id="search-tab" style="display: none;">
         <form action="/pages/search.php" method="GET" id="search-form">
-            <input type="text" name="query" placeholder="Search for products...">
+            <input id="input-search-header" type="text" name="query" placeholder="Search for products...">
             <button type="submit">Search</button>
         </form>
     </div>
@@ -85,7 +85,7 @@ function drawHeader(Session $session) { ?>
 
 <?php function drawBody(Session $session, $db, int $limit, $category = null) { ?>
 
-    <div id="filter-box">
+    <aside id="filter-box">
         <h2>Filters</h2>
         <label for="price-range">Price Range:</label>
         <input type="range" id="price-range" name="price-range" min="0" max="1000" step="10">
@@ -101,7 +101,7 @@ function drawHeader(Session $session) { ?>
         </select>
         <br>
         <button onclick="applyFilters()">Apply Filters</button>
-    </div>
+</aside>
     <main>
     <section id="recomended">
         <h1>Produtos Recomendados</h1>  
@@ -152,7 +152,7 @@ function drawProducts($db, int $limit, $categoryName = null) {
                 <a href="/pages/post.php?id=<?= $row->itemId ?>" class="item-link">
                     <article id="index-product">
                         <div id=img-product>
-                            <img id="" src="<?= $image[0]->imageUrl ?>" alt="" style="width: 50%; height: auto;">
+                            <img id="" src="<?= $image[0]->imageUrl ?>" alt="" style="width: 90%; height: 90%;">
                         </div>
                         <h1><?= htmlspecialchars($row->title) ?></h1>
                         <h2><?= htmlspecialchars($row->description) ?></h2>
