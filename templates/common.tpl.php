@@ -20,6 +20,7 @@ function drawHeader(Session $session) { ?>
         <script src="../javascript/message.js" defer></script>
         <script src="../javascript/script.js" defer></script>
         <script src="../javascript/filter_items.js" defer></script>
+        <script src="../javascript/scroll.js" defer></script>
     </head>
     <body>
     
@@ -58,6 +59,7 @@ function drawHeader(Session $session) { ?>
             <?php } ?>
         </div>
         
+        
            
     </header>
      <div id="message-container">
@@ -82,27 +84,47 @@ function drawHeader(Session $session) { ?>
     <?php } ?>
 
 <?php function drawBody(Session $session, $db, int $limit, $category = null) { ?>
-<section id="recomended">
-    <h1>Produtos Recomendados</h1>  
-    <h2><?php echo $limit; ?> produtos</h2>
-    <div id="index-products">
-        <?php drawProducts($db, $limit, $category); ?>
-    </div>
-</section>
 
-<main>
+    <div id="filter-box">
+        <h2>Filters</h2>
+        <label for="price-range">Price Range:</label>
+        <input type="range" id="price-range" name="price-range" min="0" max="1000" step="10">
+        <br>
+        <label for="category-select">Category:</label>
+        <select id="category-select">
+            <option value="Electronics">Electronics</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Books">Books</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Home Appliances">Home Appliances</option>
+            <option value="Jewelry">Jewelry</option>
+        </select>
+        <br>
+        <button onclick="applyFilters()">Apply Filters</button>
+    </div>
+    <main>
+    <section id="recomended">
+        <h1>Produtos Recomendados</h1>  
+        <h2><?php echo $limit; ?> produtos</h2>
+        <div id="index-products">
+            <?php drawProducts($db, $limit, $category); ?>
+        </div>
+    </section>
+
+    
 <?php } ?>
 
 <?php function drawFooter() { ?>
-  </main>
+    
 
     <footer id="footer-page">
         <p>2024 &copy; EcoExchange</p>
     </footer>
-
+    <script src="scroll.js"></script>
     </body>
     </html>
-  <?php } ?>
+  <?php } ?>    
+  
 
 <?php function drawLogoutForm(Session $session) { ?>
 <form action="../actions/action_logout.php" method="post" class="logout">
@@ -151,9 +173,9 @@ function drawProducts($db, int $limit, $categoryName = null) {
     } catch (PDOException $e) {
         echo "Error fetching items: " . $e->getMessage();
     }
-}
-
-?>
+    ?>
+    </main>
+<?php }?>
 <script>
 function openSearchTab() {
     var searchTab = document.getElementById("search-tab");

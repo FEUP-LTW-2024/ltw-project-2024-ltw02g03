@@ -7,7 +7,7 @@ require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/user.class.php');
 
-function drawLoginForm(Session $session,$db) { ?>   
+function drawLoginForm(Session $session,$db) { ?>
     <main>
         <section id="login">
             <h1>Login</h1>
