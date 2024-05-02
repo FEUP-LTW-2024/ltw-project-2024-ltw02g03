@@ -167,6 +167,42 @@ function drawPostCreation($session) {
                         </label>
                     </div>
                 </div>
+                <div class="publish-div">
+                <h1>Categories</h1>        
+                        <label>
+                            <select name="category" class="publish-select">
+                                <option value="NULL">-None-</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Clothing" selected>Clothing</option>
+                                <option value="Books">Books</option>
+                                <option value="Furniture">Furniture</option>
+                                <option value="Appliances">Appliances</option>
+                                <option value="Jewelry">Jewelry</option>
+                            </select>
+                        </label>
+                        <label>
+                             <select name="category" class="publish-select">
+                                <option value="NULL">-None-</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Clothing" selected>Clothing</option>
+                                <option value="Books">Books</option>
+                                <option value="Furniture">Furniture</option>
+                                <option value="Appliances">Appliances</option>
+                                <option value="Jewelry">Jewelry</option>
+                            </select>
+                        </label>
+                        <label>
+                        <select name="category" class="publish-select">
+                                <option value="NULL">-None-</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Clothing" selected>Clothing</option>
+                                <option value="Books">Books</option>
+                                <option value="Furniture">Furniture</option>
+                                <option value="Appliances">Appliances</option>
+                                <option value="Jewelry">Jewelry</option>
+                            </select>
+                        </label>
+                </div>
                 <button type="submit">Post</button>
             </form>
         </section>

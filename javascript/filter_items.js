@@ -17,12 +17,12 @@ priceSlider.noUiSlider.on('update', function (values, handle) {
     var value = values[handle];
     
     if (handle) {
-        maxPriceDisplay.textContent = "$" + value;
+        maxPriceDisplay.textContent = "€" + value;
     } else {
-        minPriceDisplay.textContent = "$" + value;
+        minPriceDisplay.textContent = "€" + value;
     }
 
-    priceDisplay.textContent = "$" + minPriceDisplay.textContent.substring(1) + " - $" + maxPriceDisplay.textContent.substring(1);
+    priceDisplay.textContent = "€" + minPriceDisplay.textContent.substring(1) + " - €" + maxPriceDisplay.textContent.substring(1);
 });
 
 function applyFilters() {

@@ -70,7 +70,30 @@ function drawCart(Session $session, $db)
             </main>
         <?php
         } else {
-            echo "No items in the cart.";
+            ?>
+             <main>
+                <section id="cart">
+                <div class="cart-items">
+                        <h3 id="no-items">No items currently in the cart</h3>
+                    </div>
+                    <div class="cart-total">
+                        <h1>Total Price:</h1>
+                        <p class="total-price"><?= number_format($totalPrice, 2) ?>€</p>
+                        <form id="cart-form" action="/checkout.php" method="post">
+                            <button id="pay-cart-button" type="submit">Pay</button>
+                        </form>
+                    </div>
+
+                    <div class="cart-total">
+                        <h1>Total Price:</h1>
+                        <p class="total-price"><?= number_format($totalPrice, 2) ?>€</p>
+                        <form id="cart-form" action="/checkout.php" method="post">
+                            <button id="pay-cart-button" type="submit">Pay</button>
+                        </form>
+                    </div>
+                </section>
+             </main>
+            <?php
         }
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
