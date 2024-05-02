@@ -320,6 +320,90 @@ static function getItemCondition(PDO $db, int $id) : ?Condition {
     }
 }
 
+public static function getItemBrandByName(PDO $db, string $brandname) : ?Brand {
+    try {
+        $stmt = $db->prepare('
+            SELECT BrandId, BrandName
+            FROM ItemBrand 
+            WHERE BrandName = ?
+        ');
+        $stmt->execute([$brandname]);
+        $brand = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($brand) {
+            return new Brand($brand['BrandId'], $brand['BrandName']);
+        } else {
+            return null;
+        }
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching item brands: " . $e->getMessage());
+    }
+}
+
+public static function getItemConditionByName(PDO $db, string $conditionname) : ?Condition {
+    try {
+        $stmt = $db->prepare('
+            SELECT ConditionId, ConditionName
+            FROM ItemCondition 
+            WHERE ConditionName = ?
+        ');
+        $stmt->execute([$conditionname]);
+        $condition = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($condition) {
+            return new Condition($condition['ConditionId'], $condition['ConditionName']);
+        } else {
+            return null;
+        }
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching item conditions: " . $e->getMessage());
+    }
+}
+
+public static function getItemSizeByName(PDO $db, string $Sizename) : ?Size {
+    try {
+        $stmt = $db->prepare('
+            SELECT SizeId, SizeName
+            FROM ItemSize 
+            WHERE SizeName = ?
+        ');
+        $stmt->execute([$Sizename]);
+        $size = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($size) {
+            return new Size($size['SizeId'], $size['SizeName']);
+        } else {
+            return null;
+        }
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching item sizes: " . $e->getMessage());
+    }
+}
+
+public static function getItemModelByName(PDO $db, string $modelname) : ?Model {
+    try {
+        $stmt = $db->prepare('
+            SELECT ModelId, ModelName
+            FROM ItemModel 
+            WHERE ModelName = ?
+        ');
+        $stmt->execute([$modelname]);
+        $model = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($model) {
+            return new Model($model['ModelId'], $model['ModelName']);
+        } else {
+            return null;
+        }
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching item models: " . $e->getMessage());
+    }
+}
+
+
+
+
+
 // Get item size
 static function getItemSize(PDO $db, int $id) : ?Size {
     try {

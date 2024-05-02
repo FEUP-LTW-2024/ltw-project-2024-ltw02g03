@@ -48,7 +48,7 @@ function drawPost(Session $session, $db, int $itemId) {
                         </div>
                     </div>
                     <div id="user-post">
-                        <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="100">
+                        <img id="img-user-post" src="<?= !empty($user->imageUrl) ? $user->imageUrl : "/Docs/img/9024845_user_circle_light_icon.png"?>" alt="" width="100">
                         <div class="user-info">
                             <h1>Username: <?= htmlspecialchars($user->username) ?></h1>
                             <div class="location-info">
@@ -100,7 +100,7 @@ function drawPostCreation($session) {
     
     <main>
         
-        <section class="publish-section">
+        <section class="publish-section" action="action_add_item.php">
             <h1>Publish Item</h1>
             <form  method="post">
                 <div class="publish-div">
@@ -166,6 +166,42 @@ function drawPostCreation($session) {
                             <img class="preview-image" id="preview-image-2" src="" alt="">
                         </label>
                     </div>
+                </div>
+                <div class="publish-div">
+                <h1>Categories</h1>        
+                        <label>
+                            <select name="category" class="publish-select">
+                                <option value="NULL">-None-</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Clothing" selected>Clothing</option>
+                                <option value="Books">Books</option>
+                                <option value="Furniture">Furniture</option>
+                                <option value="Appliances">Appliances</option>
+                                <option value="Jewelry">Jewelry</option>
+                            </select>
+                        </label>
+                        <label>
+                             <select name="category" class="publish-select">
+                                <option value="NULL">-None-</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Clothing" selected>Clothing</option>
+                                <option value="Books">Books</option>
+                                <option value="Furniture">Furniture</option>
+                                <option value="Appliances">Appliances</option>
+                                <option value="Jewelry">Jewelry</option>
+                            </select>
+                        </label>
+                        <label>
+                        <select name="category" class="publish-select">
+                                <option value="NULL">-None-</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Clothing" selected>Clothing</option>
+                                <option value="Books">Books</option>
+                                <option value="Furniture">Furniture</option>
+                                <option value="Appliances">Appliances</option>
+                                <option value="Jewelry">Jewelry</option>
+                            </select>
+                        </label>
                 </div>
                 <button type="submit">Post</button>
             </form>

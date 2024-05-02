@@ -53,16 +53,31 @@ function drawHeader(Session $session) { ?>
                     <img src="/Docs/img/9025034_shopping_cart_light_icon.png" alt="" width="30">
                 </button> 
             </a>
-            
-            <button id="profile-button">
-                <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
-            </button> 
+            <?php if ($session->isLoggedIn()) { ?>
+            <a id="login-register-anchor" href="/pages/profilepage.php">
+            <?php }  ?>
+                <button id="profile-button">
+                    <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
+                    
+                </button> 
+                <?php if ($session->isLoggedIn()) { ?> </a> <?php }  ?>
             <div id="login-register">
             <?php if (!$session->isLoggedIn()) { ?>
             <a id="login-register-anchor" href="/pages/login.php">Login/Register</a>
             <?php } else { ?>
+                
+                
+                <ul id="options-header">
+                    <li>
+                        <a id="logout-anchor" href="/pages/postcreation.php">Publish Item</a>
+                    </li>
+                    <li>
+                        <a id="logout-anchor" href="/actions/action_logout.php">Logout</a>
+                    </li>
+                </ul>
+                
+                
             
-            <a id="logout-anchor" href="/actions/action_logout.php">Logout</a>
             </div>
             <?php } ?>
         </div>
@@ -86,12 +101,47 @@ function drawHeader(Session $session) { ?>
         <form action="/pages/search.php" method="GET" id="search-form">
             <input id="input-search-header" type="text" name="query" placeholder="Search for products...">
             <button type="submit">Search</button>
+            
         </form>
+        <button id="filter-search-tab">Filters</button>
     </div>
 
-    <?php } ?>
 
-<?php function drawBody(Session $session, $db, int $limit, $category = null) { ?>
+    <aside id="filter-box">
+        <h2>Filters</h2>
+        <label for="price-slider">Price Range:</label>
+        <br>
+        <span id="price-display"><span id="min-price"></span> <span id="max-price"></span></span>
+        <div id="price-slider"></div>
+        
+        <br>
+        <label for="category-select">Category:</label>
+        <select id="category-select" class="publish-select">
+            <option value="">Selecione a categoria...</option>
+        </select>
+        <br>
+        <label for="brand-select">Brand:</label>
+        <select id="brand-select" class="publish-select">
+            <option value="">Selecione a marca...</option>
+        </select>
+        <br>
+        <label for="condition-select">Condition:</label>
+        <select id="condition-select" class="publish-select">
+            <option value="">Selecione a condição...</option>
+        </select>
+        <br>
+        <label for="size-select">Size:</label>
+        <select id="size-select" class="publish-select">
+            <option value="">Selecione o tamanho...</option>
+        </select>
+        <br>
+        <label for="model-select">Model:</label>
+        <select id="model-select" class="publish-select">
+            <option value="">Selecione o modelo...</option>
+        </select>
+        <br>
+        <button onclick="applyFilters()">Apply Filters</button>
+    </aside>
 
     <div id="filter-box">
     <h2>Filters</h2>
@@ -124,9 +174,22 @@ function drawHeader(Session $session) { ?>
     <button onclick="applyFilters()">Apply Filters</button>
 </div>
 
+    <?php } ?>
 
 
+
+
+<?php function drawBody(Session $session, $db, int $limit, $category = null) { ?>
     <main>
+        <div>
+            <header>
+                <h1 id="home-welcome">Welcome to <span id="ecox-home">EcoExchange</span></h1>
+            </header>
+            <img id="home-img" src="https://live.staticflickr.com/7023/6806424715_4c1cb053ef_o.jpg">
+            
+        </div>
+    
+    
     <section id="recomended">
         <h1>Produtos Recomendados</h1>  
         <h2><?php echo $limit; ?> produtos</h2>
@@ -216,4 +279,21 @@ function openSearchTab() {
         searchTab.style.display = "none";
     }
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Your script here
+var filterButton = document.getElementById("filter-search-tab");
+
+    // Toggle the display of the filter box when the button is clicked
+    filterButton.addEventListener("click", function() {
+        
+        var filterBox = document.getElementById("filter-box");
+        if (filterBox.style.display === "none") {
+            filterBox.style.display = "block";
+        } else {
+            filterBox.style.display = "none";
+        }
+    });
+});
+
 </script>
