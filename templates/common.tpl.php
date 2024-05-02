@@ -49,13 +49,18 @@ function drawHeader(Session $session) { ?>
                 </button> 
             </a>
             
-            <button id="profile-button">
-                <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
-            </button> 
+            <a id="login-register-anchor" href="/pages/profilepage.php">
+                <button id="profile-button">
+                    <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
+                    
+                </button> 
+            </a>
             <div id="login-register">
             <?php if (!$session->isLoggedIn()) { ?>
             <a id="login-register-anchor" href="/pages/login.php">Login/Register</a>
             <?php } else { ?>
+                
+                
                 <ul id="options-header">
                     <li>
                         <a id="logout-anchor" href="/pages/postcreation.php">Publish Item</a>
