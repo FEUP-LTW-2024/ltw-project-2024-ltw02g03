@@ -57,7 +57,24 @@ class User {
     function name() {
         return $this->firstName . ' ' . $this->lastName;
       }
+      
+    // Get Username by ID
+    static function getUserNameById(PDO $db, int $userId) : ?string {
+        try {
+            $stmt = $db->prepare('SELECT Username FROM User WHERE UserId = ?');
+            $stmt->execute([$userId]);
     
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            if ($user) {
+                return $user['Username'];
+            } else {
+                return null;
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching username: " . $e->getMessage());
+        }
+    }
     // Get a User
     static function getUser(PDO $db, int $id) : ?User {
         try {
