@@ -100,7 +100,7 @@ function drawPostCreation($session) {
     
     <main>
         
-        <section class="publish-section">
+        <section class="publish-section" action="action_add_item.php">
             <h1>Publish Item</h1>
             <form  method="post">
                 <div class="publish-div">

@@ -34,7 +34,7 @@ function drawProfile(Session $session, $db)
             
                 <div id="profilepage-name-loc">
                     <h1><?= htmlspecialchars($user->name()) ?></h1>
-                    <h2><?= htmlspecialchars($user->city) ?>, <?= htmlspecialchars($user->district) ?>, <?= htmlspecialchars($user->country) ?></h2>
+                    <h2><?= !empty($user->city) ? htmlspecialchars($user->city) : " - " ?>, <?= !empty($user->district) ? htmlspecialchars($user->district) : " - " ?>, <?= !empty($user->country) ? htmlspecialchars($user->country) : " - "?></h2>
                 </div>
             </div>
             <div id="left-profile-page">
