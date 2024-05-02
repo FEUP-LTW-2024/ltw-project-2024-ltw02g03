@@ -48,7 +48,7 @@ function drawPost(Session $session, $db, int $itemId) {
                         </div>
                     </div>
                     <div id="user-post">
-                        <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="100">
+                        <img id="img-user-post" src="<?= !empty($user->imageUrl) ? $user->imageUrl : "/Docs/img/9024845_user_circle_light_icon.png"?>" alt="" width="100">
                         <div class="user-info">
                             <h1>Username: <?= htmlspecialchars($user->username) ?></h1>
                             <div class="location-info">
