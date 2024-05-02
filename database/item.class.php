@@ -109,6 +109,17 @@ class Item {
             throw new Exception("Error fetching item: " . $e->getMessage());
         }
     }
+    //Get item name by ID
+    static function getItemNameById(PDO $db, int $id) : string {
+        try {
+            $stmt = $db->prepare('SELECT Title FROM Item WHERE ItemId = ?');
+            $stmt->execute(array($id));
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['Title'];
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching item name: " . $e->getMessage());
+        }
+    }
     static function getItemsbyName(PDO $db, string $get , int $limit): array{
         try {
             $stmt = $db->prepare('

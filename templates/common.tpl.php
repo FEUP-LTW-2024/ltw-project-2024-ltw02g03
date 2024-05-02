@@ -23,7 +23,7 @@ function drawHeader(Session $session) { ?>
         <script src="../javascript/message.js" defer></script>
         <script src="../javascript/script.js" defer></script>
         <script src="../javascript/filter_items.js" defer></script>
-        <script src="../javascript/scroll.js" defer></script>
+        <script src="../javascript/chat.js" defer></script>
     </head>
     <body>
     
@@ -40,6 +40,11 @@ function drawHeader(Session $session) { ?>
             </ul>
         </div>
         <div id="utility-wrap">
+            <a href="/pages/chat.php">
+                <button id="chat-button">
+                    
+                </button>
+            </a>
             <button id="search-button" onclick="openSearchTab()">
                 <img src="/Docs/img/9024781_gender_neuter_light_icon.png" alt="" width="30">
             </button> 
@@ -138,7 +143,39 @@ function drawHeader(Session $session) { ?>
         <button onclick="applyFilters()">Apply Filters</button>
     </aside>
 
+    <div id="filter-box">
+    <h2>Filters</h2>
+    <label for="price-slider">Price Range:</label>
+    <br>
+    <span id="price-display"><span id="min-price"></span> <span id="max-price"></span></span>
+    <div id="price-slider"></div>
+    
+    <br>
+    <label for="category-select">Category:</label>
+    <select id="category-select">
+    </select>
+    <br>
+    <label for="brand-select">Brand:</label>
+    <select id="brand-select">
+    </select>
+    <br>
+    <label for="condition-select">Condition:</label>
+    <select id="condition-select">
+    </select>
+    <br>
+    <label for="size-select">Size:</label>
+    <select id="size-select">
+    </select>
+    <br>
+    <label for="model-select">Model:</label>
+    <select id="model-select">
+    </select>
+    <br>
+    <button onclick="applyFilters()">Apply Filters</button>
+</div>
+
     <?php } ?>
+
 
 
 
@@ -170,7 +207,6 @@ function drawHeader(Session $session) { ?>
     <footer id="footer-page">
         <p>2024 &copy; EcoExchange</p>
     </footer>
-    <script src="scroll.js"></script>
     </body>
     </html>
   <?php } ?>    
@@ -193,6 +229,8 @@ function drawProducts($db, int $limit, $categoryName = null) {
         if ($items) {
             
             foreach($items as $row) {
+                $ownerId = $row->sellerId;
+                
                 
                 $condition = Item::getItemCondition($db, $row->itemId);
                 $brand = Item::getItemBrand($db, $row->itemId);            
@@ -213,6 +251,11 @@ function drawProducts($db, int $limit, $categoryName = null) {
                             <input type="hidden" name="item_id" value="<?= $row->itemId ?>">
                             <button type="submit" class="add-cart-button">Add to Cart</button> 
                         </form>
+                        <form action="../pages/chat.php" method="post" class="send-message-form">
+                            <input type="hidden" name="owner_id" value="<?= $ownerId ?>">
+                            <input type="hidden" name="item_id" value="<?= $row->itemId ?>">
+                            <button type="submit" class="send-message-button">Enviar Mensagem</button>
+                        </form>
                     </article>
                 </a>
                 <?php
@@ -225,7 +268,8 @@ function drawProducts($db, int $limit, $categoryName = null) {
     }
     ?>
     </main>
-<?php }?>
+<?php } ?>
+
 <script>
 function openSearchTab() {
     var searchTab = document.getElementById("search-tab");

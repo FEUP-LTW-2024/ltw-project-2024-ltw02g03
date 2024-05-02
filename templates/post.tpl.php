@@ -219,7 +219,7 @@ function drawPostCreation($session) {
     const previewImage = document.getElementById(`preview-image-${index}`);
 
     reader.onloadend = function () {
-        previewImage.style.display = "block"; // Show the preview image
+        previewImage.style.display = "block";
         previewImage.src = reader.result;
     }
 

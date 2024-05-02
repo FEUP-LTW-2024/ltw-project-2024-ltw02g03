@@ -1119,3 +1119,42 @@ input:focus {
 select {
     width: 100%;
 }
+
+
+
+/* CSS para o chat */
+#chat-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#messages-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.message-input {
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    max-width: 80%; /* Adicionando largura máxima para as mensagens */
+}
+
+.message-input p {
+    margin: 0; /* Removendo margem padrão dos parágrafos */
+}
+
+.message.sent {
+    background-color: #007bff; /* Fundo azul para mensagens enviadas */
+    color: #fff; /* Texto branco para mensagens enviadas */
+    align-self: flex-end; /* Alinhando as mensagens enviadas à direita */
+}
+
+.message.received {
+    background-color: #f2f2f2; /* Fundo cinza para mensagens recebidas */
+}
+/* Restante do seu CSS permanece o mesmo */
