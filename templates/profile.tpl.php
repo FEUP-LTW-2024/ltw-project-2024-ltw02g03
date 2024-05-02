@@ -30,7 +30,8 @@ function drawProfile(Session $session, $db)
         ?>
         <main id="profilepage">
             <div id="profile-img-infos">
-            <img id="profile-img" src="<?= htmlspecialchars($user->imageUrl) ?>" alt="" height="100">
+            <img id="profile-img" src="<?= !empty($user->imageUrl) ? htmlspecialchars($user->imageUrl) : "../Docs/img/9024845_user_circle_light_icon.png" ?>" alt="" height="100">
+            
                 <div id="profilepage-name-loc">
                     <h1><?= htmlspecialchars($user->name()) ?></h1>
                     <h2><?= htmlspecialchars($user->city) ?>, <?= htmlspecialchars($user->district) ?>, <?= htmlspecialchars($user->country) ?></h2>

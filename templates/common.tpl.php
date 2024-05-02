@@ -48,13 +48,14 @@ function drawHeader(Session $session) { ?>
                     <img src="/Docs/img/9025034_shopping_cart_light_icon.png" alt="" width="30">
                 </button> 
             </a>
-            
+            <?php if ($session->isLoggedIn()) { ?>
             <a id="login-register-anchor" href="/pages/profilepage.php">
+            <?php }  ?>
                 <button id="profile-button">
                     <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
                     
                 </button> 
-            </a>
+                <?php if ($session->isLoggedIn()) { ?> </a> <?php }  ?>
             <div id="login-register">
             <?php if (!$session->isLoggedIn()) { ?>
             <a id="login-register-anchor" href="/pages/login.php">Login/Register</a>
@@ -100,11 +101,6 @@ function drawHeader(Session $session) { ?>
         <button id="filter-search-tab">Filters</button>
     </div>
 
-    <?php } ?>
-
-
-
-<?php function drawBody(Session $session, $db, int $limit, $category = null) { ?>
 
     <aside id="filter-box">
         <h2>Filters</h2>
@@ -141,6 +137,12 @@ function drawHeader(Session $session) { ?>
         <br>
         <button onclick="applyFilters()">Apply Filters</button>
     </aside>
+
+    <?php } ?>
+
+
+
+<?php function drawBody(Session $session, $db, int $limit, $category = null) { ?>
     <main>
         <div>
             <header>
