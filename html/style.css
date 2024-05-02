@@ -531,13 +531,17 @@ body {
     background-color: rgb(212, 226, 230);
     padding: 20px; /* Set padding for the total container */
     border-radius: 1em;
-    grid-column: 2; /* Place total in the second column */
-    grid-row: 1; /* Place total in the first row */
+    /* grid-column: 2; /* Place total in the second column 
+    grid-row: 1; Place total in the first row */
     margin: 1em;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     height: fit-content;
+    position: fixed;
+    right: 0em;
+    top: 6em;
+    width: 28%;
   }
   
   .total-price {
