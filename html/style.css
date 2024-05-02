@@ -50,6 +50,9 @@ main {
     line-height: 1.5em;
     margin-left: 0.3em;
 }
+#options-header li a:hover {
+    font-weight: 600;
+} 
 
 #home-welcome {
     position:absolute;
