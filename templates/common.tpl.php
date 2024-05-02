@@ -56,9 +56,16 @@ function drawHeader(Session $session) { ?>
             <?php if (!$session->isLoggedIn()) { ?>
             <a id="login-register-anchor" href="/pages/login.php">Login/Register</a>
             <?php } else { ?>
-            
-                <a id="logout-anchor" href="/pages/postcreation.php">Post Item</a>
-                <a id="logout-anchor" href="/actions/action_logout.php">Logout</a>
+                <ul id="options-header">
+                    <li>
+                        <a id="logout-anchor" href="/pages/postcreation.php">Publish Item</a>
+                    </li>
+                    <li>
+                        <a id="logout-anchor" href="/actions/action_logout.php">Logout</a>
+                    </li>
+                </ul>
+                
+                
             
             </div>
             <?php } ?>
