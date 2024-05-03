@@ -165,11 +165,12 @@ class Communication
         }
     }
     // Get all existing chats
+// Get all existing chats
 static function getAllChats(PDO $db): array
 {
     try {
         $stmt = $db->prepare('
-            SELECT DISTINCT SenderId, ReceiverId
+            SELECT DISTINCT SenderId, ReceiverId, ItemId
             FROM Communication
         ');
 
@@ -180,18 +181,19 @@ static function getAllChats(PDO $db): array
         while ($row = $stmt->fetch()) {
             $senderId = $row['SenderId'];
             $receiverId = $row['ReceiverId'];
+            $itemId = $row['ItemId'];
             // Verifique se o chat já está na lista de chats
             $chatExists = false;
             foreach ($chats as $chat) {
-                if (($chat['senderId'] == $senderId && $chat['receiverId'] == $receiverId) ||
-                    ($chat['senderId'] == $receiverId && $chat['receiverId'] == $senderId)) {
+                if (($chat['senderId'] == $senderId && $chat['receiverId'] == $receiverId && $chat['itemId'] == $itemId) ||
+                    ($chat['senderId'] == $receiverId && $chat['receiverId'] == $senderId && $chat['itemId'] == $itemId)) {
                     $chatExists = true;
                     break;
                 }
             }
             // Se o chat não existir na lista, adicione-o
             if (!$chatExists) {
-                $chats[] = ['senderId' => $senderId, 'receiverId' => $receiverId];
+                $chats[] = ['senderId' => $senderId, 'receiverId' => $receiverId, 'itemId' => $itemId];
             }
         }
 
@@ -200,6 +202,6 @@ static function getAllChats(PDO $db): array
         throw new Exception("Error fetching all chats: " . $e->getMessage());
     }
 }
-
+    
 }
 ?>
