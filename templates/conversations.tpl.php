@@ -1,15 +1,18 @@
 <?php
-// Função para desenhar o corpo da página
-function drawBody(Session $session, $db) {
-    // Obtenha todas as conversas ativas do banco de dados
-    $conversations = Chat::getAllConversations($db, $session->getUserId());
+require_once(__DIR__ . '/../utils/session.php');
+require_once(__DIR__ . '/../database/connection.db.php');
+require_once(__DIR__ . '/../database/communication.class.php');
 
-    // Desenhe o corpo da página aqui, exibindo as conversas
-    // Por exemplo:
+function drawContacts(Session $session, $db) {
+    $userId = $session->getId();
+
+    $conversations = Communication::getAllChats($db);
+
     echo "<h1>Conversas Ativas</h1>";
     echo "<ul>";
     foreach ($conversations as $conversation) {
-        echo "<li><a href='/pages/chat.php?conversation_id={$conversation->conversationId}'>Conversa {$conversation->conversationId}</a></li>";
+        $otherUserId = ($userId == $conversation['senderId']) ? $conversation['receiverId'] : $conversation['senderId'];
+            echo "<li><a href='/pages/chat.php?receiver_id={$otherUserId}'>Conversa com {$otherUserId}</a></li>";
     }
     echo "</ul>";
 }

@@ -12,7 +12,13 @@ require_once(__DIR__ . '/../templates/search.tpl.php');
 require_once(__DIR__ . '/../templates/chat.tpl.php');
 
 $db = getDatabaseConnection();
+
+if (!$session->isLoggedIn()) {
+    header('Location: /pages/login.php');
+    exit();
+}
 $userId = $session->getId();
+
 
 if(isset($_POST['owner_id'], $_POST['item_id'])) {
     $ownerId = isset($_POST['owner_id']) ? intval($_POST['owner_id']) : 0; 

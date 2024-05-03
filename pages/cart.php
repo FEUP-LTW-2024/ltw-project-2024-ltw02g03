@@ -12,10 +12,6 @@
   require_once(__DIR__ . '/../templates/common.tpl.php');
 
 
-  $db = getDatabaseConnection();
-
-  
-
   drawHeader($session);
   drawCart($session, $db);
   drawFooter();

@@ -121,8 +121,3 @@ document.addEventListener('DOMContentLoaded', function() {
     
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('chat-button').addEventListener('click', function() {
-        window.location.href = '/../pages/conversations.php';
-    });
-});

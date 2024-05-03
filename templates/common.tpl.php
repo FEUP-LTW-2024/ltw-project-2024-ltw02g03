@@ -40,7 +40,7 @@ function drawHeader(Session $session) { ?>
             </ul>
         </div>
         <div id="utility-wrap">
-            <a href="/pages/chat.php">
+            <a href="/pages/conversations.php">
                 <button id="chat-button">
                     
                 </button>
