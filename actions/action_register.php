@@ -42,7 +42,7 @@ try {
     
     if (User::loginUser($db, $email, $password)) {
         $session->addMessage('success', 'Register successful! You are now logged in.');
-        header("Location: /pages"); 
+        header("Location: /pages/login.php"); 
         exit();
 
     } else {

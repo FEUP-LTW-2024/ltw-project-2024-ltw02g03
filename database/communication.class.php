@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+require_once(__DIR__ . '/../utils/session.php');
+
 class Communication
 {
     public int $communicationId;
@@ -168,13 +170,17 @@ class Communication
 // Get all existing chats
 static function getAllChats(PDO $db): array
 {
+    $session = new Session();
+    $userId = $session->getId();
+    
     try {
         $stmt = $db->prepare('
             SELECT DISTINCT SenderId, ReceiverId, ItemId
             FROM Communication
+            WHERE SenderId = :userId OR ReceiverId = :userId
         ');
 
-        $stmt->execute();
+        $stmt->execute(['userId' => $userId]);
 
         $chats = [];
 
@@ -182,6 +188,7 @@ static function getAllChats(PDO $db): array
             $senderId = $row['SenderId'];
             $receiverId = $row['ReceiverId'];
             $itemId = $row['ItemId'];
+            
             // Verifique se o chat já está na lista de chats
             $chatExists = false;
             foreach ($chats as $chat) {
@@ -191,6 +198,7 @@ static function getAllChats(PDO $db): array
                     break;
                 }
             }
+            
             // Se o chat não existir na lista, adicione-o
             if (!$chatExists) {
                 $chats[] = ['senderId' => $senderId, 'receiverId' => $receiverId, 'itemId' => $itemId];
@@ -202,6 +210,7 @@ static function getAllChats(PDO $db): array
         throw new Exception("Error fetching all chats: " . $e->getMessage());
     }
 }
+
     
 }
 ?>
