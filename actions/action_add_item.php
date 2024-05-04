@@ -19,12 +19,15 @@ $user = User::getUser($db, $session->getId());
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $productName = $_POST['productname'] ?? '';
+
     $price = floatval($_POST['price'] ?? 0); 
+
     $description = $_POST['description'] ?? '';
     $brandname = $_POST['brand'] ?? '';
     $modelname = $_POST['model'] ?? '';
     $conditionname = $_POST['condition'] ?? '';
     $sizename = $_POST['size'] ?? '';
+
     $category1name = $_POST['category1'] ?? '';
     $category2name = $_POST['category2'] ?? '';
     $category3name = $_POST['category3'] ?? '';
@@ -69,6 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if brand, model, condition, and size are found
     if (!$condition || !$size) {
         $session->addMessage('error', 'Something went wrong');
+
     } else {
         // Insert data into the database
         $sql = "INSERT INTO Item (SellerId, Title, Description, Price, BrandId, ModelId, ConditionId, SizeId)
@@ -76,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $db->prepare($sql);
 
         if ($stmt) {
-            
+
 
             if ($stmt->execute([$user->userId,$productName,$description,$price,$brand->brandId,$model->modelId,$condition->conditionId,$size->sizeId])) {
                 $itemId = $db->lastInsertId();
@@ -95,6 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 $session->addMessage('error', 'Something went wrong');
                
+
             }
 
             $stmt->closeCursor(); // Close cursor to allow next execution

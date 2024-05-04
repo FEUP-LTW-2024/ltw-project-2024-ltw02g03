@@ -43,7 +43,7 @@ function drawCart(Session $session, $db)
                             ?>
                             <div class="cart-item">
                             <div class="img-name-condition">
-                              <img id="img-product-cart" src="../<?= $image->imageUrl ?>" alt="<?= $item->title ?>" style="max-width: 200px; height: auto;">
+                              <img class="img-product-cart" src="../<?= $image->imageUrl ?>" alt="<?= $item->title ?>" style="width: 12em; height: 10em;">
                                 <div class="name-condition">
                                     <h1><?= htmlspecialchars($item->title) ?></h1>
                                     <p><strong>Condition:</strong> <?= htmlspecialchars($condition->conditionName) ?></p>
@@ -70,7 +70,30 @@ function drawCart(Session $session, $db)
             </main>
         <?php
         } else {
-            echo "No items in the cart.";
+            ?>
+             <main>
+                <section id="cart">
+                <div class="cart-items">
+                        <h3 id="no-items">No items currently in the cart</h3>
+                    </div>
+                    <div class="cart-total">
+                        <h1>Total Price:</h1>
+                        <p class="total-price"><?= number_format($totalPrice, 2) ?>€</p>
+                        <form id="cart-form" action="/checkout.php" method="post">
+                            <button id="pay-cart-button" type="submit">Pay</button>
+                        </form>
+                    </div>
+
+                    <div class="cart-total">
+                        <h1>Total Price:</h1>
+                        <p class="total-price"><?= number_format($totalPrice, 2) ?>€</p>
+                        <form id="cart-form" action="/checkout.php" method="post">
+                            <button id="pay-cart-button" type="submit">Pay</button>
+                        </form>
+                    </div>
+                </section>
+             </main>
+            <?php
         }
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();

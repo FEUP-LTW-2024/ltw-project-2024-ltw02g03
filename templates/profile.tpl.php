@@ -30,10 +30,11 @@ function drawProfile(Session $session, $db)
         ?>
         <main id="profilepage">
             <div id="profile-img-infos">
-            <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" height="100">
+            <img id="profile-img" src="<?= !empty($user->imageUrl) ? htmlspecialchars($user->imageUrl) : "../Docs/img/9024845_user_circle_light_icon.png" ?>" alt="" height="100">
+            
                 <div id="profilepage-name-loc">
                     <h1><?= htmlspecialchars($user->name()) ?></h1>
-                    <h2><?= htmlspecialchars($user->city) ?>, <?= htmlspecialchars($user->district) ?>, <?= htmlspecialchars($user->country) ?></h2>
+                    <h2><?= !empty($user->city) ? htmlspecialchars($user->city) : " - " ?>, <?= !empty($user->district) ? htmlspecialchars($user->district) : " - " ?>, <?= !empty($user->country) ? htmlspecialchars($user->country) : " - "?></h2>
                 </div>
             </div>
             <div id="left-profile-page">
@@ -43,20 +44,22 @@ function drawProfile(Session $session, $db)
                 <h1>Presented Products</h1>
                 <div id="profile-page-items">
                     <?php foreach ($presentedProducts as $product) : ?>
-                        <article class="profilepage-item">
+                        <article class="">
                             <?php
-                            // Assuming you have a method to get the image URL of the product
+                            
                             $image = Item::getItemImage($db, $product->itemId)[0];
                             ?>
-                             <a href="/pages/post.php?id=<?= $product->itemId ?>" class="item-link">
+                             <a href="/pages/post.php?id=<?= $product->itemId ?>" class="profilepage-item">
                             <img class="profilepage-img-item" src="../<?=$image->imageUrl?>" alt="" width="100">
                             
-                            <div>
+                            <div class="profilepage-title-price-item">
                                 <h1><?= htmlspecialchars($product->title) ?></h1>
-                                <h2><?= htmlspecialchars($product->price) ?>€</h2>
+                                
+                                <h2><?= $product->price ?>€</h2>
                             </div>
                     </a>
                         </article>
+                        
                     <?php endforeach; ?>
                 </div>
             </div>

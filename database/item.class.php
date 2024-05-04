@@ -431,8 +431,7 @@ static function searchItemsByTitle(PDO $db, string $title, int $count) : array {
     }
 }
 
-<<<<<<< Updated upstream
-=======
+
 //Get all Brands
 static function getBrands(PDO $db) : array {
     try {
@@ -548,7 +547,7 @@ static function getCategories(PDO $db) : array {
     }
 
 }
->>>>>>> Stashed changes
+
 
 static function getItemCategoryByName(PDO $db, string $categoryName) : ?Category {
     try {
@@ -565,7 +564,6 @@ static function getItemCategoryByName(PDO $db, string $categoryName) : ?Category
         throw new Exception("Error fetching category: " . $e->getMessage());
     }
 }
-
 
 }
 ?>

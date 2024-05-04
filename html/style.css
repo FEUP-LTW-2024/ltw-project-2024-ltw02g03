@@ -1,76 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-@media (max-width: 30em) {
-    body > header {
-      display: block;
-    }
-  
-    body > header h1 {
-      font-size: 1.5em;  
-    } 
-  
-    body > header h2 {
-      display: none;
-    }
-  
-    #menu .hamburger {
-      display: block;
-      background-color: #2a2f33;
-      color: white;
-      padding: 1em;
-    }
-  
-    #menu .hamburger:before {
-      content:'\2630';
-    }
-  
-    #menu ul {
-      flex-direction: column;
-      margin: 0;
-      padding: 0;
-      color: white;
-    }
-  
-    #hamburger:checked + .hamburger + ul li{
-      max-height: 1em;
-      padding: 1em;
-      opacity: 1;
-    }
-  
-    #hamburger:checked + .hamburger:before {
-      content:'\2715';
-    }
-  
-    #menu li {
-      max-height: 0;
-      padding: 0 1em;
-      background-color: #edeff0;
-      text-align: left;
-      opacity: 0;
-      transition: all .3s ease-in-out;
-    }
-    
 
-    #news .tags {
-      display: none;  
-    }
-  
-    #news header {
-      color: black;
-      max-width: 100%;
-      font-size: 1em;
-      padding: 1em;
-      position: static;
-    }
-  
-    #news header h1 {
-      text-shadow: none;
-    }
-  
-    #news header a{
-      color: black;
-    }
-  }
   
 body > header {
     position: fixed;
@@ -83,10 +13,13 @@ body > header {
     display: flex;
     flex-direction: row;
     align-items: center;
+    z-index: 100;
     justify-content: space-between; 
 }
 
-
+main {
+    min-height: 45em;
+}
 
 
 #header-list {
@@ -97,6 +30,56 @@ body > header {
     display: inline-block;
 }
 
+#home-img {
+    width: 100%;
+    height: 95%;
+    object-fit: cover;
+}
+
+#options-header {
+    display: flex;
+    flex-direction: column;
+    width: 10em;
+    text-align: left;
+    vertical-align:middle;
+    justify-content: left;
+}
+
+#options-header li {
+    text-align: left;
+    line-height: 1.5em;
+    margin-left: 0.3em;
+}
+#options-header li a:hover {
+    font-weight: 600;
+} 
+
+#home-welcome {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 3em;
+    color: white; /* Text color */
+    text-shadow: 
+        -2px -2px 0 #000,  
+        2px -2px 0 #000,
+        -2px 2px 0 #000,
+        2px 2px 0 #000;
+    z-index: 1;
+}
+
+#ecox-home {
+    font-size: 3.4em;
+    text-shadow: 
+        -2px -2px 0 rgb(92, 190, 255),  
+        2px -2px 0 rgb(92, 190, 255),
+        -2px 2px 0 rgb(92, 190, 255),
+        2px 2px 0 rgb(92, 190, 255);
+    color: white;
+    z-index: 1;
+}
 
 header>h1 {
     margin: 0;
@@ -136,9 +119,10 @@ a{
     position: fixed;
     right: 1em;
     top: 3.2em;
-    padding: 1.5em;
-    background-color: rgb(194, 226, 255);
-    border-radius: 2em;
+    padding: 0.8em 0.6em;
+    background-color: white;
+    border-radius: 1.5em;
+    box-shadow: 0 6.4px 14.4px 0 rgb(0 0 0 / 13%), 0 1.2px 3.6px 0 rgb(0 0 0 / 11%);
 
 }
 #profile-button:hover + #login-register {
@@ -185,14 +169,14 @@ a{
     display: inline-block;
 }
 
-ul {
+header ul {
     vertical-align: middle;
     width: 35em;
     display: flex;
     flex-direction: row;
     padding: 0;
 }
-li {
+header li {
     width: 100%;
     display: inline-block;
     text-align: center;
@@ -200,7 +184,7 @@ li {
     align-items: center;
 }
 
-li a {
+header li a {
     margin-top: 0;
     width: 100%;
     height: 100%;
@@ -242,17 +226,15 @@ li a {
 
 #img-product {
     height: 40%;
-    display: flex;
-    justify-content: center;
+    
+   
 }
 #profile-button{
     margin-right: 0; /* Adjust the margin as needed */
 }
 
-#img-product img {
-    object-fit: contain; /* Maintain aspect ratio without stretching */
-    max-width: 100%; /* Ensure the image doesn't overflow its container */
-    max-height: 100%; /* Ensure the image doesn't exceed the container's height */
+#img-product img, .search-img, .img-product-cart {
+    object-fit: cover;
 }
 
 #recomended {
@@ -319,15 +301,9 @@ li a {
 }
 
 #footer-page {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;  
     background-color: rgb(120, 153, 180);
     padding: 1em;
     color: rgb(232, 244, 255);
-      visibility: hidden; /* Inicialmente oculto */
-
 }
 
 
@@ -413,18 +389,24 @@ button{
     font-size: 0.9em;
 }
 
-/* Adiciona a caixa de filtro à esquerda do corpo e dos produtos */
 body {
-    display: flex; /* Altera o layout do corpo para flexível */
+    margin: 0;
+    font-family: Roboto;
+    background-color: rgb(231, 231, 231);
+    margin-top: 6em;
 }
 
 #filter-box {
+    display: none;
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    right: 0;
     flex: 0 0 20%; /* Define a largura fixa da caixa de filtro */
     background-color: white;
     padding: 1em;
-    margin-right: 1em;
+    margin: 0 1em;
     border-radius: 1em;
-    padding-top: 5em;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3); /* Adiciona sombra à caixa de filtro */
 }
 
@@ -437,12 +419,7 @@ body {
     width: 100%;
 }
 
-/* Ajusta o corpo principal para ocupar o restante do espaço */
-main {
-    flex: 1; /* Ocupa todo o espaço restante */
-    margin-bottom: 100em;
-    
-}
+
 
 
 #flex-login-regis {
@@ -467,11 +444,28 @@ main {
     padding: 1em;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     z-index: 1000; 
+    width: 40em;
+    text-align: center;
 }
 
 #search-tab form {
     display: flex;
     align-items: center;
+    vertical-align: middle;
+}
+
+#filter-search-tab {
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    color: #ccc;
+    font-size: large;
+    padding: 0;
+    margin: 0;
+}
+
+#input-search-header {
+    margin: 0;
 }
 
 #search-tab input[type="text"] {
@@ -505,6 +499,11 @@ main {
     grid-template-rows: auto;
   }
   
+  #no-items {
+    align-self: center;
+    font-size: 2.5em;
+  }
+
   .cart-items {
     display: flex;
     flex-direction: column; /* Stack items vertically */
@@ -550,13 +549,17 @@ main {
     background-color: rgb(212, 226, 230);
     padding: 20px; /* Set padding for the total container */
     border-radius: 1em;
-    grid-column: 2; /* Place total in the second column */
-    grid-row: 1; /* Place total in the first row */
+    /* grid-column: 2; /* Place total in the second column 
+    grid-row: 1; Place total in the first row */
     margin: 1em;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     height: fit-content;
+    position: fixed;
+    right: 0em;
+    top: 6em;
+    width: 28%;
   }
   
   .total-price {
@@ -707,6 +710,14 @@ main {
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
     
 }
+
+#img-user-post {
+    height: 8em;
+    width: 8em;
+    object-fit: cover;
+    border-radius: 4em;
+}
+
 /*
 #user-post {
     display: flex;
@@ -829,20 +840,26 @@ main {
 #profilepage {
     margin-top: 8em;
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 20em 1fr;
     grid-template-rows: auto auto;
     margin: 1em;
 }
 
 #profile-img-infos {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto;
-    background-color: white;
-    margin: 1em;
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
     padding: 1em;
     grid-column: 1 / 3;
-    border-radius: 1em;
+}
+
+#profile-img {
+    height: 12em;
+    width: 12em;
+    object-fit: cover;
+    border-radius: 6em;
+    justify-self: center;
+    margin: auto 0;
 }
 
 #profilepage-name-loc{
@@ -850,11 +867,14 @@ main {
     flex-direction: column;
     justify-content: center;
     columns: 2 / 3;
+    margin-left: 1em;
 }
 
 #profile-page-items {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    
 }
 
 #profilepage-name-loc h1, #profilepage-name-loc h2 {
@@ -868,15 +888,15 @@ main {
 
 .profilepage-item {
     background-color: white;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-template-rows: auto;
-    min-width: 16em;
+    display: flex;
+    flex-direction: row;
+    width: 20em;
     margin: 1em;
     margin-left: 0;
     padding: 1em;
     margin-top: 0;
     border-radius: 1em;
+    gap: 1em;
 }
 
 .profilepage-item h2 {
@@ -885,7 +905,11 @@ main {
 
 .profilepage-img-item {
     align-self:center ;
+    width: 6em;
+    height: 6em;
+    object-fit: cover;
 }
+
 
 #left-profile-page {
     background-color: white;
@@ -1072,3 +1096,64 @@ input:focus {
     background: #fff;
 }
 
+/* CSS para o slide-bar */
+#price-slider {
+    height: 1em; 
+    margin-top: 1em; 
+}
+
+/* Estilo personalizado para as bolas */
+#price-slider .noUi-handle {
+    width: 1.5em; 
+    height: 1.5em;
+    border-radius: 50%; 
+}
+
+#price-slider .noUi-connect {
+    background: #007bff; 
+}
+
+
+
+select {
+    width: 100%;
+}
+
+
+
+/* CSS para o chat */
+#chat-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#messages-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.message-input {
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    max-width: 80%; /* Adicionando largura máxima para as mensagens */
+}
+
+.message-input p {
+    margin: 0; /* Removendo margem padrão dos parágrafos */
+}
+
+.message.sent {
+    background-color: #007bff; /* Fundo azul para mensagens enviadas */
+    color: #fff; /* Texto branco para mensagens enviadas */
+    align-self: flex-end; /* Alinhando as mensagens enviadas à direita */
+}
+
+.message.received {
+    background-color: #f2f2f2; /* Fundo cinza para mensagens recebidas */
+}
+/* Restante do seu CSS permanece o mesmo */

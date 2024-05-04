@@ -49,7 +49,7 @@ function drawPost(Session $session, $db, int $itemId) {
                         </div>
                     </div>
                     <div id="user-post">
-                        <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="100">
+                        <img id="img-user-post" src="<?= !empty($user->imageUrl) ? $user->imageUrl : "/Docs/img/9024845_user_circle_light_icon.png"?>" alt="" width="100">
                         <div class="user-info">
                             <h1>Username: <?= htmlspecialchars($user->username) ?></h1>
                             <div class="location-info">
@@ -101,7 +101,7 @@ function drawPostCreation($session, $db) {
     
     <main>
         
-        <section class="publish-section">
+        <section class="publish-section" action="action_add_item.php">
             <h1>Publish Item</h1>
             <form  method="post" action="../actions/action_add_item.php">
                 <div class="publish-div">
@@ -196,8 +196,7 @@ function drawPostCreation($session, $db) {
                         </label>
                     </div>
                 </div>
-<<<<<<< Updated upstream
-=======
+
                 <div class="publish-div">
                 <h1>Categories</h1>        
                         <label>
@@ -240,7 +239,7 @@ function drawPostCreation($session, $db) {
                             </select>
                         </label>
                 </div>
->>>>>>> Stashed changes
+
                 <button type="submit">Post</button>
             </form>
         </section>
@@ -257,7 +256,7 @@ function drawPostCreation($session, $db) {
     const previewImage = document.getElementById(`preview-image-${index}`);
 
     reader.onloadend = function () {
-        previewImage.style.display = "block"; // Show the preview image
+        previewImage.style.display = "block";
         previewImage.src = reader.result;
     }
 

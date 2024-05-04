@@ -16,11 +16,14 @@ function drawHeader(Session $session) { ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../html/style.css">
         <link rel="icon" href="../Docs/img/Eco.png" type="image/png">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
         <script src="../javascript/login_script.js" defer></script>
         <script src="../javascript/message.js" defer></script>
         <script src="../javascript/script.js" defer></script>
         <script src="../javascript/filter_items.js" defer></script>
-        <script src="../javascript/scroll.js" defer></script>
+        <script src="../javascript/chat.js" defer></script>
     </head>
     <body>
     
@@ -32,14 +35,14 @@ function drawHeader(Session $session) { ?>
                 <li><a href="#" onclick="filterItems('Clothing')">Clothing</a></li>
                 <li><a href="#" onclick="filterItems('Books')">Books</a></li>
                 <li><a href="#" onclick="filterItems('Furniture')">Furniture</a></li>
-                <li><a href="#" onclick="filterItems('Home Appliances')">Home Appliances</a></li>
+                <li><a href="#" onclick="filterItems('Home Appliances')">Appliances</a></li>
                 <li><a href="#" onclick="filterItems('Jewelry')">Jewelry</a></li>
             </ul>
         </div>
         <div id="utility-wrap">
-<<<<<<< Updated upstream
-            <button id="search-button" onclick="openSearchTab()">
-=======
+
+            
+
             <a href="/pages/conversations.php">
                 <button class="header-button">
                     <img src="/Docs/img/9042672_message_icon.png" alt="" width="27">
@@ -47,7 +50,7 @@ function drawHeader(Session $session) { ?>
             
             </a>
             <button class="header-button" onclick="openSearchTab()">
->>>>>>> Stashed changes
+
                 <img src="/Docs/img/9024781_gender_neuter_light_icon.png" alt="" width="30">
             </button> 
             <a href="/pages/cart.php">
@@ -55,27 +58,37 @@ function drawHeader(Session $session) { ?>
                     <img src="/Docs/img/9025034_shopping_cart_light_icon.png" alt="" width="30">
                 </button> 
             </a>
-<<<<<<< Updated upstream
+
             
-            <button id="profile-button">
-                <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
-            </button> 
-=======
+            
             <?php if ($session->isLoggedIn()) { ?>
             <a id="login-register-anchor" href="/pages/profilepage.php">
             <?php }  ?>
                 <button class="header-button" id="profile-button">
+
+            
                     <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
                     
                 </button> 
                 <?php if ($session->isLoggedIn()) { ?> </a> <?php }  ?>
->>>>>>> Stashed changes
+
             <div id="login-register">
             <?php if (!$session->isLoggedIn()) { ?>
             <a id="login-register-anchor" href="/pages/login.php">Login/Register</a>
             <?php } else { ?>
+                
+                
+                <ul id="options-header">
+                    <li>
+                        <a id="logout-anchor" href="/pages/postcreation.php">Publish Item</a>
+                    </li>
+                    <li>
+                        <a id="logout-anchor" href="/actions/action_logout.php">Logout</a>
+                    </li>
+                </ul>
+                
+                
             
-            <a id="logout-anchor" href="/actions/action_logout.php">Logout</a>
             </div>
             <?php } ?>
         </div>
@@ -97,36 +110,50 @@ function drawHeader(Session $session) { ?>
     
     <div id="search-tab" style="display: none;">
         <form action="/pages/search.php" method="GET" id="search-form">
-            <input type="text" name="query" placeholder="Search for products...">
+            <input id="input-search-header" type="text" name="query" placeholder="Search for products...">
             <button type="submit">Search</button>
+            
         </form>
+        <button id="filter-search-tab">Filters</button>
     </div>
 
-    <?php } ?>
 
-<?php function drawBody(Session $session, $db, int $limit, $category = null) { ?>
-
-    <div id="filter-box">
+    <aside id="filter-box">
         <h2>Filters</h2>
-        <label for="price-range">Price Range:</label>
-        <input type="range" id="price-range" name="price-range" min="0" max="1000" step="10">
+        <label for="price-slider">Price Range:</label>
+        <br>
+        <span id="price-display"><span id="min-price"></span> <span id="max-price"></span></span>
+        <div id="price-slider"></div>
+        
         <br>
         <label for="category-select">Category:</label>
-        <select id="category-select">
-            <option value="Electronics">Electronics</option>
-            <option value="Clothing">Clothing</option>
-            <option value="Books">Books</option>
-            <option value="Furniture">Furniture</option>
-            <option value="Home Appliances">Home Appliances</option>
-            <option value="Jewelry">Jewelry</option>
+        <select id="category-select" class="publish-select">
+            <option value="">Selecione a categoria...</option>
+        </select>
+        <br>
+        <label for="brand-select">Brand:</label>
+        <select id="brand-select" class="publish-select">
+            <option value="">Selecione a marca...</option>
+        </select>
+        <br>
+        <label for="condition-select">Condition:</label>
+        <select id="condition-select" class="publish-select">
+            <option value="">Selecione a condição...</option>
+        </select>
+        <br>
+        <label for="size-select">Size:</label>
+        <select id="size-select" class="publish-select">
+            <option value="">Selecione o tamanho...</option>
+        </select>
+        <br>
+        <label for="model-select">Model:</label>
+        <select id="model-select" class="publish-select">
+            <option value="">Selecione o modelo...</option>
         </select>
         <br>
         <button onclick="applyFilters()">Apply Filters</button>
-<<<<<<< Updated upstream
-    </div>
-=======
-    </aside>
 
+    </aside>
 
     <?php } ?>
 
@@ -134,8 +161,17 @@ function drawHeader(Session $session) { ?>
 
 
 <?php function drawBody(Session $session, $db, int $limit, $category = null) { ?>
->>>>>>> Stashed changes
+
     <main>
+        <div>
+            <header>
+                <h1 id="home-welcome">Welcome to <span id="ecox-home">EcoExchange</span></h1>
+            </header>
+            <img id="home-img" src="https://live.staticflickr.com/7023/6806424715_4c1cb053ef_o.jpg">
+            
+        </div>
+    
+    
     <section id="recomended">
         <h1>Produtos Recomendados</h1>  
         <h2><?php echo $limit; ?> produtos</h2>
@@ -153,7 +189,6 @@ function drawHeader(Session $session) { ?>
     <footer id="footer-page">
         <p>2024 &copy; EcoExchange</p>
     </footer>
-    <script src="scroll.js"></script>
     </body>
     </html>
   <?php } ?>    
@@ -176,6 +211,8 @@ function drawProducts($db, int $limit, $categoryName = null) {
         if ($items) {
             
             foreach($items as $row) {
+                $ownerId = $row->sellerId;
+                
                 
                 $condition = Item::getItemCondition($db, $row->itemId);
                 $brand = Item::getItemBrand($db, $row->itemId);            
@@ -185,7 +222,7 @@ function drawProducts($db, int $limit, $categoryName = null) {
                 <a href="/pages/post.php?id=<?= $row->itemId ?>" class="item-link">
                     <article id="index-product">
                         <div id=img-product>
-                            <img id="" src="<?= $image[0]->imageUrl ?>" alt="" style="width: 50%; height: auto;">
+                            <img id="" src="<?= $image[0]->imageUrl ?>" alt="" style="width: 90%; height: 90%;">
                         </div>
                         <h1><?= htmlspecialchars($row->title) ?></h1>
                         <h2><?= htmlspecialchars($row->description) ?></h2>
@@ -195,6 +232,11 @@ function drawProducts($db, int $limit, $categoryName = null) {
                         <form action="../actions/add_to_cart.php" method="post" class="add-to-cart-form">
                             <input type="hidden" name="item_id" value="<?= $row->itemId ?>">
                             <button type="submit" class="add-cart-button">Add to Cart</button> 
+                        </form>
+                        <form action="../pages/chat.php" method="post" class="send-message-form">
+                            <input type="hidden" name="owner_id" value="<?= $ownerId ?>">
+                            <input type="hidden" name="item_id" value="<?= $row->itemId ?>">
+                            <button type="submit" class="send-message-button">Enviar Mensagem</button>
                         </form>
                     </article>
                 </a>
@@ -208,7 +250,8 @@ function drawProducts($db, int $limit, $categoryName = null) {
     }
     ?>
     </main>
-<?php }?>
+<?php } ?>
+
 <script>
 function openSearchTab() {
     var searchTab = document.getElementById("search-tab");
@@ -218,4 +261,21 @@ function openSearchTab() {
         searchTab.style.display = "none";
     }
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Your script here
+var filterButton = document.getElementById("filter-search-tab");
+
+    // Toggle the display of the filter box when the button is clicked
+    filterButton.addEventListener("click", function() {
+        
+        var filterBox = document.getElementById("filter-box");
+        if (filterBox.style.display === "none") {
+            filterBox.style.display = "block";
+        } else {
+            filterBox.style.display = "none";
+        }
+    });
+});
+
 </script>
