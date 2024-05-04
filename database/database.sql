@@ -298,6 +298,19 @@ VALUES
 (4, 'Large'),
 (5, 'Extra Large');
 
+    -- Inserir dados de exemplo na tabela ItemModel
+    INSERT INTO ItemModel (ModelId, ModelName)
+    VALUES
+    (1, 'Galaxy S20'),
+    (2, 'Air Max 270'),
+    (3, 'MacBook Pro'),
+    (4, 'Air Force 1'),
+    (5, 'Superstar'),
+    (6, 'Air Force 13'),
+    (7, 'Air Force 12'),
+    (8, 'Air Force 11'),
+    (9, 'Air Force 10'),
+    (10, 'Air Force 120');
 -- Inserir dados de exemplo na tabela ItemModel
 INSERT INTO ItemModel (ModelId, ModelName)
 VALUES

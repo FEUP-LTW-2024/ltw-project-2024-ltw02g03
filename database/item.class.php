@@ -431,6 +431,141 @@ static function searchItemsByTitle(PDO $db, string $title, int $count) : array {
     }
 }
 
+<<<<<<< Updated upstream
+=======
+//Get all Brands
+static function getBrands(PDO $db) : array {
+    try {
+        $stmt = $db->query('SELECT BrandName FROM ItemBrand');
+        $brands = array();
+
+        while ($brand = $stmt->fetch()) {
+            $brands[] = $brand['BrandName'];
+        }
+
+        return $brands;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching brands: " . $e->getMessage());
+    }
+
+}
+
+//Get all Conditions
+static function getConditions(PDO $db) : array {
+    try {
+        $stmt = $db->query('SELECT ConditionName FROM ItemCondition');
+        $conditions = array();
+
+        while ($condition = $stmt->fetch()) {
+            $conditions[] =  $condition['ConditionName'];
+        }
+
+        return $conditions;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching conditions: " . $e->getMessage());
+    }
+
+
+}
+
+static function getConditionsObj(PDO $db): array {
+    try {
+        $stmt = $db->query('SELECT ConditionId, ConditionName FROM ItemCondition');
+        $conditions = array();
+
+        while ($condition = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $conditions[] = new Condition($condition['ConditionId'], $condition['ConditionName']);
+        }
+
+        return $conditions;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching conditions: " . $e->getMessage());
+    }
+}
+
+//Get all Sizes
+static function getSizes(PDO $db) : array {
+    try {
+        $stmt = $db->query('SELECT SizeName FROM ItemSize');
+        $sizes = array();
+
+        while ($size = $stmt->fetch()) {
+            $sizes[] = $size['SizeName'];
+        }
+
+        return $sizes;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching sizes: " . $e->getMessage());
+    }
+
+}
+
+static function getSizesObj(PDO $db): array {
+    try {
+        $stmt = $db->query('SELECT SizeId, SizeName FROM ItemSize');
+        $sizes = array();
+
+        while ($size = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $sizes[] = new Size($size['SizeId'], $size['SizeName']);
+        }
+
+        return $sizes;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching sizes: " . $e->getMessage());
+    }
+}
+
+//Get all Models
+static function getModels(PDO $db) : array {
+    try {
+        $stmt = $db->query('SELECT  ModelName FROM ItemModel');
+        $models = array();
+
+        while ($model = $stmt->fetch()) {
+            $models[] = ($model['ModelName']);
+        }
+
+        return $models;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching models: " . $e->getMessage());
+    }
+
+}
+
+//Get all Categories
+static function getCategories(PDO $db) : array {
+    try {
+        $stmt = $db->query('SELECT CategoryName FROM ProductCategory');
+        $categories = array();
+
+        while ($category = $stmt->fetch()) {
+            $categories[] = $category['CategoryName'];
+        }
+
+        return $categories;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching categories: " . $e->getMessage());
+    }
+
+}
+>>>>>>> Stashed changes
+
+static function getItemCategoryByName(PDO $db, string $categoryName) : ?Category {
+    try {
+        $stmt = $db->prepare('SELECT CategoryId FROM ProductCategory WHERE categoryname = ?');
+        $stmt->execute([$categoryName]);
+        $category = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($category) {
+            return new Category($category['CategoryId'], $categoryName); // Passing $categoryName instead of trying to fetch it
+        } else {
+            return null;
+        }
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching category: " . $e->getMessage());
+    }
+}
+
 
 }
 ?>

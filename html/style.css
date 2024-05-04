@@ -209,7 +209,7 @@ li a {
 
 
 
-#cart-button, #search-button, #profile-button {
+.header-button {
     border: none;
     background: none;
     padding: 0;
@@ -219,7 +219,7 @@ li a {
     align-items: center;
 }
 
-#cart-button:hover, #search-button:hover, #profile-button:hover {
+.header-button:hover {
     background-color: rgb(230, 230, 230);
     border-radius: 10em;
 }
@@ -245,9 +245,8 @@ li a {
     display: flex;
     justify-content: center;
 }
-
-#profile-button {
-    margin-right: 0;
+#profile-button{
+    margin-right: 0; /* Adjust the margin as needed */
 }
 
 #img-product img {
@@ -612,7 +611,7 @@ main {
 
 /* CSS para a seção de mensagens */
 #messages {
-    position: absolute;
+    position: fixed;
     top: 2.5em; 
     right: 1em; 
     z-index: 1000; 

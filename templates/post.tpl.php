@@ -6,6 +6,7 @@ require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/user.class.php');
+require_once(__DIR__ . '/../actions/action_add_item.php');
 
 function drawPost(Session $session, $db, int $itemId) { 
     
@@ -33,7 +34,7 @@ function drawPost(Session $session, $db, int $itemId) {
             <section id="post">
                 <div id="product-img-post">
                     <button class="img-button"><</button>
-                    <img src="../<?= $image[0]->imageUrl ?>" alt="">
+                    <img src="../<?= !empty($image[0]->imageUrl) ? $image[0]->imageUrl : "/Docs/img/9024845_user_circle_light_icon.png" ?>" alt="">
                     <button class="img-button">></button>  
                 </div>
                 <aside id="user-aside">
@@ -95,14 +96,14 @@ function drawPost(Session $session, $db, int $itemId) {
 
 
 
-function drawPostCreation($session) {
+function drawPostCreation($session, $db) {
     ?>
     
     <main>
         
         <section class="publish-section">
             <h1>Publish Item</h1>
-            <form  method="post">
+            <form  method="post" action="../actions/action_add_item.php">
                 <div class="publish-div">
                     <label>
                         Product Name <input type="text" name="productname"  required>
@@ -110,7 +111,7 @@ function drawPostCreation($session) {
                     <label>
                             Price  
                             <div>
-                                <input id="price-input" type="text" name="price"  required><span class="currency-symbol">€</span>
+                                <input id="price-input" ttype="number" name="price" min="0" step="0.01" required><span class="currency-symbol">€</span>
                             </div>
                     </label>
                 </div>
@@ -120,53 +121,126 @@ function drawPostCreation($session) {
                     </label>
                 </div>
                 <div class="publish-div">
-                    <label>
-                        Brand <input type="text" name="brand">
+                <label for="model">Model
+                        <input type="text" name="model" id="model" list="modelList" class="publish-select">
+                        <datalist id="modelList">
+                            <option value="none"></option>
+                            <?php 
+                            $models = Item::getModels($db);
+                            foreach($models as $model) {
+                                echo '<option value="' . htmlspecialchars($model) . '">' . htmlspecialchars($model) . '</option>';
+                            }
+                            ?>
+                        </datalist>
                     </label>
-                    <label>
-                        Model <input type="text" name="model">
+                    <label for="brand">Brand
+                        <input type="text" name="brand" id="brand" list="brandList" class="publish-select">
+                        <datalist id="brandList">
+                            <option value="none"></option>
+                            <?php 
+                            $brands = Item::getBrands($db);
+                            foreach($brands as $brand) {
+                                echo '<option value="' . htmlspecialchars($brand) . '">' . htmlspecialchars($brand) . '</option>';
+                            }
+                            ?>
+                        </datalist>
+
                     </label>
                     <label>
                         Condition 
                         <select name="condition"   class="publish-select" required>
-                            <option value="New">New</option>
-                            <option value="Used - Like New" selected>Used - Like New</option>
-                            <option value="Used - Good">Used - Good</option>
-                            <option value="Used - Fair">Used - Fair</option>
-                            <option value="Bad">Bad</option>
+                            <option></option>
+                            
+                            <?php 
+                                $conditions = Item::getConditionsObj($db);
+                                foreach($conditions as $cond) {
+                                    ?> <option value="<?= "$cond->conditionName" ?>"><?= "$cond->conditionName" ?></option>
+                                    
+                                    <?php
+                                }
+                            ?>
                         </select>
                     </label>
                     <label>
                         Size
-                        <select name="size" class="publish-select">
-                            <option value="Extra Small">Extra Small</option>
-                            <option value="Small" selected>Small</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Large">Large</option>
-                            <option value="Extra Large">Extra Large</option>
+                        <select name="size" class="publish-select" required>
+                            <option></option>
+                            <?php 
+                                $conditions = Item::getSizesObj($db);
+                                foreach($conditions as $cond) {
+                                    ?> <option value="<?= htmlentities("$cond->sizeName") ?>"><?= htmlspecialchars("$cond->sizeName") ?></option>
+                                    
+                                    <?php
+                                }
+                            ?>
                         </select>
                     </label>
                 </div>
                 <div class="publish-div">
                     <h1>Images</h1>
                     <div class="image-container">
-                        <label class="image-input" >
-                            <input name="img1" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple="" data-testid="attach-photos-input" data-cy="attach-photos-input" onchange="previewImage(event, 0)"  required>
+                        <label class="image-input" name="image1">
+                            <input name="img1" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple="" data-testid="attach-photos-input" data-cy="attach-photos-input" onchange="previewImage(event, 0)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
                             <img class="preview-image" id="preview-image-0" src="" alt="">
                         </label>
-                        <label class="image-input">
+                        <label class="image-input" name="image2">
                             <input name="img2" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple="" data-testid="attach-photos-input" data-cy="attach-photos-input" onchange="previewImage(event, 1)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
                             <img class="preview-image" id="preview-image-1" src="" alt="">
                         </label>
-                        <label class="image-input">
+                        <label class="image-input" name="image3">
                             <input name="img3" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple="" data-testid="attach-photos-input" data-cy="attach-photos-input" onchange="previewImage(event, 2)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
                             <img class="preview-image" id="preview-image-2" src="" alt="">
                         </label>
                     </div>
                 </div>
+<<<<<<< Updated upstream
+=======
+                <div class="publish-div">
+                <h1>Categories</h1>        
+                        <label>
+                            <select name="category1" class="publish-select">
+                                <option value="none">- None -</option>
+                                <?php 
+                                    $categories = Item::getCategories($db);
+                                    foreach($categories as $categ) {
+                                        ?> <option value="<?= htmlentities("$categ") ?>"><?= htmlspecialchars("$categ") ?></option>
+                                        
+                                        <?php
+                                    }
+                                ?>
+                            </select>
+                        </label>
+                        <label>
+                             <select name="category2" class="publish-select">
+                                <option value="none">- None -</option>
+                                <?php 
+                                    $categories = Item::getCategories($db);
+                                    foreach($categories as $categ) {
+                                        ?> <option value="<?= htmlentities("$categ") ?>"><?= htmlspecialchars("$categ") ?></option>
+                                        
+                                        <?php
+                                    }
+                                ?>
+                            </select>
+                        </label>
+                        <label>
+                        <select name="category3" class="publish-select">
+                            <option value="none">- None -</option>
+                                <?php 
+                                    $categories = Item::getCategories($db);
+                                    foreach($categories as $categ) {
+                                        ?> <option value="<?= htmlentities("$categ") ?>"><?= htmlspecialchars("$categ") ?></option>
+                                        
+                                        <?php
+                                    }
+                                ?>
+                            </select>
+                        </label>
+                </div>
+>>>>>>> Stashed changes
                 <button type="submit">Post</button>
             </form>
         </section>

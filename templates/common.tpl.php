@@ -37,18 +37,39 @@ function drawHeader(Session $session) { ?>
             </ul>
         </div>
         <div id="utility-wrap">
+<<<<<<< Updated upstream
             <button id="search-button" onclick="openSearchTab()">
+=======
+            <a href="/pages/conversations.php">
+                <button class="header-button">
+                    <img src="/Docs/img/9042672_message_icon.png" alt="" width="27">
+                </button>
+            
+            </a>
+            <button class="header-button" onclick="openSearchTab()">
+>>>>>>> Stashed changes
                 <img src="/Docs/img/9024781_gender_neuter_light_icon.png" alt="" width="30">
             </button> 
             <a href="/pages/cart.php">
-                <button id="cart-button">
+                <button class="header-button">
                     <img src="/Docs/img/9025034_shopping_cart_light_icon.png" alt="" width="30">
                 </button> 
             </a>
+<<<<<<< Updated upstream
             
             <button id="profile-button">
                 <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
             </button> 
+=======
+            <?php if ($session->isLoggedIn()) { ?>
+            <a id="login-register-anchor" href="/pages/profilepage.php">
+            <?php }  ?>
+                <button class="header-button" id="profile-button">
+                    <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
+                    
+                </button> 
+                <?php if ($session->isLoggedIn()) { ?> </a> <?php }  ?>
+>>>>>>> Stashed changes
             <div id="login-register">
             <?php if (!$session->isLoggedIn()) { ?>
             <a id="login-register-anchor" href="/pages/login.php">Login/Register</a>
@@ -101,7 +122,19 @@ function drawHeader(Session $session) { ?>
         </select>
         <br>
         <button onclick="applyFilters()">Apply Filters</button>
+<<<<<<< Updated upstream
     </div>
+=======
+    </aside>
+
+
+    <?php } ?>
+
+
+
+
+<?php function drawBody(Session $session, $db, int $limit, $category = null) { ?>
+>>>>>>> Stashed changes
     <main>
     <section id="recomended">
         <h1>Produtos Recomendados</h1>  
