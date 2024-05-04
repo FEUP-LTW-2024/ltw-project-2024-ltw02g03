@@ -75,6 +75,40 @@ class User {
             throw new Exception("Error fetching username: " . $e->getMessage());
         }
     }
+    //Get All Users
+    static function getAllUsers (PDO $db) : array
+{
+    try {
+        $stmt = $db->prepare('SELECT * FROM User');
+        $stmt->execute();
+        $users = [];
+        while ($user = $stmt->fetch()) {
+            $admin = (bool) $user['Admin'];
+            $users[] = new User(
+                $user['UserId'],
+                $user['FirstName'],
+                $user['LastName'],
+                $user['Username'],
+                $user['Email'],
+                $user['Password'],
+                $user['JoinDate'],
+                $user['Address'],
+                $user['City'],
+                $user['District'],
+                $user['Country'],
+                $user['PostalCode'],
+                $user['Phone'],
+                $user['ImageUrl'],
+                $admin
+            );
+        }
+        return $users;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching users: " . $e->getMessage());
+    }
+}
+
+
     // Get a User
     static function getUser(PDO $db, int $id) : ?User {
         try {

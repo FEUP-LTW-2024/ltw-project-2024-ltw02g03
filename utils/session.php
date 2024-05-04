@@ -40,6 +40,10 @@
       public function getMessages() {
         return $this->messages;
       }
+      public function isAdmin() : bool {
+        return isset($_SESSION['admin']) && $_SESSION['admin'] === true;
+    }
+    
       public function addAdmin(bool $admin) {
         $_SESSION['admin'] = $admin;
       }

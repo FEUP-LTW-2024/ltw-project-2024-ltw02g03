@@ -612,5 +612,56 @@ static function getCategories(PDO $db) : array {
 
 }
 
+
+//Create a new Brand
+static function createBrand(PDO $db, string $brandName) {
+    try {
+        $stmt = $db->prepare('INSERT INTO ItemBrand (BrandName) VALUES (?)');
+        $stmt->execute([$brandName]);
+    } catch (PDOException $e) {
+        throw new Exception("Error creating brand: " . $e->getMessage());
+    }
 }
+
+//Create a new Condition
+static function createCondition(PDO $db, string $conditionName) {
+    try {
+        $stmt = $db->prepare('INSERT INTO ItemCondition (ConditionName) VALUES (?)');
+        $stmt->execute([$conditionName]);
+    } catch (PDOException $e) {
+        throw new Exception("Error creating condition: " . $e->getMessage());
+    }
+}
+
+//Create a new Size
+static function createSize(PDO $db, string $sizeName) {
+    try {
+        $stmt = $db->prepare('INSERT INTO ItemSize (SizeName) VALUES (?)');
+        $stmt->execute([$sizeName]);
+    } catch (PDOException $e) {
+        throw new Exception("Error creating size: " . $e->getMessage());
+    }
+}
+//Create a new Model
+static function createModel(PDO $db, string $modelName) {
+    try {
+        $stmt = $db->prepare('INSERT INTO ItemModel (ModelName) VALUES (?)');
+        $stmt->execute([$modelName]);
+    } catch (PDOException $e) {
+        throw new Exception("Error creating model: " . $e->getMessage());
+    }
+}
+
+//Create a new Category
+static function createCategory(PDO $db, string $categoryName) {
+    try {
+        $stmt = $db->prepare('INSERT INTO ProductCategory (CategoryName) VALUES (?)');
+        $stmt->execute([$categoryName]);
+    } catch (PDOException $e) {
+        throw new Exception("Error creating category: " . $e->getMessage());
+    }
+}
+
+}
+
 ?>
