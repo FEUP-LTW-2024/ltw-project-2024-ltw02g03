@@ -309,6 +309,16 @@
     (3, 'MacBook Pro'),
     (4, 'Air Force 1'),
     (5, 'Superstar');
+    
+-- Inserir dados de exemplo na tabela ItemModel
+INSERT INTO ItemModel (ModelId, ModelName)
+VALUES
+(1, 'Galaxy S20'),
+(2, 'Air Max 270'),
+(3, 'MacBook Pro'),
+(4, 'Air Force 1'),
+(5, 'Superstar');
+
 
     -- Inserir dados de exemplo na tabela ItemImage
     INSERT INTO ItemImage (ItemId, ImageId)
