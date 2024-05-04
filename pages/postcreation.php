@@ -19,6 +19,6 @@
   
 
   drawHeader($session);
-  drawPostCreation($session);
+  drawPostCreation($session, $db);
   drawFooter();
 ?>

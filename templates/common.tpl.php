@@ -40,27 +40,38 @@ function drawHeader(Session $session) { ?>
             </ul>
         </div>
         <div id="utility-wrap">
+
+            
+
             <a href="/pages/conversations.php">
-                <button id="chat-button">
-                    
+                <button class="header-button">
+                    <img src="/Docs/img/9042672_message_icon.png" alt="" width="27">
                 </button>
+            
             </a>
-            <button id="search-button" onclick="openSearchTab()">
+            <button class="header-button" onclick="openSearchTab()">
+
                 <img src="/Docs/img/9024781_gender_neuter_light_icon.png" alt="" width="30">
             </button> 
             <a href="/pages/cart.php">
-                <button id="cart-button">
+                <button class="header-button">
                     <img src="/Docs/img/9025034_shopping_cart_light_icon.png" alt="" width="30">
                 </button> 
             </a>
+
+            
+            
             <?php if ($session->isLoggedIn()) { ?>
             <a id="login-register-anchor" href="/pages/profilepage.php">
             <?php }  ?>
-                <button id="profile-button">
+                <button class="header-button" id="profile-button">
+
+            
                     <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
                     
                 </button> 
                 <?php if ($session->isLoggedIn()) { ?> </a> <?php }  ?>
+
             <div id="login-register">
             <?php if (!$session->isLoggedIn()) { ?>
             <a id="login-register-anchor" href="/pages/login.php">Login/Register</a>
@@ -141,38 +152,8 @@ function drawHeader(Session $session) { ?>
         </select>
         <br>
         <button onclick="applyFilters()">Apply Filters</button>
-    </aside>
 
-    <div id="filter-box">
-    <h2>Filters</h2>
-    <label for="price-slider">Price Range:</label>
-    <br>
-    <span id="price-display"><span id="min-price"></span> <span id="max-price"></span></span>
-    <div id="price-slider"></div>
-    
-    <br>
-    <label for="category-select">Category:</label>
-    <select id="category-select">
-    </select>
-    <br>
-    <label for="brand-select">Brand:</label>
-    <select id="brand-select">
-    </select>
-    <br>
-    <label for="condition-select">Condition:</label>
-    <select id="condition-select">
-    </select>
-    <br>
-    <label for="size-select">Size:</label>
-    <select id="size-select">
-    </select>
-    <br>
-    <label for="model-select">Model:</label>
-    <select id="model-select">
-    </select>
-    <br>
-    <button onclick="applyFilters()">Apply Filters</button>
-</div>
+    </aside>
 
     <?php } ?>
 
@@ -180,6 +161,7 @@ function drawHeader(Session $session) { ?>
 
 
 <?php function drawBody(Session $session, $db, int $limit, $category = null) { ?>
+
     <main>
         <div>
             <header>

@@ -19,22 +19,60 @@ $user = User::getUser($db, $session->getId());
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $productName = $_POST['productname'] ?? '';
-    $price = floatval($_POST['price'] ?? 0); // Ensure it's a float
+
+    $price = floatval($_POST['price'] ?? 0); 
+
     $description = $_POST['description'] ?? '';
     $brandname = $_POST['brand'] ?? '';
     $modelname = $_POST['model'] ?? '';
     $conditionname = $_POST['condition'] ?? '';
     $sizename = $_POST['size'] ?? '';
 
+    $category1name = $_POST['category1'] ?? '';
+    $category2name = $_POST['category2'] ?? '';
+    $category3name = $_POST['category3'] ?? '';
+    $image1 = $_POST['image1'] ?? '';
+    $image2 = $_POST['image2'] ?? '';
+    $image3 = $_POST['image3'] ?? '';
+
+    
+
     // Retrieve IDs for brand, model, condition, and size
-    $brand = $brandname ? Item::getItemBrandByName($db, $brandname) : null;
+    if($brandname != "none") {
+        $brand = $brandname ? Item::getItemBrandByName($db, $brandname) : null;
+    }
+    
     $model = $modelname ? Item::getItemModelByName($db, $modelname) : null;
+
     $condition = $conditionname ? Item::getItemConditionByName($db, $conditionname) : null;
     $size = $sizename ? Item::getItemSizeByName($db, $sizename) : null;
+    $categories = [];
+    
+    if($category1name != "none") {
+        $category1 = Item::getItemCategoryByName($db, $category1name);
+        if ($category1) {
+            $categories[] = $category1;
+        }
+    }
+    if($category2name != "none") {
+        $category2 = Item::getItemCategoryByName($db, $category2name);
+        if ($category2) {
+            $categories[] = $category2;
+        }
+    }
+    if($category3name != "none") {
+        $category3 = Item::getItemCategoryByName($db, $category3name);
+        if ($category3) {
+            $categories[] = $category3;
+        }
+    }
+    
+
 
     // Check if brand, model, condition, and size are found
-    if (!$brand || !$model || !$condition || !$size) {
-        echo "Error: Brand, model, condition, or size not found.";
+    if (!$condition || !$size) {
+        $session->addMessage('error', 'Something went wrong');
+
     } else {
         // Insert data into the database
         $sql = "INSERT INTO Item (SellerId, Title, Description, Price, BrandId, ModelId, ConditionId, SizeId)
@@ -42,12 +80,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $db->prepare($sql);
 
         if ($stmt) {
-        
+
 
             if ($stmt->execute([$user->userId,$productName,$description,$price,$brand->brandId,$model->modelId,$condition->conditionId,$size->sizeId])) {
-                echo "Item added successfully.";
+                $itemId = $db->lastInsertId();
+                foreach ($categories as $category) {
+                    
+                        $sql = "INSERT INTO ItemCategory (ItemId, CategoryId) VALUES (:itemId, :categoryId)";
+                        $stmt = $db->prepare($sql);
+                        $stmt->execute([$itemId, $category->categoryId]);   
+                }
+                
+                $session->addMessage('success', 'Successfully published');
+                header("Location: ../pages/post.php?id= $itemId ");
+                exit();
+                
             } else {
-                echo "Error: " . implode(', ', $stmt->errorInfo());
+                
+                $session->addMessage('error', 'Something went wrong');
+               
+
             }
 
             $stmt->closeCursor(); // Close cursor to allow next execution
