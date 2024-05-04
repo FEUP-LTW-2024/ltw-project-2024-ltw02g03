@@ -193,7 +193,7 @@ header li a {
 
 
 
-#cart-button, #search-button, #profile-button {
+.header-button {
     border: none;
     background: none;
     padding: 0;
@@ -203,7 +203,7 @@ header li a {
     align-items: center;
 }
 
-#cart-button:hover, #search-button:hover, #profile-button:hover {
+.header-button:hover {
     background-color: rgb(230, 230, 230);
     border-radius: 10em;
 }
@@ -615,7 +615,7 @@ body {
 
 /* CSS para a seção de mensagens */
 #messages {
-    position: absolute;
+    position: fixed;
     top: 2.5em; 
     right: 1em; 
     z-index: 1000; 
