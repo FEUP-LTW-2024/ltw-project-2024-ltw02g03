@@ -374,6 +374,17 @@ static function getAllAdmins(PDO $db) : array {
 
 
 }
+
+// Update user address
+static function updateUserAddress(PDO $db, int $userId, string $address, string $city, string $district, string $country) : void {
+    try {
+        $stmt = $db->prepare('UPDATE User SET Address = ?, City = ?, District = ?, Country = ? WHERE UserId = ?');
+        $stmt->execute([$address, $city, $district, $country, $userId]);
+    } catch (PDOException $e) {
+        throw new Exception("Error updating user address: " . $e->getMessage());
+    }
+
+}
 }
 
 

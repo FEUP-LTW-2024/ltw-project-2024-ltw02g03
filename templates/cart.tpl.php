@@ -62,9 +62,13 @@ function drawCart(Session $session, $db)
                     <div class="cart-total">
                         <h1>Total Price:</h1>
                         <p class="total-price"><?= number_format($totalPrice, 2) ?>€</p>
-                        <form id="cart-form" action="/checkout.php" method="post">
-                            <button id="pay-cart-button" type="submit">Pay</button>
-                        </form>
+                        <form id="cart-form" action="../pages/checkout.php" method="post">
+                        <?php foreach ($cartItems as $cartItem) : ?>
+                            <input type="hidden" name="item_ids[]" value="<?= $cartItem->itemId ?>">
+                        <?php endforeach; ?>
+                        <button id="pay-cart-button" type="submit">Pay</button>
+                    </form>
+            
                     </div>
                 </section>
             </main>
@@ -76,18 +80,11 @@ function drawCart(Session $session, $db)
                 <div class="cart-items">
                         <h3 id="no-items">No items currently in the cart</h3>
                     </div>
+                    
                     <div class="cart-total">
                         <h1>Total Price:</h1>
                         <p class="total-price"><?= number_format($totalPrice, 2) ?>€</p>
-                        <form id="cart-form" action="/checkout.php" method="post">
-                            <button id="pay-cart-button" type="submit">Pay</button>
-                        </form>
-                    </div>
-
-                    <div class="cart-total">
-                        <h1>Total Price:</h1>
-                        <p class="total-price"><?= number_format($totalPrice, 2) ?>€</p>
-                        <form id="cart-form" action="/checkout.php" method="post">
+                        <form id="cart-form" action="../pages" method="post">
                             <button id="pay-cart-button" type="submit">Pay</button>
                         </form>
                     </div>
