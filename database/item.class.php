@@ -68,21 +68,34 @@ class Item {
     public string $description;
     public float $price;
     public string $listingDate;
+    public bool $active;
 
-    public function __construct(int $itemId, int $sellerId,  string $title, string $description, float $price, string $listingDate) {
+    public function __construct(int $itemId, int $sellerId, string $title, string $description, float $price, string $listingDate, bool $active) {
         $this->itemId = $itemId;
         $this->sellerId = $sellerId;
         $this->title = $title;
         $this->description = $description;
         $this->price = $price;
         $this->listingDate = $listingDate;
+        $this->active = $active;
     }
+
+    //Update item Status
+    static function updateItemStatus(PDO $db, int $itemId, bool $active) {
+        try {
+            $stmt = $db->prepare('UPDATE Item SET Active = ? WHERE ItemId = ?');
+            $stmt->execute([$active, $itemId]);
+        } catch (PDOException $e) {
+            throw new Exception("Error updating item status: " . $e->getMessage());
+        }
+    }
+
 
     // Get item by Id
     static function getItem(PDO $db, int $id) : ?Item {
         try {
             $stmt = $db->prepare('
-                SELECT ItemId, SellerId, Title, Description, Price, ListingDate
+                SELECT ItemId, SellerId, Title, Description, Price, ListingDate, Active
                 FROM Item
                 WHERE ItemId = ?
             ');
@@ -95,20 +108,122 @@ class Item {
             if (!$item) {
                 return null;
             }
-    
-            // Return a new Item object
+            $active = (bool) $item['Active'];
             return new Item(
                 $item['ItemId'],
                 $item['SellerId'],
                 $item['Title'],
                 $item['Description'],
                 $item['Price'],
-                $item['ListingDate']
+                $item['ListingDate'],
+                $active
             );
         } catch (PDOException $e) {
             throw new Exception("Error fetching item: " . $e->getMessage());
         }
     }
+
+    // Get x Items
+    static function getItems(PDO $db, int $limit) : array {
+        try {
+            $stmt = $db->prepare('
+                SELECT ItemId, SellerId, Title, Description, Price, ListingDate, Active
+                FROM Item
+                LIMIT :limit
+            ');
+            $stmt->bindValue(':limit', $limit, PDO::PARAM_INT); // Bind do valor do limite
+            $stmt->execute();
+            $items = array();
+
+            while ($item = $stmt->fetch()) {
+                if ($item['Active']) {
+                    $active = (bool) $item['Active'];
+                    $items[] = new Item(
+                        $item['ItemId'],
+                        $item['SellerId'],
+                        $item['Title'],
+                        $item['Description'],
+                        $item['Price'],
+                        $item['ListingDate'],
+                        $active
+                    );
+                }
+            }
+            return $items;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching items: " . $e->getMessage());
+        }
+    }
+
+    // Search Items
+    static function searchItems(PDO $db, string $search, int $count) : array {
+        try {
+            $stmt = $db->prepare('
+                SELECT ItemId, SellerId, Title, Description, Price, ListingDate, Active
+                FROM Item
+                WHERE Title LIKE ? AND Active = 1
+                LIMIT ?
+            ');
+            $stmt->bindValue(1, '%' . $search . '%', PDO::PARAM_STR);
+            $stmt->bindValue(2, $count, PDO::PARAM_INT);
+            $stmt->execute();
+            $items = array();
+
+            while ($item = $stmt->fetch()) {
+                $active = (bool) $item['Active'];
+                $items[] = new Item(
+                    $item['ItemId'],
+                    $item['SellerId'],
+                    $item['Title'],
+                    $item['Description'],
+                    $item['Price'],
+                    $item['ListingDate'],
+                    $active
+                );
+            }
+
+            return $items;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching items by title: " . $e->getMessage());
+        }
+    }
+
+    // Get items by category name
+    static function getItemsByCategoryName(PDO $db, int $limit, string $categoryName): array {
+        try {
+            $stmt = $db->prepare('
+                SELECT Item.ItemId, SellerId, Title, Description, Price, ListingDate, Active
+                FROM Item
+                JOIN ItemCategory ON Item.ItemId = ItemCategory.ItemId
+                JOIN ProductCategory ON ItemCategory.CategoryId = ProductCategory.CategoryId
+                WHERE ProductCategory.CategoryName = ? AND Active = 1
+                LIMIT ?
+            ');
+            $stmt->bindValue(1, $categoryName, PDO::PARAM_STR);
+            $stmt->bindValue(2, $limit, PDO::PARAM_INT);
+            $stmt->execute();
+            $items = array();
+
+            while ($item = $stmt->fetch()) {
+                $active = (bool) $item['Active'];   
+                $items[] = new Item(
+                    $item['ItemId'],
+                    $item['SellerId'],
+                    $item['Title'],
+                    $item['Description'],
+                    $item['Price'],
+                    $item['ListingDate'],
+                    $active
+                );
+            }
+
+            return $items;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching items by category: " . $e->getMessage());
+        }
+    }
+
+
     //Get item name by ID
     static function getItemNameById(PDO $db, int $id) : string {
         try {
@@ -151,85 +266,10 @@ class Item {
     }
     
 
-    // Get x Items
-    static function getItems(PDO $db, int $limit) : array {
-        try {
-            $stmt = $db->prepare('
-                SELECT ItemId, SellerId, Title, Description, Price, ListingDate
-                FROM Item
-                LIMIT :limit
-            ');
-            $stmt->bindValue(':limit', $limit, PDO::PARAM_INT); // Bind do valor do limite
-            $stmt->execute();
-            $items = array();
 
-            while ($item = $stmt->fetch()) {
-                $items[] = new Item(
-                    $item['ItemId'],
-                    $item['SellerId'],
-                    $item['Title'],
-                    $item['Description'],
-                    $item['Price'],
-                    $item['ListingDate']
-                );
-            }
-            return $items;
-        } catch (PDOException $e) {
-            throw new Exception("Error fetching items: " . $e->getMessage());
-        }
-    }
-    static function searchItems(PDO $db, string $search, int $count) : array {
-        $stmt = $db->prepare('SELECT ItemId, Name, Description, Price, ListingDate 
-        FROM Item WHERE Name LIKE ? LIMIT ?');
-        $stmt->execute(array($search . '%', $count));
     
-        $item = array();
-        while ($item = $stmt->fetch()) {
-          $items[] = new Item(
-            $item['ItemId'],
-            $item['SellerId'],
-            $item['Name'],
-            $item['Description'],
-            $item['Price'],
-            $item['ListingDate']
-
-          );
-        }
     
-        return $items;
-      }
-    
-      static function getItemsByCategoryName(PDO $db, int $limit, string $categoryName): array {
-        try {
-            $stmt = $db->prepare('
-                SELECT Item.ItemId, SellerId, Title, Description, Price, ListingDate
-                FROM Item
-                JOIN ItemCategory ON Item.ItemId = ItemCategory.ItemId
-                JOIN ProductCategory ON ItemCategory.CategoryId = ProductCategory.CategoryId
-                WHERE ProductCategory.CategoryName = ?
-                LIMIT ?
-            ');
-            $stmt->bindValue(1, $categoryName, PDO::PARAM_STR);
-            $stmt->bindValue(2, $limit, PDO::PARAM_INT);
-            $stmt->execute();
-            $items = array();
-    
-            while ($item = $stmt->fetch()) {
-                $items[] = new Item(
-                    $item['ItemId'],
-                    $item['SellerId'],
-                    $item['Title'],
-                    $item['Description'],
-                    $item['Price'],
-                    $item['ListingDate']
-                );
-            }
-    
-            return $items;
-        } catch (PDOException $e) {
-            throw new Exception("Error fetching items by category: " . $e->getMessage());
-        }
-    }
+      
 
     // Get total products count
     static function getCountbyCategory($db, ?string $categoryName = null) {

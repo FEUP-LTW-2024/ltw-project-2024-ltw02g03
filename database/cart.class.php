@@ -72,27 +72,52 @@ class Cart
     {
         try {
             $stmt = $db->prepare('
-                SELECT *
-                FROM Cart
-                WHERE UserId = ?
+                SELECT 
+                    Cart.CartId, 
+                    Cart.UserId, 
+                    Cart.ItemId, 
+                    Cart.Quantity
+                    
+                FROM 
+                    Cart
+                INNER JOIN 
+                    Item ON Cart.ItemId = Item.ItemId
+                WHERE 
+                    Cart.UserId = ?
             ');
-
+    
             $stmt->execute(array($userId));
-
+    
             $items = array();
-
+    
             while ($item = $stmt->fetch()) {
                 $items[] = new Cart(
                     $item['CartId'],
                     $item['UserId'],
                     $item['ItemId'],
                     $item['Quantity']
+                    
                 );
             }
-
+    
             return $items;
         } catch (PDOException $e) {
             throw new Exception("Error fetching items from cart: " . $e->getMessage());
+        }
+    }
+    
+    //Clear the cart of a user
+    static function clearCart(PDO $db, int $userId): void
+    {
+        try {
+            $stmt = $db->prepare('
+                DELETE FROM Cart
+                WHERE UserId = ?
+            ');
+
+            $stmt->execute(array($userId));
+        } catch (PDOException $e) {
+            throw new Exception("Error clearing cart: " . $e->getMessage());
         }
     }
 
