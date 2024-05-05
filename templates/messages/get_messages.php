@@ -4,6 +4,7 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../../database/connection.db.php');
 require_once(__DIR__ . '/../../database/communication.class.php');
 require_once(__DIR__ . '/../../utils/session.php');
+require_once(__DIR__ . '/../../database/user.class.php');
 $session = new Session();
 
 try {
@@ -13,8 +14,8 @@ try {
     $itemId = isset($_GET['item_id']) ? intval($_GET['item_id']) : 0;
     $senderId = $session->getId();
     
-    $messages = Communication::getCommunicationsForItem($db, $senderId, $ownerId, $itemId);
-
+    $messages = Communication::getCommunicationsForItemWithSenderName($db, $senderId, $ownerId, $itemId); // Modificação aqui
+    
     header('Content-Type: application/json');
 
     echo json_encode($messages);

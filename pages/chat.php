@@ -24,6 +24,7 @@ if(isset($_POST['owner_id'], $_POST['item_id'])) {
     $ownerId = isset($_POST['owner_id']) ? intval($_POST['owner_id']) : 0; 
     $itemId = isset($_POST['item_id']) ? intval($_POST['item_id']) : 0; 
     
+    
     try {
         $communications = Communication::getCommunicationsForItem($db, $userId, $ownerId, $itemId);
     } catch (Exception $e) {
