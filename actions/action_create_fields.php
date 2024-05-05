@@ -1,7 +1,9 @@
 <?php
-
+require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/item.class.php');
+require_once(__DIR__ . '/../database/user.class.php');
+$session = new Session();
 
 // Verifique se um formulário para criar uma nova marca foi enviado
 if (isset($_POST['createBrand'])) {
@@ -9,11 +11,15 @@ if (isset($_POST['createBrand'])) {
     $brandName = $_POST['brandName'];
 
     try {
-        Item::createBrand($db, $brandName);
-        echo "Brand created successfully!";
+        $brand=Item::createBrand($db, $brandName);
+        if($brand==0)
+            $session->addMessage('success', 'Brand created successfully!');
+        else
+            $session->addMessage('error', 'Brand already exists!');
     } catch (Exception $e) {
-        echo "Error creating brand: " . $e->getMessage();
+        $session->addMessage('error', 'Error removing model!');        
     }
+    header('Location: /../pages/profilepage.php');
 }
 
 // Verifique se um formulário para criar uma nova condição foi enviado
@@ -22,11 +28,16 @@ if (isset($_POST['createCondition'])) {
     $conditionName = $_POST['conditionName'];
 
     try {
-        Item::createCondition($db, $conditionName);
-        echo "Condition created successfully!";
+        $condition=Item::createCondition($db, $conditionName);
+        if($condition==0)
+            $session->addMessage('success', 'Condition created successfully!');
+        else
+            $session->addMessage('error', 'Condition already exists!');
     } catch (Exception $e) {
-        echo "Error creating condition: " . $e->getMessage();
+        $session->addMessage('error', 'Error creating condition!');
     }
+    header('Location: /../pages/profilepage.php');
+
 }
 
 // Verifique se um formulário para criar um novo tamanho foi enviado
@@ -35,11 +46,16 @@ if (isset($_POST['createSize'])) {
     $sizeName = $_POST['sizeName'];
 
     try {
-        Item::createSize($db, $sizeName);
-        echo "Size created successfully!";
+        $size=Item::createSize($db, $sizeName);
+        if($size==0)
+            $session->addMessage('success', 'Size created successfully!');
+        else
+            $session->addMessage('error', 'Size already exists!');
     } catch (Exception $e) {
-        echo "Error creating size: " . $e->getMessage();
+        $session->addMessage('error', 'Error creating size!');
     }
+    header('Location: /../pages/profilepage.php');
+
 }
 
 // Verifique se um formulário para criar uma nova categoria foi enviado
@@ -48,11 +64,16 @@ if (isset($_POST['createCategory'])) {
     $categoryName = $_POST['categoryName'];
 
     try {
-        Item::createCategory($db, $categoryName);
-        echo "Category created successfully!";
+        $category=Item::createCategory($db, $categoryName);
+        if($category==0)
+            $session->addMessage('success', 'Category created successfully!');
+        else
+            $session->addMessage('error', 'Category already exists!');
     } catch (Exception $e) {
-        echo "Error creating category: " . $e->getMessage();
+        $session->addMessage('error', 'Error creating category!');
     }
+    header('Location: /../pages/profilepage.php');
+
 }
 
 // Verifique se um formulário para criar um novo modelo de item foi enviado
@@ -61,11 +82,31 @@ if (isset($_POST['createModel'])) {
     $modelName = $_POST['modelName'];
 
     try {
-        Item::createModel($db, $modelName);
-        echo "Model created successfully!";
+        $model=Item::createModel($db, $modelName);
+        if($model==0)
+            $session->addMessage('success', 'Model created successfully!');
+        else
+            $session->addMessage('error', 'Model already exists!');
     } catch (Exception $e) {
-        echo "Error creating model: " . $e->getMessage();
+        $session->addMessage('error', 'Error creating model!');
     }
+    header('Location: /../pages/profilepage.php');
+
 }
+
+// Verifique se um formulário para elevar um usuário a administrador foi enviado
+if (isset($_POST['elevateAdmin'])) {
+    $db = getDatabaseConnection();
+    $userId = $_POST['userId'];
+    try {
+        User::elevateUserToAdmin($db, $userId);
+        $session->addMessage('success', 'User elevated to admin successfully!');
+    } catch (Exception $e) {
+        $session->addMessage('error', 'Error elevating user to admin!');
+    }
+    header('Location: /../pages/profilepage.php');
+
+}
+
 
 ?>

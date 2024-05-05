@@ -98,31 +98,34 @@ function drawPost(Session $session, $db, int $itemId) {
 
 
 function drawPostCreation($session, $db) {
+    $images= Item::getAllImages($db);
+    var_dump($images);
+    
     ?>
     
+     
     <main>
-        
-        <section class="publish-section" action="action_add_item.php">
+        <section class="publish-section">
             <h1>Publish Item</h1>
-            <form  method="post" action="../actions/action_add_item.php">
+            <form method="post" action="../actions/action_add_item.php" enctype="multipart/form-data">
                 <div class="publish-div">
                     <label>
-                        Product Name <input type="text" name="productname"  required>
+                        Product Name <input type="text" name="productname" required>
                     </label>
                     <label>
-                            Price  
-                            <div>
-                                <input id="price-input" ttype="number" name="price" min="0" step="0.01" required><span class="currency-symbol">€</span>
-                            </div>
+                        Price  
+                        <div>
+                            <input id="price-input" type="number" name="price" min="0" step="0.01" required><span class="currency-symbol">€</span>
+                        </div>
                     </label>
                 </div>
                 <div class="publish-div">
-                     <label>
-                        Description <input id="description-input" type="text" name="description" placeholder="Write description here"  required>
+                    <label>
+                        Description <input id="description-input" type="text" name="description" placeholder="Write description here" required>
                     </label>
                 </div>
                 <div class="publish-div">
-                <label for="model">Model
+                    <label for="model">Model
                         <input type="text" name="model" id="model" list="modelList" class="publish-select">
                         <datalist id="modelList">
                             <option value="none"></option>
@@ -145,17 +148,15 @@ function drawPostCreation($session, $db) {
                             }
                             ?>
                         </datalist>
-
                     </label>
                     <label>
                         Condition 
-                        <select name="condition"   class="publish-select" required>
+                        <select name="condition" class="publish-select" required>
                             <option></option>
-                            
                             <?php 
                                 $conditions = Item::getConditionsObj($db);
                                 foreach($conditions as $cond) {
-                                    ?> <option value="<?= "$cond->conditionName" ?>"><?= "$cond->conditionName" ?></option>
+                                    ?> <option value="<?= $cond->conditionName ?>"><?= $cond->conditionName ?></option>
                                     
                                     <?php
                                 }
@@ -169,7 +170,7 @@ function drawPostCreation($session, $db) {
                             <?php 
                                 $conditions = Item::getSizesObj($db);
                                 foreach($conditions as $cond) {
-                                    ?> <option value="<?= htmlentities("$cond->sizeName") ?>"><?= htmlspecialchars("$cond->sizeName") ?></option>
+                                    ?> <option value="<?= htmlentities($cond->sizeName) ?>"><?= htmlspecialchars($cond->sizeName) ?></option>
                                     
                                     <?php
                                 }
@@ -180,92 +181,78 @@ function drawPostCreation($session, $db) {
                 <div class="publish-div">
                     <h1>Images</h1>
                     <div class="image-container">
-                        <label class="image-input" name="image1">
-                            <input name="img1" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple="" data-testid="attach-photos-input" data-cy="attach-photos-input" onchange="previewImage(event, 0)">
+                        <label class="image-input">
+                            <input name="images[]" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple onchange="previewImage(event, 0)">
+                            <!-- SVG e imagem de pré-visualização -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
                             <img class="preview-image" id="preview-image-0" src="" alt="">
                         </label>
-                        <label class="image-input" name="image2">
-                            <input name="img2" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple="" data-testid="attach-photos-input" data-cy="attach-photos-input" onchange="previewImage(event, 1)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
-                            <img class="preview-image" id="preview-image-1" src="" alt="">
-                        </label>
-                        <label class="image-input" name="image3">
-                            <input name="img3" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple="" data-testid="attach-photos-input" data-cy="attach-photos-input" onchange="previewImage(event, 2)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
-                            <img class="preview-image" id="preview-image-2" src="" alt="">
-                        </label>
                     </div>
                 </div>
-
                 <div class="publish-div">
-                <h1>Categories</h1>        
-                        <label>
-                            <select name="category1" class="publish-select">
-                                <option value="none">- None -</option>
-                                <?php 
-                                    $categories = Item::getCategories($db);
-                                    foreach($categories as $categ) {
-                                        ?> <option value="<?= htmlentities("$categ") ?>"><?= htmlspecialchars("$categ") ?></option>
-                                        
-                                        <?php
-                                    }
-                                ?>
-                            </select>
-                        </label>
-                        <label>
-                             <select name="category2" class="publish-select">
-                                <option value="none">- None -</option>
-                                <?php 
-                                    $categories = Item::getCategories($db);
-                                    foreach($categories as $categ) {
-                                        ?> <option value="<?= htmlentities("$categ") ?>"><?= htmlspecialchars("$categ") ?></option>
-                                        
-                                        <?php
-                                    }
-                                ?>
-                            </select>
-                        </label>
-                        <label>
+                    <h1>Categories</h1>        
+                    <label>
+                        <select name="category1" class="publish-select">
+                            <option value="none">- None -</option>
+                            <?php 
+                                $categories = Item::getCategories($db);
+                                foreach($categories as $categ) {
+                                    ?> <option value="<?= htmlentities($categ) ?>"><?= htmlspecialchars($categ) ?></option>
+                                    
+                                    <?php
+                                }
+                            ?>
+                        </select>
+                    </label>
+                    <label>
+                        <select name="category2" class="publish-select">
+                            <option value="none">- None -</option>
+                            <?php 
+                                foreach($categories as $categ) {
+                                    ?> <option value="<?= htmlentities($categ) ?>"><?= htmlspecialchars($categ) ?></option>
+                                    
+                                    <?php
+                                }
+                            ?>
+                        </select>
+                    </label>
+                    <label>
                         <select name="category3" class="publish-select">
                             <option value="none">- None -</option>
-                                <?php 
-                                    $categories = Item::getCategories($db);
-                                    foreach($categories as $categ) {
-                                        ?> <option value="<?= htmlentities("$categ") ?>"><?= htmlspecialchars("$categ") ?></option>
-                                        
-                                        <?php
-                                    }
-                                ?>
-                            </select>
-                        </label>
+                            <?php 
+                                foreach($categories as $categ) {
+                                    ?> <option value="<?= htmlentities($categ) ?>"><?= htmlspecialchars($categ) ?></option>
+                                    
+                                    <?php
+                                }
+                            ?>
+                        </select>
+                    </label>
                 </div>
-
                 <button type="submit">Post</button>
             </form>
         </section>
     </main>
     
+    <script>
+        function previewImage(event, index) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            const previewImage = document.getElementById(`preview-image-${index}`);
+
+            reader.onloadend = function () {
+                previewImage.style.display = "block";
+                previewImage.src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.style.display = "none"; // Hide the preview image if no file is selected
+                previewImage.src = "";
+            }
+        }
+    </script>
 <?php
 }
 ?>
-
-<script>
-    function previewImage(event, index) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    const previewImage = document.getElementById(`preview-image-${index}`);
-
-    reader.onloadend = function () {
-        previewImage.style.display = "block";
-        previewImage.src = reader.result;
-    }
-
-    if (file) {
-        reader.readAsDataURL(file);
-    } else {
-        previewImage.style.display = "none"; // Hide the preview image if no file is selected
-        previewImage.src = "";
-    }
-}
-</script>

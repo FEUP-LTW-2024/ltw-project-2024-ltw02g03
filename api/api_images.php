@@ -1,5 +1,5 @@
 <?php
-$uploadDirectory = 'database/uploads/';
+/*$uploadDirectory = '../database/uploads/';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_FILES['images'])) {
@@ -28,13 +28,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+*/
 ?>
-
-<!-- forms para receber imagems-->
-
-
-<!-- <form action="" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="item_id" value="123"> <!-- ID do item 
-    Selecione as imagens: <input type="file" name="images[]" multiple><br>
-    <input type="submit" value="Enviar">
-</form> -->

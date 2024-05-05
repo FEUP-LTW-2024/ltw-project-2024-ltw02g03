@@ -9,6 +9,7 @@ require_once(__DIR__ . '/../database/user.class.php');
 
 function drawProfile(Session $session, $db)
 {
+    
     try {
         // Redirect if user is not logged in
         if (!$session->isLoggedIn()) {
@@ -22,10 +23,8 @@ function drawProfile(Session $session, $db)
         // Get user data
         $user = User::getUser($db, $userId);
 
-        // Fetch presented products by the user
         $presentedProducts = User::fetchPresentedProducts($db, $userId);
-        //$image = User::getUserImage($db, $userId)[0];
-        // Start rendering HTML
+        
     
         ?>
         <main id="profilepage">
@@ -38,65 +37,119 @@ function drawProfile(Session $session, $db)
             </div>
             <div id="left-profile-page">
                 <?php if ($session->isAdmin()): ?>
-                    <!-- Conteúdo exclusivo para administradores -->
                     <div id="admin-section">
                         <h2>Admin Section</h2>
-                        <form action="/pages/create_fields.php" method="post">
-                            <!-- Input para criar uma nova marca -->
+                        <form action="/../actions/action_create_fields.php" method="post">
                             <label for="brandName">New Brand:</label>
                             <input type="text" id="brandName" name="brandName" required>
                             <button type="submit" name="createBrand">Create Brand</button>
                         </form>
-
-                        <form action="/pages/create_fields.php" method="post">
-                            <!-- Input para criar uma nova condição -->
+                        <form action="/../actions/action_create_fields.php" method="post">
                             <label for="conditionName">New Condition:</label>
                             <input type="text" id="conditionName" name="conditionName" required>
                             <button type="submit" name="createCondition">Create Condition</button>
                         </form>
 
-                        <form action="/pages/create_fields.php" method="post">
-                            <!-- Input para criar um novo tamanho -->
+                        <form action="/../actions/action_create_fields.php" method="post">
                             <label for="sizeName">New Size:</label>
                             <input type="text" id="sizeName" name="sizeName" required>
                             <button type="submit" name="createSize">Create Size</button>
                         </form>
 
-                        <form action="/pages/create_fields.php" method="post">
-                            <!-- Input para criar um novo modelo -->
+                        <form action="/../actions/action_create_fields.php" method="post">
                             <label for="modelName">New Model:</label>
                             <input type="text" id="modelName" name="modelName" required>
                             <button type="submit" name="createModel">Create Model</button>
                         </form>
 
-                        <form action="/pages/create_fields.php" method="post">
-                            <!-- Input para criar uma nova categoria -->
+                        <form action="/../actions/action_create_fields.php" method="post">
                             <label for="categoryName">New Category:</label>
                             <input type="text" id="categoryName" name="categoryName" required>
                             <button type="submit" name="createCategory">Create Category</button>
                         </form>
-                        <form action="/pages/create_fields.php" method="post">
-                        <!-- Dropdown para selecionar um usuário para elevar a administrador -->
-                        <label for="userId">Select User:</label>
-                        <select id="userId" name="userId" required>
+                        <form action="/../actions/action_create_fields.php" method="post">
+                            <label for="userId">Select User:</label>
+                            <select id="userId" name="userId" required>
+                                <?php
+                                $users = User::getAllUsers($db);
+                                foreach ($users as $user) {
+                                    if(!$user->admin){
+                                        echo "<option value=\"{$user->userId}\">{$user->firstName} {$user->lastName}</option>";
+                                    }
+                                    
+                                }
+                                ?>
+                            </select>
+                            <button type="submit" name="elevateAdmin">Elevate User to Admin</button>
+                    </form>
+                    <form action="/templates/route.php?action=remove-category" method="post">
+                        <label for="category-select">Remove Category:</label>
+                        <select id="category-select" name="category" class="publish-select">
                             <?php
-                            // Aqui você precisará buscar os usuários existentes do banco de dados
-                            // e exibi-los como opções no dropdown
-                            $users = User::getAllUsers($db);
-                            foreach ($users as $user) {
-                                echo "<option value=\"{$user->userId}\">{$user->firstName} {$user->lastName}</option>";
+                            $categories = Item::getCategories($db);
+                            foreach ($categories as $category) {
+                                echo "<option value=\"{$category}\">{$category}</option>";
                             }
                             ?>
                         </select>
-                        <button type="submit" name="elevateAdmin">Elevate User to Admin</button>
+                        <button type="submit" name="removeCategory">Remove Category</button>
+                    </form>
+                    <form action="/templates/route.php?action=remove-model" method="post">
+                        <label for="model-select">Remove Model:</label>
+                        <select id="model-select" name="model" class="publish-select">
+                            <?php
+                            $models = Item::getModels($db);
+                            foreach ($models as $model) {
+                                echo "<option value=\"{$model}\">{$model}</option>";
+                            }
+                            ?>
+                        </select>
+                        <button type="submit" name="removeModel">Remove Model</button>
+                    </form>
+                    <form action="/templates/route.php?action=remove-condition" method="post">
+                        <label for="condition-select">Remove Condition:</label>
+                        <select id="condition-select" name="condition" class="publish-select">
+                            <?php
+                            $conditions = Item::getConditions($db);
+                            foreach ($conditions as $condition) {
+                                echo "<option value=\"{$condition}\">{$condition}</option>";
+                            }
+                            ?>
+                        </select>
+                        <button type="submit" name="removeCondition">Remove Condition</button>
+                    </form>
+                    <form action="/templates/route.php?action=remove-size" method="post">
+                        <label for="size-select">Remove Size:</label>
+                        <select id="size-select" name="size" class="publish-select">
+                            <?php
+                            $sizes = Item::getSizes($db);
+                            foreach ($sizes as $size) {
+                                echo "<option value=\"{$size}\">{$size}</option>";
+                            }
+                            ?>
+                        </select>
+                        <button type="submit" name="removeSize">Remove Size</button>
+                    </form>
+                    <form action="/templates/route.php?action=remove-brand" method="post">
+                        <label for="brand-select">Remove Brand:</label>
+                        <select id="brand-select" name="brand" class="publish-select">
+                            <?php
+                            $brands = Item::getBrands($db);
+                            foreach ($brands as $brand) {
+                                echo "<option value=\"{$brand}\">{$brand}</option>";
+                            }
+                            ?>
+                        </select>
+                        <button type="submit" name="removeBrand">Remove Brand</button>
                     </form>
 
 
-
-                    </div>
+                </div>
+                
                 <?php endif; ?>
                 <p>Description</p>
             </div>
+            
             <div>
                 <h1>Presented Products</h1>
                 <div id="profile-page-items">
