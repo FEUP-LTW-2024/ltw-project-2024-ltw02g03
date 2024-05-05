@@ -182,11 +182,29 @@ function drawPostCreation($session, $db) {
                     <h1>Images</h1>
                     <div class="image-container">
                         <label class="image-input">
-                            <input name="images[]" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple onchange="previewImage(event, 0)">
-                            <!-- SVG e imagem de pré-visualização -->
+                            <input name="images[]" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple onchange="previewImages(event, 0)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
                             <img class="preview-image" id="preview-image-0" src="" alt="">
                         </label>
+
+                        <label class="image-input">
+                            <input name="images[]" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple onchange="previewImages(event,1)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
+                            <img class="preview-image" id="preview-image-1" src="" alt="">
+                        </label>
+
+                        <label class="image-input">
+                            <input name="images[]" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple onchange="previewImages(event,2)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
+                            <img class="preview-image" id="preview-image-2" src="" alt="">
+                        </label>
+
+                        <label class="image-input">
+                            <input name="images[]" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple onchange="previewImages(event,3)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
+                            <img class="preview-image" id="preview-image-3" src="" alt="">
+                        </label>
+                        
                     </div>
                 </div>
                 <div class="publish-div">
@@ -234,24 +252,33 @@ function drawPostCreation($session, $db) {
         </section>
     </main>
     
-    <script>
-        function previewImage(event, index) {
-            const file = event.target.files[0];
-            const reader = new FileReader();
-            const previewImage = document.getElementById(`preview-image-${index}`);
+<script>
+        
+        function previewImages(event, startIndex) {
+    const files = event.target.files;
+    
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+        const previewImage = document.getElementById(`preview-image-${startIndex + i}`);
 
-            reader.onloadend = function () {
-                previewImage.style.display = "block";
-                previewImage.src = reader.result;
-            }
-
-            if (file) {
-                reader.readAsDataURL(file);
-            } else {
-                previewImage.style.display = "none"; // Hide the preview image if no file is selected
-                previewImage.src = "";
-            }
+        reader.onloadend = function () {
+            previewImage.style.display = "block";
+            previewImage.src = reader.result;
         }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            previewImage.style.display = "none"; // Hide the preview image if no file is selected
+            previewImage.src = "";
+        }
+    }
+}
+
+</script>
+
+
     </script>
 <?php
 }
