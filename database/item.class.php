@@ -594,57 +594,109 @@ static function getCategories(PDO $db) : array {
 
 
 //Create a new Brand
-static function createBrand(PDO $db, string $brandName) {
+static function createBrand(PDO $db, string $brandName) :int{
     try {
-        $stmt = $db->prepare('INSERT INTO ItemBrand (BrandName) VALUES (?)');
-        $stmt->execute([$brandName]);
+        // Verifying if the brand already exists
+        if (!self::brandExists($db, $brandName)) {
+            $stmt = $db->prepare('INSERT INTO ItemBrand (BrandName) VALUES (?)');
+            $stmt->execute([$brandName]);
+            return 0;
+        }
     } catch (PDOException $e) {
         throw new Exception("Error creating brand: " . $e->getMessage());
     }
+    return 1;
+}
+
+// Function to check if a brand already exists
+static function brandExists(PDO $db, string $brandName) {
+    $stmt = $db->prepare('SELECT COUNT(*) FROM ItemBrand WHERE BrandName = ?');
+    $stmt->execute([$brandName]);
+    $count = $stmt->fetchColumn();
+    return $count > 0;
 }
 
 //Create a new Condition
 static function createCondition(PDO $db, string $conditionName) {
     try {
-        $stmt = $db->prepare('INSERT INTO ItemCondition (ConditionName) VALUES (?)');
-        $stmt->execute([$conditionName]);
+        if(!self::conditionExists($db, $conditionName)){
+            $stmt = $db->prepare('INSERT INTO ItemCondition (ConditionName) VALUES (?)');
+            $stmt->execute([$conditionName]);
+            return 0;
+        }
     } catch (PDOException $e) {
-        throw new Exception("Error creating condition: " . $e->getMessage());
+        throw new Exception("Error creating condition: " . $e->getMessage());   
     }
+    return 1;
+}
+static function conditionExists(PDO $db, string $conditionName) {
+    $stmt = $db->prepare('SELECT COUNT(*) FROM ItemCondition WHERE ConditionName = ?');
+    $stmt->execute([$conditionName]);
+    $count = $stmt->fetchColumn();
+    return $count > 0;
 }
 
 //Create a new Size
 static function createSize(PDO $db, string $sizeName) {
     try {
-        $stmt = $db->prepare('INSERT INTO ItemSize (SizeName) VALUES (?)');
-        $stmt->execute([$sizeName]);
+        if(!self::sizeExists($db, $sizeName)){
+            $stmt = $db->prepare('INSERT INTO ItemSize (SizeName) VALUES (?)');
+            $stmt->execute([$sizeName]);
+            return 0;
+        }
     } catch (PDOException $e) {
         throw new Exception("Error creating size: " . $e->getMessage());
     }
+    return 1;
+}
+static function sizeExists(PDO $db, string $sizeName) {
+    $stmt = $db->prepare('SELECT COUNT(*) FROM ItemSize WHERE SizeName = ?');
+    $stmt->execute([$sizeName]);
+    $count = $stmt->fetchColumn();
+    return $count > 0;
 }
 //Create a new Model
 static function createModel(PDO $db, string $modelName) {
     try {
-        $stmt = $db->prepare('INSERT INTO ItemModel (ModelName) VALUES (?)');
-        $stmt->execute([$modelName]);
+        if(!self::modelExists($db, $modelName)){
+            $stmt = $db->prepare('INSERT INTO ItemModel (ModelName) VALUES (?)');
+            $stmt->execute([$modelName]);
+            return 0;
+        }
     } catch (PDOException $e) {
         throw new Exception("Error creating model: " . $e->getMessage());
     }
+    return 1;
+}
+static function modelExists(PDO $db, string $modelName) {
+    $stmt = $db->prepare('SELECT COUNT(*) FROM ItemModel WHERE ModelName = ?');
+    $stmt->execute([$modelName]);
+    $count = $stmt->fetchColumn();
+    return $count > 0;
 }
 
 //Create a new Category
 static function createCategory(PDO $db, string $categoryName) {
     try {
-        $stmt = $db->prepare('INSERT INTO ProductCategory (CategoryName) VALUES (?)');
-        $stmt->execute([$categoryName]);
+        if(!self::categoryExists($db, $categoryName)){
+            $stmt = $db->prepare('INSERT INTO ProductCategory (CategoryName) VALUES (?)');
+            $stmt->execute([$categoryName]);
+            return 0;
+        }
     } catch (PDOException $e) {
         throw new Exception("Error creating category: " . $e->getMessage());
     }
+    return 1;
+}
+static function categoryExists(PDO $db, string $categoryName) {
+    $stmt = $db->prepare('SELECT COUNT(*) FROM ProductCategory WHERE CategoryName = ?');
+    $stmt->execute([$categoryName]);
+    $count = $stmt->fetchColumn();
+    return $count > 0;
 }
 
-}
 
-?>
+
 static function getConditionsObj(PDO $db): array {
     try {
         $stmt = $db->query('SELECT ConditionId, ConditionName FROM ItemCondition');
@@ -715,6 +767,80 @@ static function getItemSizeByName(PDO $db, string $sizeName) : ?Size {
     }
 }
 
+//Remove a Category
+static function removeCategory(PDO $db, string $categoryName):int {
+    try {
+        $stmt = $db->prepare('DELETE FROM ProductCategory WHERE CategoryName = ?');
+        $stmt->execute([$categoryName]);
+        return 0;
+    } catch (PDOException $e) {
+        throw new Exception("Error removing category: " . $e->getMessage());
+    }
+    return 1;
+}
 
+//Remove a Brand
+static function removeBrand(PDO $db, string $brandName) :int{
+    try {
+        $stmt = $db->prepare('DELETE FROM ItemBrand WHERE BrandName = ?');
+        $stmt->execute([$brandName]);
+        return 0;
+    } catch (PDOException $e) {
+        throw new Exception("Error removing brand: " . $e->getMessage());
+    }
+    return 1;
+}
+
+//Remove a Condition
+static function removeCondition(PDO $db, string $conditionName) :int{
+    try {
+        $stmt = $db->prepare('DELETE FROM ItemCondition WHERE ConditionName = ?');
+        $stmt->execute([$conditionName]);
+        return 0;
+    } catch (PDOException $e) {
+        throw new Exception("Error removing condition: " . $e->getMessage());
+    }
+    return 1;
+}
+
+//Remove a Size
+static function removeSize(PDO $db, string $sizeName) :int {
+    try {
+        $stmt = $db->prepare('DELETE FROM ItemSize WHERE SizeName = ?');
+        $stmt->execute([$sizeName]);
+        return 0;
+    } catch (PDOException $e) {
+        throw new Exception("Error removing size: " . $e->getMessage());
+    }
+    return 1;
+}
+
+//Remove a Model
+static function removeModel(PDO $db, string $modelName) :int {
+    try {
+        $stmt = $db->prepare('DELETE FROM ItemModel WHERE ModelName = ?');
+        $stmt->execute([$modelName]);
+        return 0;
+    } catch (PDOException $e) {
+        throw new Exception("Error removing model: " . $e->getMessage());
+    }
+    return 1;
+}
+
+//GET ALL IMAGES URL from all items
+static function getAllImages(PDO $db) : array {
+    try {
+        $stmt = $db->query('SELECT ImageUrl FROM ProductImage');
+        $images = array();
+
+        while ($image = $stmt->fetch()) {
+            $images[] = $image['ImageUrl'];
+        }
+
+        return $images;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching images: " . $e->getMessage());
+    }
+}
 }
 ?>

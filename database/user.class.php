@@ -328,6 +328,53 @@ class User {
     }
 }
 
+// Elevate a user to admin
+static function elevateUserToAdmin(PDO $db, int $userId) : void {
+    try {
+        $stmt = $db->prepare('UPDATE User SET Admin = 1 WHERE UserId = ?');
+        $stmt->execute([$userId]);
+    } catch (PDOException $e) {
+        throw new Exception("Error elevating user to admin: " . $e->getMessage());
+    }
+
 
 }
+// Get all admins
+static function getAllAdmins(PDO $db) : array {
+    try {
+        $stmt = $db->prepare('SELECT * FROM User WHERE Admin = 1');
+        $stmt->execute();
+        $users = [];
+
+        while ($user = $stmt->fetch()) {
+            $admin = (bool) $user['Admin'];
+            $users[] = new User(
+                $user['UserId'],
+                $user['FirstName'],
+                $user['LastName'],
+                $user['Username'],
+                $user['Email'],
+                $user['Password'],
+                $user['JoinDate'],
+                $user['Address'],
+                $user['City'],
+                $user['District'],
+                $user['Country'],
+                $user['PostalCode'],
+                $user['Phone'],
+                $user['ImageUrl'],
+                $admin
+            );
+        }
+
+        return $users;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching admins: " . $e->getMessage());
+    }
+
+
+}
+}
+
+
 ?>
