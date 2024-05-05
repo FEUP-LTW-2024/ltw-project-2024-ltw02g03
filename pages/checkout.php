@@ -18,11 +18,12 @@
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['item_ids']) && is_array($_POST['item_ids'])) {
         // IDs dos itens estão disponíveis em $_POST['item_ids']
-        $itemIds = intval($_POST['item_ids']);
+        $itemIds = $_POST['item_ids'];
 
         // Agora você pode usar os IDs dos itens para obter suas informações do banco de dados, se necessário
         foreach ($itemIds as $itemId) {
-            $item = Item::getItem($db, $itemId);
+          $itemId = intval($itemId);
+          $item = Item::getItem($db, $itemId);
             
         }
     }

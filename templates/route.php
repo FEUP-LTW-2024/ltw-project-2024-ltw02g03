@@ -156,6 +156,9 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])) {
         getSizes($db);
     } elseif ($action === 'get-models') {
         getModels($db);
+    } elseif ($action === 'get-categories') {
+        getCategories($db);
+        
     }else {
         http_response_code(404);
         echo "Not Found";

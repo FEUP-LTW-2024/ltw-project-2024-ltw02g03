@@ -54,6 +54,7 @@
     Description NVARCHAR(200),
     Price NUMERIC(10,2)  NOT NULL,
     ListingDate DATE DEFAULT CURRENT_DATE,
+    Active BOOLEAN DEFAULT 1,
     ImageId INTEGER,
     BrandId INTEGER,
     ConditionId INTEGER,
