@@ -114,6 +114,7 @@
         ReceiverId INTEGER,
         ItemId INTEGER,
         CommunicationText Text,
+        SenderName 
         SendDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (SenderId) REFERENCES User (UserId) 
             ON DELETE NO ACTION ON UPDATE NO ACTION,

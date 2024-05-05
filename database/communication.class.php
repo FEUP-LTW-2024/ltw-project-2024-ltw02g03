@@ -121,13 +121,48 @@ class Communication
 
     // Get all communications between two users
     static function getCommunicationsForItem(PDO $db, int $senderId, int $receiverId, int $itemId): array
+    {
+        try {
+            $stmt = $db->prepare('
+                SELECT c.*, u.Username AS SenderName
+                FROM Communication c
+                INNER JOIN User u ON c.SenderId = u.UserId
+                WHERE ((c.SenderId = ? AND c.ReceiverId = ?) OR (c.SenderId = ? AND c.ReceiverId = ?))
+                AND c.ItemId = ?
+            ');
+    
+            $stmt->execute([$senderId, $receiverId, $receiverId, $senderId, $itemId,]);
+    
+            $communications = [];
+            
+            while ($communication = $stmt->fetch()) {
+                $communications[] = new Communication(
+                    $communication['CommunicationId'],
+                    $communication['SenderId'],
+                    $communication['ReceiverId'],
+                    $communication['ItemId'],
+                    $communication['CommunicationText'],
+                    $communication['SendDate'],
+                    $communication['SenderName']
+                    
+                );
+            }
+    
+            return $communications;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching communications for item: " . $e->getMessage());
+        }
+    }
+    // Adicione este método à classe Communication para obter as mensagens com o nome do remetente
+static function getCommunicationsForItemWithSenderName(PDO $db, int $senderId, int $receiverId, int $itemId): array
 {
     try {
         $stmt = $db->prepare('
-            SELECT *
-            FROM Communication
-            WHERE ((SenderId = ? AND ReceiverId = ?) OR (SenderId = ? AND ReceiverId = ?))
-            AND ItemId = ?
+            SELECT c.*, u.Username AS SenderName
+            FROM Communication c
+            INNER JOIN User u ON c.SenderId = u.UserId
+            WHERE ((c.SenderId = ? AND c.ReceiverId = ?) OR (c.SenderId = ? AND c.ReceiverId = ?))
+            AND c.ItemId = ?
         ');
 
         $stmt->execute([$senderId, $receiverId, $receiverId, $senderId, $itemId]);
@@ -135,14 +170,15 @@ class Communication
         $communications = [];
 
         while ($communication = $stmt->fetch()) {
-            $communications[] = new Communication(
-                $communication['CommunicationId'],
-                $communication['SenderId'],
-                $communication['ReceiverId'],
-                $communication['ItemId'],
-                $communication['CommunicationText'],
-                $communication['SendDate']
-            );
+            $communications[] = [
+                'CommunicationId' => $communication['CommunicationId'],
+                'SenderId' => $communication['SenderId'],
+                'ReceiverId' => $communication['ReceiverId'],
+                'ItemId' => $communication['ItemId'],
+                'CommunicationText' => $communication['CommunicationText'],
+                'SendDate' => $communication['SendDate'],
+                'SenderName' => $communication['SenderName'], // Incluindo o nome do remetente
+            ];
         }
 
         return $communications;
@@ -150,6 +186,7 @@ class Communication
         throw new Exception("Error fetching communications for item: " . $e->getMessage());
     }
 }
+
 
     // Save a communication
     static function saveCommunication(PDO $db, int $communicationId, int $senderId, int $receiverId, string $messageText, string $sendDate): void
