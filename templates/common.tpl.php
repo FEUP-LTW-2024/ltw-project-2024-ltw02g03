@@ -195,7 +195,7 @@ function drawProducts($db, int $limit, $categoryName = null) {
     
     try {
         
-        $items = $categoryName ? Item::getItemsByCategoryName($db, $limit,$categoryName) : Item::getItems($db, $limit);
+        $items = $categoryName ? Item::getItemsByCategoryName($db, $limit, $categoryName) : Item::getItems($db, $limit);
         
         if ($items) {
             
@@ -217,7 +217,9 @@ function drawProducts($db, int $limit, $categoryName = null) {
                         <h2><?= htmlspecialchars($row->description) ?></h2>
                         <p><?= number_format($row->price, 2) ?>€</p>
                         <p>Condition: <?= htmlspecialchars($condition->conditionName) ?></p>
-                        <p>Brand: <?= htmlspecialchars($brand->brandName) ?></p>
+                        <?php if ($brand) { ?>
+                            <p>Brand: <?= htmlspecialchars($brand->brandName) ?></p>
+                        <?php } ?>
                         <form action="../actions/add_to_cart.php" method="post" class="add-to-cart-form">
                             <input type="hidden" name="item_id" value="<?= $row->itemId ?>">
                             <button type="submit" class="add-cart-button">Add to Cart</button> 
@@ -240,6 +242,7 @@ function drawProducts($db, int $limit, $categoryName = null) {
     ?>
     </main>
 <?php } ?>
+
 
 <script>
 function openSearchTab() {

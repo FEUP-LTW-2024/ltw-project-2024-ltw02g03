@@ -96,7 +96,6 @@ function drawPost(Session $session, $db, int $itemId) {
 
 
 
-
 function drawPostCreation($session, $db) {
     $images= Item::getAllImages($db);
     var_dump($images);
@@ -126,28 +125,26 @@ function drawPostCreation($session, $db) {
                 </div>
                 <div class="publish-div">
                     <label for="model">Model
-                        <input type="text" name="model" id="model" list="modelList" class="publish-select">
-                        <datalist id="modelList">
-                            <option value="none"></option>
+                        <select name="model" id="model" class="publish-select">
+                        <option></option>
                             <?php 
                             $models = Item::getModels($db);
                             foreach($models as $model) {
                                 echo '<option value="' . htmlspecialchars($model) . '">' . htmlspecialchars($model) . '</option>';
                             }
                             ?>
-                        </datalist>
+                        </select>
                     </label>
                     <label for="brand">Brand
-                        <input type="text" name="brand" id="brand" list="brandList" class="publish-select">
-                        <datalist id="brandList">
-                            <option value="none"></option>
+                        <select name="brand" id="brand" class="publish-select">
+                        <option></option>
                             <?php 
                             $brands = Item::getBrands($db);
                             foreach($brands as $brand) {
                                 echo '<option value="' . htmlspecialchars($brand) . '">' . htmlspecialchars($brand) . '</option>';
                             }
                             ?>
-                        </datalist>
+                        </select>
                     </label>
                     <label>
                         Condition 
@@ -254,7 +251,7 @@ function drawPostCreation($session, $db) {
     
 <script>
         
-        function previewImages(event, startIndex) {
+function previewImages(event, startIndex) {
     const files = event.target.files;
     
     for (let i = 0; i < files.length; i++) {
