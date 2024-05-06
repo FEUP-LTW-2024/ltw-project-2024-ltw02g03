@@ -312,13 +312,15 @@ class User {
         $products = [];
 
         while ($product = $stmt->fetch()) {
+            $active = (bool) $product['Active'];
             $products[] = new Item(
                 $product['ItemId'],
                 $product['SellerId'],
                 $product['Title'],
                 $product['Description'],
                 $product['Price'],
-                $product['ListingDate']
+                $product['ListingDate'],
+                $active
             );
         }
 
@@ -376,10 +378,10 @@ static function getAllAdmins(PDO $db) : array {
 }
 
 // Update user address
-static function updateUserAddress(PDO $db, int $userId, string $address, string $city, string $district, string $country) : void {
+static function updateUserAddress(PDO $db, int $userId, string $address,string $postalCode, string $city, string $district, string $country) : void {
     try {
-        $stmt = $db->prepare('UPDATE User SET Address = ?, City = ?, District = ?, Country = ? WHERE UserId = ?');
-        $stmt->execute([$address, $city, $district, $country, $userId]);
+        $stmt = $db->prepare('UPDATE User SET Address = ?,PostalCode=?, City = ?, District = ?, Country = ? WHERE UserId = ?');
+        $stmt->execute([$address,$postalCode, $city, $district, $country, $userId]);
     } catch (PDOException $e) {
         throw new Exception("Error updating user address: " . $e->getMessage());
     }

@@ -83,6 +83,11 @@
         BuyerId INTEGER,
         SellerId INTEGER,
         ItemId INTEGER,
+        Address NVARCHAR(70),
+        City NVARCHAR(40),
+        District NVARCHAR(40),
+        Country NVARCHAR(40),
+        PostalCode NVARCHAR(10),
         PaymentDate DATE DEFAULT CURRENT_DATE,
         CONSTRAINT PK_Payment PRIMARY KEY  (PaymentId),
         FOREIGN KEY (BuyerId) REFERENCES User (UserId) 

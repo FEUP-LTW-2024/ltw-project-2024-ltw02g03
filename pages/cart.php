@@ -11,7 +11,10 @@
   require_once(__DIR__ . '/../templates/cart.tpl.php');
   require_once(__DIR__ . '/../templates/common.tpl.php');
 
-
+  if (!$session->isLoggedIn()) {
+    header('Location: /pages/login.php');
+    exit();
+}
   drawHeader($session);
   drawCart($session, $db);
   drawFooter();

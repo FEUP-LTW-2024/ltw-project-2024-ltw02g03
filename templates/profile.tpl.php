@@ -152,8 +152,18 @@ function drawProfile(Session $session, $db)
             
             <div>
                 <h1>Presented Products</h1>
+                <h2>To Sell:</h2>
                 <div id="profile-page-items">
-                    <?php foreach ($presentedProducts as $product) : ?>
+                <?php 
+                $activeItems=Item::getActiveItemsBySellerId($db, $userId);
+                $allItems=Item::getItemsBySellerId($db, $userId);
+                
+                if (!empty($activeItems)) {
+                    $inactiveItems = array_diff($allItems, $activeItems);
+                } else {
+                  $inactiveItems = $allItems;
+                }
+                foreach ($activeItems as $product) : ?>
                         <article class="">
                             <?php
                             $image = Item::getItemImage($db, $product->itemId)[0];
@@ -167,7 +177,25 @@ function drawProfile(Session $session, $db)
                             </a>
                         </article>
                     <?php endforeach; ?>
+                        
                 </div>
+                <h2>Sold:</h2>
+                <div id="profile-page-items">
+                <?php
+                foreach ($inactiveItems as $product) : ?>
+                        <article class="">
+                            <?php
+                            $image = Item::getItemImage($db, $product->itemId)[0];
+                            ?>
+                            <a href="/pages/post.php?id=<?= $product->itemId ?>" class="profilepage-item">
+                                <img class="profilepage-img-item" src="../<?=$image->imageUrl?>" alt="" width="100">
+                                <div class="profilepage-title-price-item">
+                                    <h1><?= htmlspecialchars($product->title) ?></h1>
+                                    <h2><?= $product->price ?>€</h2>
+                                </div>
+                            </a>
+                        </article>
+                    <?php endforeach; ?>
             </div>
         </main>
     <?php

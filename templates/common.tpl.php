@@ -4,7 +4,7 @@ require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/user.class.php');
-
+require_once(__DIR__ . '/../database/payment.class.php');
 
 function drawHeader(Session $session) { ?>
 
@@ -165,7 +165,7 @@ function drawHeader(Session $session) { ?>
         <h1>Produtos Recomendados</h1>  
         <h2><?php echo $limit; ?> produtos</h2>
         <div id="index-products">
-            <?php drawProducts($db, $limit, $category); ?>
+            <?php drawProducts($session,$db, $limit, $category); ?>
         </div>
     </section>
 
@@ -191,12 +191,11 @@ function drawHeader(Session $session) { ?>
 <?php } ?>
 
 <?php
-function drawProducts($db, int $limit, $categoryName = null) {
+function drawProducts(Session $session, $db, int $limit, $categoryName = null) {
     
     try {
-        
+        $myId = $session->getId();
         $items = $categoryName ? Item::getItemsByCategoryName($db, $limit, $categoryName) : Item::getItems($db, $limit);
-        
         if ($items) {
             
             foreach($items as $row) {
@@ -219,11 +218,14 @@ function drawProducts($db, int $limit, $categoryName = null) {
                         <p>Condition: <?= htmlspecialchars($condition->conditionName) ?></p>
                         <?php if ($brand) { ?>
                             <p>Brand: <?= htmlspecialchars($brand->brandName) ?></p>
-                        <?php } ?>
+                        <?php }
+                        if($myId != $ownerId)
+                        { ?>
                         <form action="../actions/add_to_cart.php" method="post" class="add-to-cart-form">
                             <input type="hidden" name="item_id" value="<?= $row->itemId ?>">
                             <button type="submit" class="add-cart-button">Add to Cart</button> 
                         </form>
+                        <?php }?>
                         <form action="../pages/chat.php" method="post" class="send-message-form">
                             <input type="hidden" name="owner_id" value="<?= $ownerId ?>">
                             <input type="hidden" name="item_id" value="<?= $row->itemId ?>">
