@@ -17,6 +17,7 @@ function drawPost(Session $session, $db, int $itemId) {
             echo "<p>Item not found.</p>";
             return;
         }
+        $userId = $session->getId();
 
         $condition = Item::getItemCondition($db, $itemId);
         $brand = Item::getItemBrand($db, $itemId);    
@@ -41,9 +42,19 @@ function drawPost(Session $session, $db, int $itemId) {
                         <h2 id="product-title-post"><?= htmlspecialchars($item->title) ?></h2>
                         <div id="post-price-button">
                             <h1><?= number_format($item->price, 2) ?>€</h1>
-                            <form action="../actions/add_to_cart.php" method="post" >
-                            <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
-                            <button type="submit" class="cart-button-post">Add to Cart</button> 
+                            <?php if($userId == $sellerId) { ?>
+                                <form action="../actions/delete_item.php" method="post">
+                                    <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
+                                    <button type="submit" class="cart-button-post">Delete</button>
+                                </form>
+                            <?php } else { ?>
+                                <form action="../actions/add_to_cart.php" method="post" >
+                                    <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
+                                    <button type="submit" class="cart-button-post">Add to Cart</button> 
+                                </form>
+                            <?php } ?>
+
+                            
                         </form>
                         </div>
                     </div>

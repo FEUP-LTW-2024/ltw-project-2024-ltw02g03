@@ -7,6 +7,7 @@ require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/user.class.php');
 require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/cart.class.php');
+require_once(__DIR__ . '/../database/payment.class.php');
 
 function simulatePurchaseAndRedirect() {
     $session = new Session();
@@ -24,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['checkout_submitted'])
 
     try {
         $address = $_POST['address'] ?? null;
+        $postalCode = $_POST['postal_code'] ?? null;
         $city = $_POST['city'] ?? null;
         $district = $_POST['district'] ?? null;
         $country = $_POST['country'] ?? null;
@@ -32,12 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['checkout_submitted'])
         $userId = $session->getId();
         
         $db = getDatabaseConnection();
-        User::updateUserAddress($db, $userId, $address, $city, $district, $country);
-        
+        User::updateUserAddress($db, $userId, $address,$postalCode, $city, $district, $country);
         $itemIds = $_POST['item_ids'] ?? null;
         foreach ($itemIds as $itemId) {
             $itemId = intval($itemId);
             Item::updateItemStatus($db, $itemId,false);
+            $sellerId = Item::getSellerId($db, $itemId);
+            Payment::insertPayment($db, $userId, $sellerId, $itemId, $address, $city, $district, $country, $postalCode, date('Y-m-d H:i:s'));
         }
         simulatePurchaseAndRedirect();
     } catch (Exception $e) {

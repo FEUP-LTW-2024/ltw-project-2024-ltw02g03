@@ -333,6 +333,81 @@ class Item {
             throw new Exception("Error filtering items by category id: " . $e->getMessage());
         }
     }
+
+    //get sellerId by ItemId
+    static function getSellerId(PDO $db, int $itemId) : int {
+        try {
+            $stmt = $db->prepare('SELECT SellerId FROM Item WHERE ItemId = ?');
+            $stmt->execute([$itemId]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int)$result['SellerId'];
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching seller id: " . $e->getMessage());
+        }
+    }
+    //get all items by userid that are active
+    static function getActiveItemsBySellerId(PDO $db, int $sellerId) : array {
+        try {
+            $stmt = $db->prepare('
+                SELECT ItemId, SellerId, Title, Description, Price, ListingDate, Active
+                FROM Item
+                WHERE SellerId = ? AND Active = 1
+            ');
+            $stmt->execute([$sellerId]);
+            $items = array();
+
+            while ($item = $stmt->fetch()) {
+                $active = (bool) $item['Active'];
+                $items[] = new Item(
+                    $item['ItemId'],
+                    $item['SellerId'],
+                    $item['Title'],
+                    $item['Description'],
+                    $item['Price'],
+                    $item['ListingDate'],
+                    $active
+                );
+            }
+
+            return $items;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching items by seller id: " . $e->getMessage());
+        }
+    }
+
+    //get all items by userid that are active
+    static function getInactiveItemsBySellerId(PDO $db, int $sellerId) : array {
+        try {
+            $stmt = $db->prepare('
+                SELECT ItemId, SellerId, Title, Description, Price, ListingDate, Active
+                FROM Item
+                WHERE SellerId = ? AND Active = 0
+            ');
+            $stmt->execute([$sellerId]);
+            $items = array();
+
+            while ($item = $stmt->fetch()) {
+                $active = (bool) $item['Active'];
+                $items[] = new Item(
+                    $item['ItemId'],
+                    $item['SellerId'],
+                    $item['Title'],
+                    $item['Description'],
+                    $item['Price'],
+                    $item['ListingDate'],
+                    $active
+                );
+            }
+
+            return $items;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching items by seller id: " . $e->getMessage());
+        }
+    }
+    
+
+
+
     // Filter items by brand id
     public static function filterItemsByBrandId($db, ?int $brandId = 0, array $items = []) {
         try {
@@ -579,8 +654,35 @@ class Item {
         }
     }
     
-
-
+    //get all items by userid
+    static function getItemsBySellerId(PDO $db, int $sellerId) : array {
+        try {
+            $stmt = $db->prepare('
+                SELECT ItemId, SellerId, Title, Description, Price, ListingDate, Active
+                FROM Item
+                WHERE SellerId = ?
+            ');
+            $stmt->execute([$sellerId]);
+            $items = array();
+    
+            while ($item = $stmt->fetch()) {
+                $active = (bool) $item['Active'];
+                $items[] = new Item(
+                    $item['ItemId'],
+                    $item['SellerId'],
+                    $item['Title'],
+                    $item['Description'],
+                    $item['Price'],
+                    $item['ListingDate'],
+                    $active
+                );
+            }
+    
+            return $items;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching items by seller id: " . $e->getMessage());
+        }
+    }
     
     
       
@@ -1224,5 +1326,18 @@ static function getAllImages(PDO $db) : array {
         throw new Exception("Error fetching images: " . $e->getMessage());
     }
 }
+
+//Delete an item
+static function deleteItem(PDO $db, int $itemId) :int {
+    try {
+        $stmt = $db->prepare('DELETE FROM Item WHERE ItemId = ?');
+        $stmt->execute([$itemId]);
+        return 0;
+    } catch (PDOException $e) {
+        throw new Exception("Error deleting item: " . $e->getMessage());
+    }
+    return 1;
+}
+
 }
 ?>

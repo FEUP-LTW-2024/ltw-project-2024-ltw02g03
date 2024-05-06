@@ -32,8 +32,9 @@ function applyFilters() {
     var selectedSize = document.getElementById("size-select").value;
     var selectedModel = document.getElementById("model-select").value;
     var minPrice = minPriceDisplay.textContent.substring(1); 
-var maxPrice = maxPriceDisplay.textContent.substring(1);
-    if (selectedCategory === "" && selectedBrand === "" && selectedCondition === "" && selectedSize === "" && selectedModel === "") {
+    var maxPrice = maxPriceDisplay.textContent.substring(1);
+    
+    if (selectedCategory === "" && selectedBrand === "" && selectedCondition === "" && selectedSize === "" && selectedModel === "" && minPrice === "0" && maxPrice === "10000") {
         return;
     }
     

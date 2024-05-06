@@ -17,17 +17,18 @@ class Payment
         $this->itemId = $itemId;
         $this->paymentDate = $paymentDate;
     }
+    
 
-    // Insert a payment
-    static function insertPayment(PDO $db, int $buyerId, int $sellerId, int $itemId, string $paymentDate): int
+    // Insert a new payment
+    static function insertPayment(PDO $db, int $buyerId, int $sellerId, int $itemId,string $address,string $city, string $district,string $country, string $postalCode ,string $paymentDate): String
     {
         try {
             $stmt = $db->prepare('
-                INSERT INTO Payment (BuyerId, SellerId, ItemId, PaymentDate)
-                VALUES (?, ?, ?, ?)
+                INSERT INTO Payment (BuyerId, SellerId, ItemId,address,city,district,country,postalCode, PaymentDate)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             ');
 
-            $stmt->execute(array($buyerId, $sellerId, $itemId, $paymentDate));
+            $stmt->execute(array($buyerId, $sellerId, $itemId, $address, $city, $district, $country, $postalCode, $paymentDate));
 
             return $db->lastInsertId();
         } catch (PDOException $e) {

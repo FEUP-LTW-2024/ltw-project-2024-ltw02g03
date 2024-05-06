@@ -25,14 +25,19 @@ function drawCheckout(Session $session, $db, $item, $userId) {
                 <form action="/../actions/action_checkout.php" method="post">
                     <!-- Informações de envio -->
                     <h3>Informações de Envio</h3>
-                    <label for="address">Endereço:</label>
-                    <input type="text" id="address" name="address" value="<?= htmlspecialchars($user->address) ?>" required><br>
-                    <label for="city">Cidade:</label>
-                    <input type="text" id="city" name="city" value="<?= htmlspecialchars($user->city) ?>" required><br>
-                    <label for="district">Distrito:</label>
-                    <input type="text" id="district" name="district" value="<?= htmlspecialchars($user->district) ?>" required><br>
-                    <label for="country">País:</label>
-                    <input type="text" id="country" name="country" value="<?= htmlspecialchars($user->country) ?>" required><br>
+                        <label for="address">Endereço:</label>
+                        <input type="text" id="address" name="address" value="<?= isset($user->address) ? htmlspecialchars($user->address) : '' ?>" required><br>
+                        <label for="postal_code">Código Postal:</label>
+                        <input type="text" id="postal_code" name="postal_code" value="<?= isset($user->postalCode) ? htmlspecialchars($user->postalCode) : '' ?>" required><br>
+                        <label for="city">Cidade:</label>
+                        <input type="text" id="city" name="city" value="<?= isset($user->city) ? htmlspecialchars($user->city) : '' ?>" required><br>
+                        <label for="district">Distrito:</label>
+                        <input type="text" id="district" name="district" value="<?= isset($user->district) ? htmlspecialchars($user->district) : '' ?>" required><br>
+                        <label for="country">País:</label>
+                        <input type="text" id="country" name="country" value="<?= isset($user->country) ? htmlspecialchars($user->country) : '' ?>" required><br>
+
+                    <h3>Opções de Pagamento</h3>
+
                     
                     <h3>Opções de Pagamento</h3>
                     <label for="payment_method">Método de Pagamento:</label>
