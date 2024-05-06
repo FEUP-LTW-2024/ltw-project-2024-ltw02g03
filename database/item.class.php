@@ -222,6 +222,318 @@ class Item {
             throw new Exception("Error fetching items by category: " . $e->getMessage());
         }
     }
+    //get category id
+    static function getCategoryId(PDO $db, ?string $categoryName) : int {
+        try {
+            $stmt = $db->prepare('SELECT CategoryId FROM ProductCategory WHERE CategoryName = ?');
+            $stmt->execute([$categoryName]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int)$result['CategoryId'];
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching category id: " . $e->getMessage());
+        }
+    }
+
+    //get condition id
+    static function getConditionId(PDO $db, ?string $conditionName) : int {
+        try {
+            $stmt = $db->prepare('SELECT ConditionId FROM ItemCondition WHERE ConditionName = ?');
+            $stmt->execute([$conditionName]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int)$result['ConditionId'];
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching condition id: " . $e->getMessage());
+        }
+    }
+
+    //get brand id
+    static function getBrandId(PDO $db, ?string $brandName) : int {
+        try {
+            $stmt = $db->prepare('SELECT BrandId FROM ItemBrand WHERE BrandName = ?');
+            $stmt->execute([$brandName]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int)$result['BrandId'];
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching brand id: " . $e->getMessage());
+        }
+    }
+
+    //get size id
+    static function getSizeId(PDO $db, ?string $sizeName) : int {
+        try {
+            $stmt = $db->prepare('SELECT SizeId FROM ItemSize WHERE SizeName = ?');
+            $stmt->execute([$sizeName]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int)$result['SizeId'];
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching size id: " . $e->getMessage());
+        }
+    }
+
+    //get model id
+    static function getModelId(PDO $db, ?string $modelName) : int {
+        try {
+            $stmt = $db->prepare('SELECT ModelId FROM ItemModel WHERE ModelName = ?');
+            $stmt->execute([$modelName]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int)$result['ModelId'];
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching model id: " . $e->getMessage());
+        }
+    }
+
+    
+    
+
+    // Filter items by category id
+    public static function filterItemsByCategoryId($db, ?int $categoryId = 0, array $items = []) {
+        try {
+            $query = "SELECT Item.ItemId, SellerId, Title, Description, Price, ListingDate, Active
+                      FROM Item
+                      JOIN ItemCategory ON Item.ItemId = ItemCategory.ItemId
+                      WHERE 1=1";
+            
+            $params = [];
+    
+            if ($categoryId !== 0) {
+                $query .= " AND ItemCategory.CategoryId = ?";
+                $params[] = $categoryId;
+            }
+    
+        
+            if (empty($items)) {
+                $query .= " AND Item.Active = 1"; 
+            } else {
+                $itemIds = array_map(function($item) {
+                    return $item->itemId;
+                }, $items);
+    
+                $query .= " AND Item.ItemId IN (" . implode(',', $itemIds) . ")";
+            }
+    
+            $stmt = $db->prepare($query);
+            $stmt->execute($params);
+            $filteredItems = [];
+    
+            while ($item = $stmt->fetch()) {
+                $active = (bool)$item['Active'];
+                $filteredItems[] = new Item(
+                    $item['ItemId'],
+                    $item['SellerId'],
+                    $item['Title'],
+                    $item['Description'],
+                    $item['Price'],
+                    $item['ListingDate'],
+                    $active
+                );
+            }
+    
+            return $filteredItems;
+        } catch (PDOException $e) {
+            throw new Exception("Error filtering items by category id: " . $e->getMessage());
+        }
+    }
+    // Filter items by brand id
+    public static function filterItemsByBrandId($db, ?int $brandId = 0, array $items = []) {
+        try {
+            $query = "SELECT Item.ItemId, SellerId, Title, Description, Price, ListingDate, Active
+                      FROM Item
+                      WHERE 1=1";
+            
+            $params = [];
+    
+            if ($brandId !== 0) {
+                $query .= " AND BrandId = ?";
+                $params[] = $brandId;
+            }
+    
+            if (empty($items)) {
+                $query .= " AND Item.Active = 1"; 
+            } else {
+                $itemIds = array_map(function($item) {
+                    return $item->itemId;
+                }, $items);
+    
+                $query .= " AND Item.ItemId IN (" . implode(',', $itemIds) . ")";
+            }
+    
+            $stmt = $db->prepare($query);
+            $stmt->execute($params);
+            $filteredItems = [];
+    
+            while ($item = $stmt->fetch()) {
+                $active = (bool)$item['Active'];
+                $filteredItems[] = new Item(
+                    $item['ItemId'],
+                    $item['SellerId'],
+                    $item['Title'],
+                    $item['Description'],
+                    $item['Price'],
+                    $item['ListingDate'],
+                    $active
+                );
+            }
+    
+            return $filteredItems;
+        } catch (PDOException $e) {
+            throw new Exception("Error filtering items by brand id: " . $e->getMessage());
+        }
+    }
+   
+
+    
+    
+    
+    // Filter items by condition id
+    public static function filterItemsByConditionId($db, ?int $conditionId = 0, array $items = []) {
+        try {
+            $query = "SELECT Item.ItemId, SellerId, Title, Description, Price, ListingDate, Active
+                      FROM Item
+                      WHERE 1=1";
+            
+            $params = [];
+    
+            if ($conditionId !== 0) {
+                $query .= " AND ConditionId = ?";
+                $params[] = $conditionId;
+            }
+    
+            if (empty($items)) {
+                $query .= " AND Item.Active = 1"; 
+            } else {
+                $itemIds = array_map(function($item) {
+                    return $item->itemId;
+                }, $items);
+    
+                $query .= " AND Item.ItemId IN (" . implode(',', $itemIds) . ")";
+            }
+    
+            $stmt = $db->prepare($query);
+            $stmt->execute($params);
+            $filteredItems = [];
+    
+            while ($item = $stmt->fetch()) {
+                $active = (bool)$item['Active'];
+                $filteredItems[] = new Item(
+                    $item['ItemId'],
+                    $item['SellerId'],
+                    $item['Title'],
+                    $item['Description'],
+                    $item['Price'],
+                    $item['ListingDate'],
+                    $active
+                );
+            }
+    
+            return $filteredItems;
+        } catch (PDOException $e) {
+            throw new Exception("Error filtering items by condition id: " . $e->getMessage());
+        }
+    }
+
+    // Filter items by size id
+    public static function filterItemsBySizeId($db, ?int $sizeId = 0, array $items = []) {
+        try {
+            $query = "SELECT Item.ItemId, SellerId, Title, Description, Price, ListingDate, Active
+                      FROM Item
+                      WHERE 1=1";
+            
+            $params = [];
+    
+            if ($sizeId !== 0) {
+                $query .= " AND SizeId = ?";
+                $params[] = $sizeId;
+            }
+    
+            if (empty($items)) {
+                $query .= " AND Item.Active = 1"; 
+            } else {
+                $itemIds = array_map(function($item) {
+                    return $item->itemId;
+                }, $items);
+    
+                $query .= " AND Item.ItemId IN (" . implode(',', $itemIds) . ")";
+            }
+    
+            $stmt = $db->prepare($query);
+            $stmt->execute($params);
+            $filteredItems = [];
+    
+            while ($item = $stmt->fetch()) {
+                $active = (bool)$item['Active'];
+                $filteredItems[] = new Item(
+                    $item['ItemId'],
+                    $item['SellerId'],
+                    $item['Title'],
+                    $item['Description'],
+                    $item['Price'],
+                    $item['ListingDate'],
+                    $active
+                );
+            }
+    
+            return $filteredItems;
+        } catch (PDOException $e) {
+            throw new Exception("Error filtering items by size id: " . $e->getMessage());
+        }
+    }
+
+    // Filter items by model id
+    public static function filterItemsByModelId($db, ?int $modelId = 0, array $items = []) {
+        try {
+            $query = "SELECT Item.ItemId, SellerId, Title, Description, Price, ListingDate, Active
+                      FROM Item
+                      WHERE 1=1";
+            
+            $params = [];
+    
+            if ($modelId !== 0) {
+                $query .= " AND ModelId = ?";
+                $params[] = $modelId;
+            }
+    
+            if (empty($items)) {
+                $query .= " AND Item.Active = 1"; 
+            } else {
+                $itemIds = array_map(function($item) {
+                    return $item->itemId;
+                }, $items);
+    
+                $query .= " AND Item.ItemId IN (" . implode(',', $itemIds) . ")";
+            }
+    
+            $stmt = $db->prepare($query);
+            $stmt->execute($params);
+            $filteredItems = [];
+    
+            while ($item = $stmt->fetch()) {
+                $active = (bool)$item['Active'];
+                $filteredItems[] = new Item(
+                    $item['ItemId'],
+                    $item['SellerId'],
+                    $item['Title'],
+                    $item['Description'],
+                    $item['Price'],
+                    $item['ListingDate'],
+                    $active
+                );
+            }
+    
+            return $filteredItems;
+        } catch (PDOException $e) {
+            throw new Exception("Error filtering items by model id: " . $e->getMessage());
+        }
+    }
+    
+    
+    
+    
+
+    
+    
+    
+
+
 
 
     //Get item name by ID
@@ -238,7 +550,7 @@ class Item {
     static function getItemsbyName(PDO $db, string $get , int $limit): array{
         try {
             $stmt = $db->prepare('
-                SELECT ItemId, SellerId, Title, Description, Price, ListingDate
+                SELECT ItemId, SellerId, Title, Description, Price, ListingDate, Active
                 FROM Item
                 WHERE Title LIKE ? 
                 LIMIT ?
@@ -249,13 +561,15 @@ class Item {
             $items = array();
     
             while ($item = $stmt->fetch()) {
+                $active = (bool) $item['Active'];
                 $items[] = new Item(
                     $item['ItemId'],
                     $item['SellerId'],
                     $item['Title'],
                     $item['Description'],
                     $item['Price'],
-                    $item['ListingDate']
+                    $item['ListingDate'],
+                    $active
                 );
             }
     
@@ -865,6 +1179,34 @@ static function removeModel(PDO $db, string $modelName) :int {
         throw new Exception("Error removing model: " . $e->getMessage());
     }
     return 1;
+}
+
+//get all items
+static function getAllItems(PDO $db) : array {
+    try {
+        $stmt = $db->query('
+            SELECT ItemId, SellerId, Title, Description, Price, ListingDate, Active
+            FROM Item
+        ');
+        $items = array();
+
+        while ($item = $stmt->fetch()) {
+            $active = (bool) $item['Active'];
+            $items[] = new Item(
+                $item['ItemId'],
+                $item['SellerId'],
+                $item['Title'],
+                $item['Description'],
+                $item['Price'],
+                $item['ListingDate'],
+                $active
+            );
+        }
+
+        return $items;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching items: " . $e->getMessage());
+    }
 }
 
 //GET ALL IMAGES URL from all items

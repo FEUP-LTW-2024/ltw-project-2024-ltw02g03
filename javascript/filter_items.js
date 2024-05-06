@@ -4,12 +4,12 @@ var maxPriceDisplay = document.getElementById("max-price");
 var priceDisplay = document.getElementById("price-display");
 
 noUiSlider.create(priceSlider, {
-    start: [0, 1000], 
+    start: [0, 10000], 
     connect: true, 
     step: 10, 
     range: {
         'min': 0,
-        'max': 1000
+        'max': 10000
     }
 });
 
@@ -31,12 +31,13 @@ function applyFilters() {
     var selectedCondition = document.getElementById("condition-select").value;
     var selectedSize = document.getElementById("size-select").value;
     var selectedModel = document.getElementById("model-select").value;
-    
+    var minPrice = minPriceDisplay.textContent.substring(1); 
+var maxPrice = maxPriceDisplay.textContent.substring(1);
     if (selectedCategory === "" && selectedBrand === "" && selectedCondition === "" && selectedSize === "" && selectedModel === "") {
         return;
     }
     
-    var url = "/pages/filtered_results.php?";
+    var url = "/pages/filter.php?";
     if (selectedCategory) {
         url += "category=" + selectedCategory + "&";
     }
@@ -52,6 +53,8 @@ function applyFilters() {
     if (selectedModel) {
         url += "model=" + selectedModel + "&";
     }
+    url += "minPrice=" + minPrice + "&";
+    url += "maxPrice=" + maxPrice;
     
     window.location.href = url;
 }
