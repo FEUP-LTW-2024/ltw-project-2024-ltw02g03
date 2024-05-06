@@ -155,13 +155,19 @@ function drawProfile(Session $session, $db)
                 <h2>To Sell:</h2>
                 <div id="profile-page-items">
                 <?php 
-                $activeItems=Item::getActiveItemsBySellerId($db, $userId);
                 $allItems=Item::getItemsBySellerId($db, $userId);
-                
-                if (!empty($activeItems)) {
-                    $inactiveItems = array_diff($allItems, $activeItems);
-                } else {
-                  $inactiveItems = $allItems;
+                $activeItems = [];
+                $inactiveItems = [];
+
+                foreach ($allItems as $item) {
+                    if ($item->active === true) {
+                        $activeItems[] = $item;
+                    } else {
+                        $inactiveItems[] = $item;
+                    }
+                }
+                if(empty($activeItems)){
+                    echo "<h3>No items to sell</h3>";
                 }
                 foreach ($activeItems as $product) : ?>
                         <article class="">
@@ -182,6 +188,9 @@ function drawProfile(Session $session, $db)
                 <h2>Sold:</h2>
                 <div id="profile-page-items">
                 <?php
+                if(empty($inactiveItems)){
+                    echo "<h3>No items sold</h3>";
+                }
                 foreach ($inactiveItems as $product) : ?>
                         <article class="">
                             <?php
