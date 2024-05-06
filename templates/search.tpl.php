@@ -44,26 +44,52 @@ function drawSearchedProducts($db, array $items, string $searchQuery) { ?>
     
 <?php } 
 
-function drawFilteredProducts($db,int $limit, array $items,$categoryName) { ?>   
+function drawFilteredProducts($db, ?string $categoryName = null, ?string $brandName = null, ?string $condition = null, ?string $size = null, ?string $model = null, ?int $minPrice=0,?int $maxPrice=10000) { ?>   
     <main id="main-search">
-        <h2><?php echo $limit; ?> produtos</h2>
-        <h1>Results for: <?= htmlspecialchars($categoryName) ?></h1>
-        <?php if (!empty($items)) : ?>
+        <h1>Results for: <?= htmlspecialchars($categoryName ?? 'All Categories') ?></h1>
+        <?php
+        
+        $categoryId = Item::getCategoryId($db, $categoryName);
+        $conditionId = Item::getConditionId($db, $condition);
+        $brandId = Item::getBrandId($db, $brandName);
+        $sizeId = Item::getSizeId($db, $size);
+        $modelId = Item::getModelId($db, $model);
+        $items = Item::getAllItems($db);
+        if($categoryId !=0){
+            $items = Item::filterItemsByCategoryId($db, $categoryId,$items);
+        }
+        if($brandId !=0){
+            $items = Item::filterItemsByBrandId($db, $brandId, $items);
+        }
+        if($conditionId !=0){
+            $items = Item::filterItemsByConditionId($db, $conditionId, $items);
+        }
+        if($sizeId !=0){
+            $items = Item::filterItemsBySizeId($db, $sizeId, $items);
+        }
+        if($modelId !=0){
+            $items = Item::filterItemsByModelId($db, $modelId, $items);
+        }
+
+        
+        if (!empty($items)) : ?>
             <?php foreach ($items as $item) : 
+                if($item->price < $minPrice || $item->price > $maxPrice){
+                    continue;
+                }
                 $image = Item::getItemImage($db, $item->itemId)[0]; 
-                $condition = Item::getItemCondition($db, $item->itemId);
+                $conditionObj = Item::getItemCondition($db, $item->itemId);
                 ?>
                 <a href="/pages/post.php?id=<?= $item->itemId ?>">
                     <article class="search-item">  
                         <div class="img-title-condition">
-                            
                             <img class="search-img" src="../<?= $image->imageUrl ?>" alt="<?= $item->title ?>" style="width: 17em; height: 13em;">
                             <div class="title-cond">
                                 <div>
                                     <h1><?= htmlspecialchars($item->title) ?></h1>
                                     <h2 class="date-search"><?= $item->listingDate ?></h2>
                                 </div>
-                                <p><strong>Condition:</strong> <?= htmlspecialchars($condition->conditionName) ?></p>
+                                <p><strong>Condition:</strong> <?= htmlspecialchars($conditionObj->conditionName) ?></p>
                             </div>
                         </div>
                         <p class="price-search"><?= number_format($item->price, 2) ?>€</p>
@@ -74,7 +100,7 @@ function drawFilteredProducts($db,int $limit, array $items,$categoryName) { ?>
             <p>No items found for this filter.</p>
         <?php endif; ?>
     </main>
-    
 <?php } 
+
 
 

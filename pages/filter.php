@@ -20,13 +20,43 @@ if(isset($_GET['category'])) {
 } else {
     $categoryName = null;
 }
+if(isset($_GET['brand'])) {
+    $brandName = $_GET['brand'];
+} else {
+    $brandName = null;
+}
+if(isset($_GET['condition'])) {
+    $condition = $_GET['condition'];
+} else {
+    $condition = null;
+}
 
-$totalProducts = Item::getCountbyCategory($db, $categoryName);
-$items = Item::getItemsByCategoryName($db, $totalProducts,$categoryName);
+if(isset($_GET['size'])) {
+    $size = $_GET['size'];
+} else {
+    $size = null;
+}
+if(isset($_GET['model'])) {
+    $model = $_GET['model'];
+} else {
+    $model = null;
+}
+if(isset($_GET['minPrice'])) {
+    $minPrice = intval($_GET['minPrice']);
+} else {
+    $minPrice = null;
+}
+if(isset($_GET['maxPrice'])) {
+    $maxPrice = intval($_GET['maxPrice']);
+} else {
+    $maxPrice = null;
+}
+
+
 
 
 
 drawHeader($session);
-drawFilteredProducts($db, $totalProducts, $items, $categoryName);
+drawFilteredProducts($db,$categoryName,$brandName,$condition,$size,$model,$minPrice,$maxPrice);
 drawFooter();
 ?>
