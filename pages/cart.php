@@ -15,7 +15,7 @@
     header('Location: /pages/login.php');
     exit();
 }
-  drawHeader($session);
+  drawHeader($session, $db);
   drawCart($session, $db);
   drawFooter();
 ?>

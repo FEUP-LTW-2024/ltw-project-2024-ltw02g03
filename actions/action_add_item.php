@@ -55,8 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Check if brand, model, condition, and size are found
-    if (!$brand || !$model || !$condition || !$size) {
+    
+    if (!$condition || !$size) {
         $session->addMessage('error', 'Something went wrong');
         header('Location: ../pages/error.php');
         exit();
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES (:sellerId, :productName, :description, :price, :brandId, :modelId, :conditionId, :sizeId)";
     $stmt = $db->prepare($sql);
 
-    if ($stmt) {
+   
         if ($stmt->execute([$user->userId, $productName, $description, $price, $brand->brandId, $model->modelId, $condition->conditionId, $size->sizeId])) {
             $itemId = $db->lastInsertId();
             
@@ -75,26 +75,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $uploadDirectory = '../database/uploads/';
             $imageUrls = [];
             foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name) {
-                $file_name = $_FILES['images']['name'][$key];
-                $file_tmp = $_FILES['images']['tmp_name'][$key];
-                $file_type = $_FILES['images']['type'][$key];
-                
-                if ($file_type == 'image/jpeg' || $file_type == 'image/png') {
-                    $itemFolder = $uploadDirectory . 'item_' . $itemId . '/';
+                if (!empty($_FILES['images']['name'][$key])) {
+                    $file_name = $_FILES['images']['name'][$key];
+                    $file_tmp = $_FILES['images']['tmp_name'][$key];
+                    $file_type = $_FILES['images']['type'][$key];
                     
-                    if (!file_exists($itemFolder)) {
-                        mkdir($itemFolder, 0777, true);
-                    }
-                    
-                    $targetFilePath = $itemFolder . $file_name;
-                    
-                    if (move_uploaded_file($file_tmp, $targetFilePath)) {
-                        $imageUrls[] = $targetFilePath;
+                    if ($file_type == 'image/jpeg' || $file_type == 'image/png') {
+                        $itemFolder = $uploadDirectory . 'item_' . $itemId . '/';
+                        
+                        if (!file_exists($itemFolder)) {
+                            mkdir($itemFolder, 0777, true);
+                        }
+                        
+                        $targetFilePath = $itemFolder . $file_name;
+                        
+                        if (move_uploaded_file($file_tmp, $targetFilePath)) {
+                            $imageUrls[] = $targetFilePath;
+                        } else {
+                            $session->addMessage('error', 'Failed to upload image: ' . $file_name);
+                        }
                     } else {
-                        $session->addMessage('error', 'Failed to upload image: ' . $file_name);
+                        $session->addMessage('error', 'Only JPEG and PNG files are allowed: ' . $file_name);
                     }
-                } else {
-                    $session->addMessage('error', 'Only JPEG and PNG files are allowed: ' . $file_name);
                 }
             }
 
@@ -128,17 +130,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             foreach ($categories as $category) {
                 $sql = "INSERT INTO ItemCategory (ItemId, CategoryId) VALUES (:itemId, :categoryId)";
                 $stmt = $db->prepare($sql);
-                if ($stmt) {
-                    if ($stmt->execute([$itemId, $category->categoryId])) {
-                        $session->addMessage('success', 'Item associated with category successfully');
-                    } else {
-                        $session->addMessage('error', 'Failed to associate item with category');
-                    }
-                } else {
-                    $session->addMessage('error', 'Failed to prepare SQL statement for associating item with category');
+                
+                if (!$stmt->execute([$itemId, $category->categoryId])) {
+                    $session->addMessage('error', 'Failed to associate item with category');
+                    exit();
                 }
+                
             }
-
+            $session->addMessage('success', 'Item successfully published');
             header("Location: ../pages/post.php?id=$itemId");
             exit();
         } else {
@@ -146,10 +145,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header('Location: ../pages/error.php');
             exit();
         }
-    } else {
-        $session->addMessage('error', 'Failed to prepare SQL statement for inserting item');
-        header('Location: ../pages/error.php');
-        exit();
-    }
+    
 }
 ?>

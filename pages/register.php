@@ -15,7 +15,7 @@
 
   
 
-  drawHeader($session);
+  drawHeader($session, $db);
   drawRegisterForm($session, $db);
   drawFooter();
 ?>

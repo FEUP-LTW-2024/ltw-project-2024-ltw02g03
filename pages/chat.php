@@ -33,7 +33,7 @@ if(isset($_POST['owner_id'], $_POST['item_id'])) {
     }
 
     // Desenhe o chat com as mensagens obtidas
-    drawHeader($session);
+    drawHeader($session, $db);
     drawChat($db, $userId, $ownerId, $itemId, $communications);
     drawFooter();
 } else {

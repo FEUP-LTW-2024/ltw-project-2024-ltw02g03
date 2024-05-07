@@ -18,7 +18,7 @@
 
   
 
-  drawHeader($session);
+  drawHeader($session, $db);
   drawLoginForm($session, $db);
   drawFooter();
 ?>

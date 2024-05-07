@@ -66,7 +66,7 @@ if(chatContainer) {
             const senderName = message.SenderId === receiverId ?  message.SenderName: 'Você';
             console.log('senderName:', senderName);
             const messageContent = document.createElement('p');
-            messageContent.textContent = `${senderName}: ${message.CommunicationText}`; 
+            messageContent.textContent = ` ${message.CommunicationText}`; 
             const messageDate = document.createElement('span');
             messageDate.textContent = message.SendDate;
     
