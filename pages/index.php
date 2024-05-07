@@ -31,7 +31,7 @@ if(isset($_GET['category'])) {
 
 $totalProducts = getTotalProductsCount($db);
 
-drawHeader($session);
+drawHeader($session, $db);
 
 drawBody($session, $db, $totalProducts);
 

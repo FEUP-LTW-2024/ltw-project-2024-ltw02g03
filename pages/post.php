@@ -23,7 +23,7 @@
 
 $itemId = $_GET['id'];
   
-  drawHeader($session);
+  drawHeader($session, $db);
   drawPost($session, $db, (int) $itemId);
   drawFooter();
 ?>

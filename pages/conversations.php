@@ -13,7 +13,7 @@ if (!$session->isLoggedIn()) {
 }
 
 $db = getDatabaseConnection();
-drawHeader($session);
+drawHeader($session, $db);
 drawConversations($session, $db); 
 drawFooter();
 ?>

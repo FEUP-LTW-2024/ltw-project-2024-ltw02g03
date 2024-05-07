@@ -6,7 +6,7 @@ require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/user.class.php');
 require_once(__DIR__ . '/../database/payment.class.php');
 
-function drawHeader(Session $session) { ?>
+function drawHeader(Session $session, $db) { ?>
 
     <!DOCTYPE html>
     <html lang="en-US">
@@ -30,35 +30,47 @@ function drawHeader(Session $session) { ?>
     <header>
         <h1><a href="/pages">EcoExchange</a></h1>
         <div id="header-list">
-            <ul>
-                <li><a href="#" onclick="filterItems('Electronics')">Electronics</a></li>
-                <li><a href="#" onclick="filterItems('Clothing')">Clothing</a></li>
-                <li><a href="#" onclick="filterItems('Books')">Books</a></li>
-                <li><a href="#" onclick="filterItems('Furniture')">Furniture</a></li>
-                <li><a href="#" onclick="filterItems('Home Appliances')">Appliances</a></li>
-                <li><a href="#" onclick="filterItems('Jewelry')">Jewelry</a></li>
-            </ul>
+        <ul>
+            <?php 
+            $categories = Item::getCategories($db); 
+            foreach($categories as $category) {
+                if($category == "Home Appliances") {
+                    echo "<li><a href='#' onclick='filterItems(\"$category\")'>Appliances</a></li>";
+                } else {
+                    echo "<li><a href='#' onclick='filterItems(\"$category\")'>$category</a></li>";
+                }
+            }
+            ?>
+        </ul>
         </div>
         <div id="utility-wrap">
-            <a href="/pages/conversations.php">
+            <a href="/pages/conversations.php" class="utility-wrap-anchor">
                 <button class="header-button">
                     <img src="/Docs/img/9042672_message_icon.png" alt="" width="27">
                 </button>
             </a>
+
             <button class="header-button" onclick="openSearchTab()">
                 <img src="/Docs/img/9024781_gender_neuter_light_icon.png" alt="" width="30">
             </button> 
-            <a href="/pages/cart.php">
+            
+            <a href="/pages/cart.php" class="utility-wrap-anchor">
                 <button class="header-button">
                     <img src="/Docs/img/9025034_shopping_cart_light_icon.png" alt="" width="30">
                 </button> 
             </a>
+
             <?php if ($session->isLoggedIn()) { ?>
-            <a id="login-register-anchor" href="/pages/profilepage.php">
+            <a id="login-register-anchor" href="/pages/profilepage.php" >
             <?php }  ?>
                 <button class="header-button" id="profile-button">
-                    <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
-                    
+                <?php if($session->isLoggedIn())  {
+                    $userId = $session->getId();
+                    $user = User::getUser($db, $userId); ?>
+                    <img id="profile-pic-header" src="<?= !empty($user->imageUrl) ? htmlspecialchars($user->imageUrl) : "../Docs/img/9024845_user_circle_light_icon.png" ?>" alt="" width="1.8em">
+                    <?php } else { ?>
+                        <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
+                    <?php } ?>
                 </button> 
                 <?php if ($session->isLoggedIn()) { ?> </a> <?php }  ?>
             <div id="login-register">
@@ -207,32 +219,33 @@ function drawProducts(Session $session, $db, int $limit, $categoryName = null) {
                 $image = Item::getItemImage($db, $row->itemId);
                 
                 ?>
-                <a href="/pages/post.php?id=<?= $row->itemId ?>" class="item-link">
-                    <article id="index-product">
-                        <div id=img-product>
-                            <img id="" src="<?= $image[0]->imageUrl ?>" alt="" style="width: 90%; height: 90%;">
-                        </div>
-                        <h1><?= htmlspecialchars($row->title) ?></h1>
-                        <h2><?= htmlspecialchars($row->description) ?></h2>
-                        <p><?= number_format($row->price, 2) ?>€</p>
-                        <p>Condition: <?= htmlspecialchars($condition->conditionName) ?></p>
-                        <?php if ($brand) { ?>
-                            <p>Brand: <?= htmlspecialchars($brand->brandName) ?></p>
-                        <?php }
-                        if($myId != $ownerId)
-                        { ?>
-                        <form action="../actions/add_to_cart.php" method="post" class="add-to-cart-form">
-                            <input type="hidden" name="item_id" value="<?= $row->itemId ?>">
-                            <button type="submit" class="add-cart-button">Add to Cart</button> 
-                        </form>
-                        <?php }?>
-                        <form action="../pages/chat.php" method="post" class="send-message-form">
-                            <input type="hidden" name="owner_id" value="<?= $ownerId ?>">
-                            <input type="hidden" name="item_id" value="<?= $row->itemId ?>">
-                            <button type="submit" class="send-message-button">Enviar Mensagem</button>
-                        </form>
+                
+                    <article >
+                        <a id="index-product" href="/pages/post.php?id=<?= $row->itemId ?>" class="item-link">
+                            <div id=img-product>
+                                <img  src="<?= $image[0]->imageUrl ?>" alt="" style="width: 90%; height: 90%;">
+                            </div>
+                            <h1><?= htmlspecialchars($row->title) ?></h1>
+                            <h2><?= htmlspecialchars($row->description) ?></h2>
+                            <p><?= number_format($row->price, 2) ?>€</p>
+                            <p>Condition: <?= htmlspecialchars($condition->conditionName) ?></p>
+                            
+                            <p>Brand: <?= !empty($brand) ? htmlspecialchars($brand->brandName) : "  -  "?></p>
+                            <?php 
+                            if($myId != $ownerId) { ?>
+                            <form action="../actions/add_to_cart.php" method="post" class="add-to-cart-form">
+                                <input type="hidden" name="item_id" value="<?= $row->itemId ?>">
+                                <button type="submit" class="add-cart-button">Add to Cart</button> 
+                            </form>
+                            <?php } else {?>
+                                <form action="../actions/delete_item.php" method="post" class="add-to-cart-form">
+                                        <input type="hidden" name="item_id" value="<?= $row->itemId ?>">
+                                        <button type="submit" id="delete-cart-button" class="add-cart-button">Delete</button>
+                                    </form>
+                            <?php } ?>
+                        </a>
                     </article>
-                </a>
+                
                 <?php
             }
         } else {

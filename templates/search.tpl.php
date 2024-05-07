@@ -58,7 +58,7 @@ function drawFilteredProducts($db, ?string $categoryName = null, ?string $brandN
         if($categoryId !=0){
             $items = Item::filterItemsByCategoryId($db, $categoryId,$items);
         }
-        if($brandId !=0){
+        if($brandId >0){
             $items = Item::filterItemsByBrandId($db, $brandId, $items);
         }
         if($conditionId !=0){

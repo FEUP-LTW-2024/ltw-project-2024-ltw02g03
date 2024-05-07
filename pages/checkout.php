@@ -32,7 +32,7 @@ $userId= $session->getId();
 
 
 
-  drawHeader($session);
+  drawHeader($session, $db);
   drawCheckout($session, $db ,$item, $userId);
   drawFooter();
 ?>

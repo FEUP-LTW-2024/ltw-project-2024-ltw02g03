@@ -16,7 +16,7 @@
 
   $album = Album::getAlbum($db, intval($_GET['id']));
 
-  drawHeader($session);
+  drawHeader($session, $db);
   drawEditAlbum($album);
   drawFooter();
 ?>
