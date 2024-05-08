@@ -33,7 +33,10 @@ function drawHeader(Session $session, $db) { ?>
         <ul>
             <?php 
             $categories = Item::getCategories($db); 
+            $limite = 7;
             foreach($categories as $category) {
+                $limite--;
+                if($limite===0) {break;}
                 if($category == "Home Appliances") {
                     echo "<li><a href='#' onclick='filterItems(\"$category\")'>Appliances</a></li>";
                 } else {
@@ -69,7 +72,9 @@ function drawHeader(Session $session, $db) { ?>
                     $user = User::getUser($db, $userId); ?>
                     <img id="profile-pic-header" src="<?= !empty($user->imageUrl) ? htmlspecialchars($user->imageUrl) : "../Docs/img/9024845_user_circle_light_icon.png" ?>" alt="" width="1.8em">
                     <?php } else { ?>
+                        <a id="login-register-anchor" href="/pages/login.php">
                         <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
+                        </a>
                     <?php } ?>
                 </button> 
                 <?php if ($session->isLoggedIn()) { ?> </a> <?php }  ?>

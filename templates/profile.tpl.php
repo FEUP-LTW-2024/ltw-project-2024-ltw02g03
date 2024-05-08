@@ -157,12 +157,8 @@ function drawProfile(Session $session, $db)
                 <?php 
                 $activeItems=Item::getActiveItemsBySellerId($db, $userId);
                 $allItems=Item::getItemsBySellerId($db, $userId);
+                $inactiveItems =Item::getInactiveItemsBySellerId($db, $userId);
                 
-                if (!empty($activeItems)) {
-                    $inactiveItems = array_diff($allItems, $activeItems);
-                } else {
-                  $inactiveItems = $allItems;
-                }
                 foreach ($activeItems as $product) : ?>
                         <article class="">
                             <?php
