@@ -235,6 +235,7 @@ function drawProducts(Session $session, $db, int $limit, $categoryName = null) {
                             <p><?= number_format($row->price, 2) ?>€</p>
                             <p>Condition: <?= htmlspecialchars($condition->conditionName) ?></p>
                             
+                
                             <p>Brand: <?= !empty($brand) ? htmlspecialchars($brand->brandName) : "  -  "?></p>
                             <?php 
                             if($myId != $ownerId) { ?>
