@@ -298,7 +298,7 @@ function previewImages(event, startIndex) {
 </script>
 
 
-    </script>
+    
 <?php
 }
 ?>
