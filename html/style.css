@@ -659,6 +659,18 @@ body {
     transition: background-color 0.3s;
 }
 
+.profile-edit{
+    background-color: white;
+    border-radius: 1em;
+    padding: 1em;
+}
+
+#admin-section {
+    background-color: white;
+    padding: 1em;
+    border-radius: 1em;
+}
+
 #profile-menu ul li a:hover {
     background-color: #f0f0f0;
 }
@@ -949,12 +961,35 @@ body {
     object-fit: cover;
 }
 
+.button-left-prof {
+    background-color: #ccc;
+    color: #999;
+    border-radius: 0;
+    border-top: solid 2px black;
+}
+
+#left-profile-page .button-left-prof:last-child {
+    border-bottom: solid 2px black;
+}
+
+.button-left-prof:hover {
+    background-color: #ddd;
+}
+.button-left-prof:active {
+       color: #ddd;
+}
 
 #left-profile-page {
     background-color: white;
     border-radius: 1em;
     margin: 1em;
     padding: 1em;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    height: fit-content;
+    
 }
 
 /*--------search.css---------*/
@@ -1171,7 +1206,7 @@ select {
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 10px;
-    max-height: 60%;
+    height: 60%;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
