@@ -5,9 +5,8 @@ require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../database/user.class.php');
 require_once(__DIR__ . '/../database/connection.db.php');
 
-
-
-
+// Start the session
+session_start();
 
 // Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -23,11 +22,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate input
     if (empty($currentPassword) || empty($newPassword) || empty($confirmPassword)) {
         $session->addMessage('error', 'Please fill out all fields');
+        redirectToProfilePage();
+        exit();
     } else if ($newPassword !== $confirmPassword) {
         $session->addMessage('error', 'New password and confirm password do not match');
+        redirectToProfilePage();
+        exit();
         
     } else if (!password_verify($currentPassword, $user->password)) {
         $session->addMessage('error', 'Incorrect current password');
+        redirectToProfilePage();
+        exit();
     } else {
         // Hash the new password
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
@@ -42,11 +47,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($stmt->execute()) {
                 $session->addMessage('success', 'Password changed successfully');
+                redirectToProfilePage();
+                exit();
             } else {
                 $session->addMessage('error', 'Failed to update password');
+                redirectToProfilePage();
+                exit();
             }
         
     }
+}
+
+function redirectToProfilePage() {
+    $_SESSION['redirect_to_profile'] = true;
     header('Location: ../pages/profilepage.php');
     exit();
 }
