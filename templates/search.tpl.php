@@ -49,16 +49,23 @@ function drawFilteredProducts($db, ?string $categoryName = null, ?string $brandN
         <h1>Results for: <?= htmlspecialchars($categoryName ?? 'All Categories') ?></h1>
         <?php
         
+        if($minPrice == null){
+            $minPrice = 0;
+        }
+        if($maxPrice == null){
+            $maxPrice = 10000;
+        }
+
         $categoryId = Item::getCategoryId($db, $categoryName);
         $conditionId = Item::getConditionId($db, $condition);
         $brandId = Item::getBrandId($db, $brandName);
         $sizeId = Item::getSizeId($db, $size);
         $modelId = Item::getModelId($db, $model);
-        $items = Item::getAllItems($db);
+        $items = Item::getAllActiveItems($db);
         if($categoryId !=0){
             $items = Item::filterItemsByCategoryId($db, $categoryId,$items);
         }
-        if($brandId >0){
+        if($brandId !=0){
             $items = Item::filterItemsByBrandId($db, $brandId, $items);
         }
         if($conditionId !=0){
@@ -68,12 +75,12 @@ function drawFilteredProducts($db, ?string $categoryName = null, ?string $brandN
             $items = Item::filterItemsBySizeId($db, $sizeId, $items);
         }
         if($modelId !=0){
-            $items = Item::filterItemsByModelId($db, $modelId, $items);
+           $items = Item::filterItemsByModelId($db, $modelId, $items);
         }
-
         
         if (!empty($items)) : ?>
             <?php foreach ($items as $item) : 
+                
                 if($item->price < $minPrice || $item->price > $maxPrice){
                     continue;
                 }

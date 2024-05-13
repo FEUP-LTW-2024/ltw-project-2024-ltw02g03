@@ -224,6 +224,7 @@ class Item {
     }
     //get category id
     static function getCategoryId(PDO $db, ?string $categoryName) : int {
+        if($categoryName==null){return 0;}
         try {
             $stmt = $db->prepare('SELECT CategoryId FROM ProductCategory WHERE CategoryName = ?');
             $stmt->execute([$categoryName]);
@@ -236,7 +237,7 @@ class Item {
 
     //get condition id
     static function getConditionId(PDO $db, ?string $conditionName) : int {
-        if ($conditionName == null) {return -1;}
+        if ($conditionName == null) {return 0;}
         try {
             $stmt = $db->prepare('SELECT ConditionId FROM ItemCondition WHERE ConditionName = ?');
             $stmt->execute([$conditionName]);
@@ -249,7 +250,7 @@ class Item {
 
     //get brand id
     static function getBrandId(PDO $db, ?string $brandName) : int {
-        if ($brandName == null) {return -1;}
+        if ($brandName == null) {return 0;}
         try {
             $stmt = $db->prepare('SELECT BrandId FROM ItemBrand WHERE BrandName = ?');
             $stmt->execute([$brandName]);
@@ -262,7 +263,7 @@ class Item {
 
     //get size id
     static function getSizeId(PDO $db, ?string $sizeName) : int {
-        if ($sizeName == null) {return -1;}
+        if ($sizeName == null) {return 0;}
         try {
             $stmt = $db->prepare('SELECT SizeId FROM ItemSize WHERE SizeName = ?');
             $stmt->execute([$sizeName]);
@@ -275,7 +276,7 @@ class Item {
 
     //get model id
     static function getModelId(PDO $db, ?string $modelName) : int {
-        if ($modelName == null) {return -1;}
+        if ($modelName == null) {return 0;}
         try {
             $stmt = $db->prepare('SELECT ModelId FROM ItemModel WHERE ModelName = ?');
             $stmt->execute([$modelName]);
@@ -1318,6 +1319,35 @@ static function removeModel(PDO $db, string $modelName) :int {
     }
     return 1;
 }
+//get all active items
+static function getAllActiveItems(PDO $db) : array {
+    try {
+        $stmt = $db->query('
+            SELECT ItemId, SellerId, Title, Description, Price, ListingDate, Active
+            FROM Item
+            WHERE Active = 1
+        ');
+        $items = array();
+
+        while ($item = $stmt->fetch()) {
+            $active = (bool) $item['Active'];
+            $items[] = new Item(
+                $item['ItemId'],
+                $item['SellerId'],
+                $item['Title'],
+                $item['Description'],
+                $item['Price'],
+                $item['ListingDate'],
+                $active
+            );
+        }
+
+        return $items;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching active items: " . $e->getMessage());
+    }
+}
+
 
 //get all items
 static function getAllItems(PDO $db) : array {

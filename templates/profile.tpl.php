@@ -9,7 +9,8 @@ require_once(__DIR__ . '/../database/user.class.php');
 require_once(__DIR__ . '/../actions/action_editprofile.php');
 require_once(__DIR__ . '/../actions/action_change_password.php');
 
-function drawProfile(Session $session, $db)
+function 
+drawProfile(Session $session, $db)
 {
     
     try {

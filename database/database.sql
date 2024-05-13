@@ -251,8 +251,8 @@
     (1, 1, 'Samsung Galaxy S20', 'Brand new Samsung Galaxy S20 smartphone', 799.99, CURRENT_DATE, 1, 1, 1, 2, 1),
     (2, 1, 'Nike Air Max 270', 'Nike Air Max 270 shoes', 129.99, CURRENT_DATE, 2, 3, 1, 3, 2),
     (3, 2, 'Apple MacBook Pro', 'Used MacBook Pro in good condition', 1499.99, CURRENT_DATE, 3, 2, 3, 1, 3),
-    (4, 2, 'Nike Air Force 1', 'Classic Nike Air Force 1 shoes', 99.99, CURRENT_DATE, 4, 3, 1, 2, 1),
-    (5, 3, 'Adidas Superstar', 'Adidas Superstar sneakers', 79.99, CURRENT_DATE, 5, 4, 1, 3, 1);
+    (4, 2, 'Nike Air Force 1', 'Classic Nike Air Force 1 shoes', 99.99, CURRENT_DATE, 4, 3, 1, 2, 4),
+    (5, 3, 'Adidas Superstar', 'Adidas Superstar sneakers', 79.99, CURRENT_DATE, 5, 4, 1, 3, 5);
 
     -- Inserir dados de exemplo na tabela ProductCategory
     INSERT INTO ProductCategory (CategoryId, CategoryName)

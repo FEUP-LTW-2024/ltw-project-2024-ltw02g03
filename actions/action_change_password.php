@@ -5,12 +5,13 @@ require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../database/user.class.php');
 require_once(__DIR__ . '/../database/connection.db.php');
 
-$session = new Session();
+
 
 
 
 // Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $session = new Session();
     $db = getDatabaseConnection();
     $user = User::getUser($db, $session->getId());
 
@@ -24,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $session->addMessage('error', 'Please fill out all fields');
     } else if ($newPassword !== $confirmPassword) {
         $session->addMessage('error', 'New password and confirm password do not match');
+        
     } else if (!password_verify($currentPassword, $user->password)) {
         $session->addMessage('error', 'Incorrect current password');
     } else {

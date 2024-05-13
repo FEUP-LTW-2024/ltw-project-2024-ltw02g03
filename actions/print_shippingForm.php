@@ -11,7 +11,7 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
 $session = new Session();
 // Obtenha uma conexão com o banco de dados
 $db = getDatabaseConnection();
-drawHeader($session);
+drawHeader($session,$db);
 
 // Função para gerar o conteúdo do formulário de envio
 function generateShippingFormContent($itemId, $db)
