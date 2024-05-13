@@ -57,8 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     
     if (!$condition || !$size) {
-        $session->addMessage('error', 'Something went wrong');
-        header('Location: ../pages/error.php');
+        $session->addMessage('error', 'Please fill in all required fields.');
+        header('Location: ../pages/postcreation.php');
         exit();
     }
 
@@ -93,9 +93,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $imageUrls[] = $targetFilePath;
                         } else {
                             $session->addMessage('error', 'Failed to upload image: ' . $file_name);
+                            header("Location: ../pages/post.php?id=$itemId");
+                            exit();
                         }
                     } else {
                         $session->addMessage('error', 'Only JPEG and PNG files are allowed: ' . $file_name);
+                        header("Location: ../pages/post.php?id=$itemId");
+                        exit();
                     }
                 }
             }
@@ -114,15 +118,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             if ($stmt->execute([$itemId, $imageId])) {
                             } else {
                                 $session->addMessage('error', 'Failed to associate image with item');
+                                header('Location: ../pages/postcreation.php');
+                                exit();
                             }
                         } else {
                             $session->addMessage('error', 'Failed to prepare SQL statement for associating image with item');
+                            header('Location: ../pages/postcreation.php');
+                            exit();
                         }
                     } else {
                         $session->addMessage('error', 'Failed to save image URL in the database');
+                        header('Location: ../pages/postcreation.php');
+                        exit();
                     }
                 } else {
                     $session->addMessage('error', 'Failed to prepare SQL statement for saving image URL');
+                    header('Location: ../pages/postcreation.php');
+                    exit();
                 }
             }
             
@@ -133,6 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 if (!$stmt->execute([$itemId, $category->categoryId])) {
                     $session->addMessage('error', 'Failed to associate item with category');
+                    header('Location: ../pages/postcreation.php');
                     exit();
                 }
                 
@@ -142,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         } else {
             $session->addMessage('error', 'Failed to insert item into the database');
-            header('Location: ../pages/error.php');
+            header('Location: ../pages/postcreation.php');
             exit();
         }
     

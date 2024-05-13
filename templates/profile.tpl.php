@@ -308,7 +308,6 @@ drawProfile(Session $session, $db)
                 
                 
                 <?php endif; ?>
-                <p>Description</p>
             </div>
             
             
