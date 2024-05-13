@@ -18,6 +18,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Initialize an array to store the fields to be updated
     $fieldsToUpdate = [];
 
+      // Retrieve form data and add non-empty fields to the update array
+      if (!empty($_POST['email'])) {
+        $fieldsToUpdate['Email'] = $_POST['email'];
+    }
+    if (!empty($_POST['username'])) {
+        $fieldsToUpdate['Username'] = $_POST['username'];
+    }
+    if (!empty($_POST['firstName'])) {
+        $fieldsToUpdate['FirstName'] = $_POST['firstName'];
+    }
+    if (!empty($_POST['lastName'])) {
+        $fieldsToUpdate['LastName'] = $_POST['lastName'];
+    }
+    if (!empty($_POST['address'])) {
+        $fieldsToUpdate['Address'] = $_POST['address'];
+    }
+    if (!empty($_POST['city'])) {
+        $fieldsToUpdate['City'] = $_POST['city'];
+    }
+    if (!empty($_POST['district'])) {
+        $fieldsToUpdate['District'] = $_POST['district'];
+    }
+    if (!empty($_POST['country'])) {
+        $fieldsToUpdate['Country'] = $_POST['country'];
+    }
+    if (!empty($_POST['postalCode'])) {
+        $fieldsToUpdate['PostalCode'] = $_POST['postalCode'];
+    }
+    if (!empty($_POST['phone'])) {
+        $fieldsToUpdate['Phone'] = $_POST['phone'];
+    }
     // Retrieve form data and add non-empty fields to the update array
     if (!empty($_FILES['images']['name'][0])) {
         $uploadDirectory = '../path/to/upload/directory/';
