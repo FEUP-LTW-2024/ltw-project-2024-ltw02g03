@@ -6,6 +6,7 @@ require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/user.class.php');
+require_once(__DIR__ . '/../database/payment.class.php');
 require_once(__DIR__ . '/../actions/action_editprofile.php');
 require_once(__DIR__ . '/../actions/action_change_password.php');
 
@@ -14,16 +15,13 @@ drawProfile(Session $session, $db)
 {
     
     try {
-        // Redirect if user is not logged in
         if (!$session->isLoggedIn()) {
             header('Location: /pages/login.php');
             exit();
         }
 
-        // Get user ID from session
         $userId = $session->getId();
 
-        // Get user data
         $user = User::getUser($db, $userId);
 
         $presentedProducts = User::fetchPresentedProducts($db, $userId);
@@ -42,12 +40,15 @@ drawProfile(Session $session, $db)
                 <button class="button-left-prof" onclick="toggleProfileProd()">
                     Published products
                 </button>
+                <button onclick="togglePurchaseHistory()" class="button-left-prof">Purchase History</button> 
+
                 <button onclick="toggleEditProfile()" class="button-left-prof">
                     Edit Profile
                 </button>
                 <button onclick="toggleChangePass()" class="button-left-prof">
                     Change Password
                 </button>
+
                 <?php if($session->isAdmin()) { ?>
                 <button onclick="toggleAdminSection()" class="button-left-prof">
                     Admin options
@@ -113,7 +114,40 @@ drawProfile(Session $session, $db)
                             <?php endforeach; ?>
                     </div>
                 </div>
-                
+
+
+
+
+                <div id="purchase-history" style="display: none;">
+                    <h1>Purchase History</h1>
+                    
+                        <div id="profile-page-items">
+                        <?php 
+                        $payments= Payment::getPaymentsByBuyerId($db, $userId);
+                        foreach($payments as $payment):
+                            $item = Item::getItem($db, $payment->itemId);
+                            $image = Item::getItemImage($db, $item->itemId)[0];
+                            ?>
+                            <article class="">
+                                <a href="/pages/postbought.php?id=<?= $item->itemId ?>" class="profilepage-item">
+                                    <img class="profilepage-img-item" src="../<?=$image->imageUrl?>" alt="" width="100">
+                                    <div class="profilepage-title-price-item">
+                                        <h1><?= htmlspecialchars($item->title) ?></h1>
+                                        <h2><?= $item->price ?>€</h2>
+                                    </div>
+                                </a>
+                            </article>
+                            <?php endforeach; 
+                            if(empty($payments)){
+                                ?><h3>No purchase history</h3>
+                            <?php } ?>
+                        </div>
+                        
+                        
+                </div>
+
+
+
                 <div id="edit-profile-section" style="display: none;">
                 <form class="profile-edit" action="/actions/action_editprofile.php" method="post" enctype="multipart/form-data">
                         <h1>User</h1>
@@ -365,6 +399,20 @@ drawProfile(Session $session, $db)
         profileEdit.style.display = "none";
         changepass.style.display = "block";
     }
+    function togglePurchaseHistory() {
+        var adminSection = document.getElementById("admin-section");
+        var presentedProducts = document.getElementById("profile-presented");
+        var profileEdit = document.getElementById("edit-profile-section");
+        var changepass = document.getElementById("change-password");
+        var purchaseHistory = document.getElementById("purchase-history");
+
+        adminSection.style.display = "none";
+        presentedProducts.style.display = "none";
+        profileEdit.style.display = "none";
+        changepass.style.display = "none";
+        purchaseHistory.style.display = "block"; // Exibe a seção do histórico de compras
+    }
+
 
     function previewImage(event) {
     const file = event.target.files[0]; // Get the first file from the selected files

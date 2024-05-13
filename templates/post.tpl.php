@@ -314,4 +314,123 @@ function previewImages(event, startIndex) {
     
 <?php
 }
+function drawPostBought(Session $session, $db, int $itemId) { 
+    
+    try {
+        $item = Item::getItem($db, $itemId);
+        
+          
+        if (!$item) {
+            echo "<p>Item not found.</p>";
+            return;
+        }
+        $userId = $session->getId();
+
+        $condition = Item::getItemCondition($db, $itemId);
+        $brand = Item::getItemBrand($db, $itemId);    
+        $image = Item::getItemImage($db, $itemId);
+        $size = Item::getItemSize($db, $itemId);
+        $model = Item::getItemModel($db, $itemId);
+        $sellerId = $item->sellerId;
+        $user = User::getUser($db, $sellerId);
+        $current_user=0;
+        if ($session->isLoggedIn()) {
+            $current_user = User::getUser($db, $session->getId());
+        }       
+        if ($item->active === (false) && $current_user->admin === (false)) {
+            echo "<p>Item not found.</p>";
+            return;
+        }
+   
+        ?>
+        <main>
+            <section id="post">
+                <div id="product-img-post">
+                    <button class="img-button"><</button>
+                    <img id="post-image-product" src="../<?= $image[0]->imageUrl ?>" alt="" >
+                    <button class="img-button">></button>  
+                </div>
+                <aside id="user-aside">
+                    <div id="price-post">
+                        <div id="title-button-post">
+                            <h2 id="product-title-post"><?= htmlspecialchars($item->title) ?></h2>
+                            <h2><?= number_format($item->price, 2) ?>€</h2>
+                            <form action="../pages/chat.php" method="post" class="post-form-button">
+                                <input type="hidden" name="owner_id" value="<?= $sellerId ?>">
+                                <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
+                                <button type="submit" class="send-message-button">Enviar Mensagem</button>
+                            </form>
+                        </div>
+                        
+                        <div id="post-price-button">
+                            <h2>Deixe uma review</h2>
+                            <form id="review-form" action="/../actions/action_process_review.php" method="POST">
+                                <input type="hidden" name="user_id" value="<?= $userId ?>">
+                                <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
+                                
+
+                                <label for="review_text">Sua revisão:</label><br>
+                                <textarea id="review_text" name="review_text" rows="4" cols="50" required></textarea><br>
+
+                                <label for="rating">Classificação:</label>
+                                <select id="rating" name="rating" required>
+                                    <option value="">Selecione uma classificação</option>
+                                    <option value="1.0">1 estrela</option>
+                                    <option value="2.0">2 estrelas</option>
+                                    <option value="3.0">3 estrelas</option>
+                                    <option value="4.0">4 estrelas</option>
+                                    <option value="5.0">5 estrelas</option>
+                                </select><br>
+
+                                <input type="submit" value="Enviar revisão">
+                            </form>
+                        </div>
+
+                            
+                        
+                        
+                    </div>
+                    <div id="user-post">
+                        <img id="img-user-post" src="<?= !empty($user->imageUrl) ? $user->imageUrl : "/Docs/img/9024845_user_circle_light_icon.png"?>" alt="" width="100">
+                        <div class="user-info">
+                            <h1>Username: <?= htmlspecialchars($user->username) ?></h1>
+                            <div class="location-info">
+                                <h2>Location:</h2>
+                                <p><?= !empty($user->address) ? htmlspecialchars($user->address) : " - " ?></p>
+                                <p><?= !empty($user->city) ? htmlspecialchars($user->city) : " - " ?></p>
+                                <p><?= !empty($user->district) ? htmlspecialchars($user->district) : " - " ?></p>
+                                <p><?= !empty($user->country) ? htmlspecialchars($user->country) : " - " ?></p>
+
+                            </div>
+                            <h2>Phone: <?= !empty($user->phone) ? htmlspecialchars($user->phone)  : " - "?></h2>
+                            <h2>Email: <?= !empty($user->email) ? htmlspecialchars($user->email) : " - "?></h2>
+                        </div>
+                    </div>
+
+                    
+                    <div id="specs-post">
+                        <p class="spec-type">Brand:</p> 
+                        <p class="spec"><?= !empty($brand->brandName) ? htmlspecialchars($brand->brandName) : " - " ?></p>
+                        <p class="spec-type">Condition:</p> 
+                        <p class="spec"><?= !empty($condition->conditionName) ? htmlspecialchars($condition->conditionName) : " - " ?></p>
+                        <p class="spec-type">Size:</p> 
+                        <p class="spec"><?= !empty($size->sizeName) ? htmlspecialchars($size->sizeName) : " - " ?></p>
+                        <p class="spec-type">Model:</p> 
+                        <p class="spec"><?= !empty($model->modelName) ? htmlspecialchars($model->modelName) : " - " ?></p>
+                    </div>
+                </aside>
+                <div id="description-post">
+                    <div>
+                        <h2 id="description-post-h2">Description</h2>
+                        <p><?= !empty($item->description) ? htmlspecialchars($item->description) : "No description" ?></p>
+                    </div>
+                    <p id="date-post"><?= !empty($item->listingDate) ? htmlentities($item->listingDate) : " No Date " ?></p>
+                </div>
+            </section>
+        </main>
+        <?php
+    } catch (PDOException $e) {
+        echo "Error fetching item details: " . $e->getMessage();
+    }
+}
 ?>

@@ -194,21 +194,19 @@
         
     );
 
-
-    /*
-    EXTRA FEATURES
-
-    -- Review Table
+     -- Review Table
     CREATE TABLE Review (
         ReviewId INTEGER PRIMARY KEY,
         UserId INTEGER,
         ItemId INTEGER,
-        Rating INTEGER,
+        Rating FLOAT,
         Comment TEXT,
         ReviewDate DATE DEFAULT CURRENT_DATE,
         FOREIGN KEY (UserId) REFERENCES User (UserId) ON DELETE NO ACTION ON UPDATE NO ACTION,
         FOREIGN KEY (ItemId) REFERENCES Item (ItemId) ON DELETE NO ACTION ON UPDATE NO ACTION
     );
+    /*
+    EXTRA FEATURES
 
     -- PaymentHistory Table
     CREATE TABLE PaymentHistory (
