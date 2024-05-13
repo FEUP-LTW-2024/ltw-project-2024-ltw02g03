@@ -44,7 +44,42 @@ class Payment
     } catch (PDOException $e) {
         throw new Exception("Error inserting payment: " . $e->getMessage());
     }
-}
+}   
+
+    //Get all payments by buyer ID
+    static function getPaymentsByBuyerId(PDO $db, int $buyerId): array
+    {
+        try {
+            $stmt = $db->prepare('
+                SELECT *
+                FROM Payment
+                WHERE BuyerId = ?
+            ');
+
+            $stmt->execute(array($buyerId));
+
+            $payments = array();
+
+            while ($payment = $stmt->fetch()) {
+                $payments[] = new Payment(
+                    $payment['PaymentId'],
+                    $payment['BuyerId'],
+                    $payment['SellerId'],
+                    $payment['ItemId'],
+                    $payment['Address'],
+                    $payment['City'],
+                    $payment['District'],
+                    $payment['Country'],
+                    $payment['PostalCode'],
+                    $payment['PaymentDate']
+                );
+            }
+
+            return $payments;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching payments: " . $e->getMessage());
+        }
+    }
     
 
     // Get payment by item ID
