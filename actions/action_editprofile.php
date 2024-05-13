@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../database/connection.db.php');
@@ -19,37 +19,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fieldsToUpdate = [];
 
     // Retrieve form data and add non-empty fields to the update array
-    if (!empty($_POST['email'])) {
-        $fieldsToUpdate['Email'] = $_POST['email'];
-    }
-    if (!empty($_POST['username'])) {
-        $fieldsToUpdate['Username'] = $_POST['username'];
-    }
-    if (!empty($_POST['firstName'])) {
-        $fieldsToUpdate['FirstName'] = $_POST['firstName'];
-    }
-    if (!empty($_POST['lastName'])) {
-        $fieldsToUpdate['LastName'] = $_POST['lastName'];
-    }
-    if (!empty($_POST['address'])) {
-        $fieldsToUpdate['Address'] = $_POST['address'];
-    }
-    if (!empty($_POST['city'])) {
-        $fieldsToUpdate['City'] = $_POST['city'];
-    }
-    if (!empty($_POST['district'])) {
-        $fieldsToUpdate['District'] = $_POST['district'];
-    }
-    if (!empty($_POST['country'])) {
-        $fieldsToUpdate['Country'] = $_POST['country'];
-    }
-    if (!empty($_POST['postalCode'])) {
-        $fieldsToUpdate['PostalCode'] = $_POST['postalCode'];
-    }
-    if (!empty($_POST['phone'])) {
-        $fieldsToUpdate['Phone'] = $_POST['phone'];
+    if (!empty($_FILES['images']['name'][0])) {
+        $uploadDirectory = '../path/to/upload/directory/';
+        $imageUrls = [];
+
+        foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name) {
+            if (!empty($_FILES['images']['name'][$key])) {
+                $file_name = $_FILES['images']['name'][$key];
+                $file_tmp = $_FILES['images']['tmp_name'][$key];
+                $file_type = $_FILES['images']['type'][$key];
+                
+                if ($file_type == 'image/jpeg' || $file_type == 'image/png') {
+                    // Generate directory for the user if not exists
+                    $userFolder = $uploadDirectory . 'user_' . $user->userId . '/';
+                    if (!file_exists($userFolder)) {
+                        mkdir($userFolder, 0777, true);
+                    }
+                    
+                    $targetFile = $userFolder . $file_name;
+                    
+                    if (move_uploaded_file($file_tmp, $targetFile)) {
+                        $fieldsToUpdate['ImageUrl'] = $targetFile;
+                    } else {
+                        $session->addMessage('error', 'Failed to upload image: ' . $file_name);
+                    }
+                } else {
+                    $session->addMessage('error', 'Only JPEG and PNG files are allowed: ' . $file_name);
+                }
+            }
+        }
     }
 
+    // Other form data processing goes here...
+    
     // Update user's profile if there are fields to be updated
     if (!empty($fieldsToUpdate)) {
         // Construct the SET part of the SQL query dynamically
@@ -79,12 +81,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             } else {
                 $session->addMessage('error', 'Failed to update profile');
-                header('Location: ../pages/error.php');
+                header('Location: ../pages/errorfailedtoupdateprofile.php');
                 exit();
             }
         } else {
             $session->addMessage('error', 'Failed to prepare SQL statement');
-            header('Location: ../pages/error.php');
+            header('Location: ../pages/errorsqlstatement.php');
             exit();
         }
     } else {
@@ -94,3 +96,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+z
