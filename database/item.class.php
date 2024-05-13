@@ -408,7 +408,37 @@ class Item {
             throw new Exception("Error fetching items by seller id: " . $e->getMessage());
         }
     }
-    
+
+
+
+    //get all inactive items
+    public static function getInactiveItems(PDO $db) : array {
+        try {
+            $stmt = $db->query('
+                SELECT ItemId, SellerId, Title, Description, Price, ListingDate, Active
+                FROM Item
+                WHERE Active = FALSE
+            ');
+            $items = array();
+
+            while ($item = $stmt->fetch()) {
+                $active = (bool) $item['Active'];
+                $items[] = new Item(
+                    $item['ItemId'],
+                    $item['SellerId'],
+                    $item['Title'],
+                    $item['Description'],
+                    $item['Price'],
+                    $item['ListingDate'],
+                    $active
+                );
+            }
+
+            return $items;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching inactive items: " . $e->getMessage());
+        }
+    }
 
 
 
@@ -950,13 +980,15 @@ static function searchItemsByTitle(PDO $db, string $title, int $count) : array {
         $items = array();
 
         while ($item = $stmt->fetch()) {
+            $active = (bool) $item['Active'];
             $items[] = new Item(
                 $item['ItemId'],
                 $item['SellerId'],
                 $item['Title'],
                 $item['Description'],
                 $item['Price'],
-                $item['ListingDate']
+                $item['ListingDate'],
+                $active
             );
         }
 

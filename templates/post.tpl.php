@@ -26,8 +26,14 @@ function drawPost(Session $session, $db, int $itemId) {
         $model = Item::getItemModel($db, $itemId);
         $sellerId = $item->sellerId;
         $user = User::getUser($db, $sellerId);
-        
-        
+        $current_user=0;
+        if ($session->isLoggedIn()) {
+            $current_user = User::getUser($db, $session->getId());
+        }       
+        if ($item->active === (false) && $current_user->admin === (false)) {
+            echo "<p>Item not found.</p>";
+            return;
+        }
    
         ?>
         <main>
@@ -53,17 +59,23 @@ function drawPost(Session $session, $db, int $itemId) {
                         <?php } ?>
                         <div id="post-price-button">
                             <h1><?= number_format($item->price, 2) ?>€</h1>
-                            <?php if($userId == $sellerId) { ?>
+                            <?php if (($userId == $sellerId && $item->active === (true)) || ($current_user->admin === (true)&& $item->active === (true) )) { ?>
                                 <form action="../actions/delete_item.php" method="post">
                                     <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
                                     <button type="submit" id="delete-cart-button" class="cart-button-post">Delete</button>
                                 </form>
+                            <?php } else if ($userId == $sellerId && $item->active === (false)) { ?>
+                                <form action="../actions/print_shippingForm.php" method="post">
+                                    <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
+                                    <button type="submit" class="cart-button-post">Shipping Form</button>
+                                </form>
                             <?php } else { ?>
-                                <form action="../actions/add_to_cart.php" method="post" >
+                                <form action="../actions/add_to_cart.php" method="post">
                                     <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
                                     <button type="submit" class="cart-button-post">Add to Cart</button> 
                                 </form>
                             <?php } ?>
+
 
                             
                         </form>
@@ -119,9 +131,10 @@ function drawPost(Session $session, $db, int $itemId) {
 
 
 function drawPostCreation($session, $db) {
-    // $images= Item::getAllImages($db);
-    // var_dump($images);
-    
+
+    $images= Item::getAllImages($db);
+     
+
     ?>
     
      

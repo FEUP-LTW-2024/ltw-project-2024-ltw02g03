@@ -298,7 +298,64 @@ function drawProfile(Session $session, $db)
                 
                 
                 <?php endif; ?>
+                <p>Description</p>
+            </div>
+            
+            <div>
+                <h1>Presented Products</h1>
+                <h2>To Sell:</h2>
+                <div id="profile-page-items">
+                <?php 
+                $allItems=Item::getItemsBySellerId($db, $userId);
+                $activeItems = [];
+                $inactiveItems = [];
+
+                foreach ($allItems as $item) {
+                    if ($item->active === true) {
+                        $activeItems[] = $item;
+                    } else {
+                        $inactiveItems[] = $item;
+                    }
+                }
+                if(empty($activeItems)){
+                    echo "<h3>No items to sell</h3>";
+                }
+                foreach ($activeItems as $product) : ?>
+                        <article class="">
+                            <?php
+                            $image = Item::getItemImage($db, $product->itemId)[0];
+                            ?>
+                            <a href="/pages/post.php?id=<?= $product->itemId ?>" class="profilepage-item">
+                                <img class="profilepage-img-item" src="../<?=$image->imageUrl?>" alt="" width="100">
+                                <div class="profilepage-title-price-item">
+                                    <h1><?= htmlspecialchars($product->title) ?></h1>
+                                    <h2><?= $product->price ?>€</h2>
+                                </div>
+                            </a>
+                        </article>
+                    <?php endforeach; ?>
+                        
                 </div>
+                <h2>Sold:</h2>
+                <div id="profile-page-items">
+                <?php
+                if(empty($inactiveItems)){
+                    echo "<h3>No items sold</h3>";
+                }
+                foreach ($inactiveItems as $product) : ?>
+                        <article class="">
+                            <?php
+                            $image = Item::getItemImage($db, $product->itemId)[0];
+                            ?>
+                            <a href="/pages/post.php?id=<?= $product->itemId ?>" class="profilepage-item">
+                                <img class="profilepage-img-item" src="../<?=$image->imageUrl?>" alt="" width="100">
+                                <div class="profilepage-title-price-item">
+                                    <h1><?= htmlspecialchars($product->title) ?></h1>
+                                    <h2><?= $product->price ?>€</h2>
+                                </div>
+                            </a>
+                        </article>
+                    <?php endforeach; ?>
             </div>
         </main>
     <?php

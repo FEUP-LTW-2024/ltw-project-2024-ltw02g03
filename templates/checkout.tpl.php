@@ -36,9 +36,6 @@ function drawCheckout(Session $session, $db, $item, $userId) {
                         <input type="text" id="district" name="district" value="<?= isset($user->district) ? htmlspecialchars($user->district) : '' ?>" required><br>
                         <label for="country">País:</label>
                         <input type="text" id="country" name="country" value="<?= isset($user->country) ? htmlspecialchars($user->country) : '' ?>" required><br>
-
-                    
-
                     
                     <h3>Opções de Pagamento</h3>
                     <label for="payment_method">Método de Pagamento:</label>

@@ -232,9 +232,6 @@
     );
     */
 
-    /*******************************************************************************
-    Create Foreign Keys
-    ********************************************************************************/
 
     /*******************************************************************************
     Populate Tables
@@ -334,3 +331,11 @@
     (3, 'Docs/Apple_16-inch-MacBook-Pro_111319_big.jpg.large.jpg'),
     (4, 'Docs/sapatilhas-air-force-1-07-1nfJ59.jpg'),
     (5, 'Docs/adidas-superstar-gore-tex-core-black-white-if6162-658e93bd76e79.jpg');
+
+    -- Inserir dados de exemplo na tabela Payment
+    INSERT INTO Payment (PaymentId, BuyerId, SellerId, ItemId, Address, City, District, Country, PostalCode, PaymentDate)
+    VALUES
+    (1, 2, 1, 1, '123 Main St', 'Anytown', 'Anydistrict', 'AnyCountry', '12345', CURRENT_DATE),
+    (2, 3, 2, 3, '456 Oak St', 'Othertown', 'Otherdistrict', 'OtherCountry', '54321', CURRENT_DATE),
+    (3, 1, 2, 4, '789 Elm St', 'Somewhere', 'Somedistrict', 'SomeCountry', '67890', CURRENT_DATE),
+    (4, 2, 3, 5, '101 Pine St', 'Anywhere', 'Anydistrict', 'AnyCountry', '54321', CURRENT_DATE);
