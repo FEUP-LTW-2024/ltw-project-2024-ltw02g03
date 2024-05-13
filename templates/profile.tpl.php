@@ -61,11 +61,20 @@ drawProfile(Session $session, $db)
                         <h2>To Sell:</h2>
                         <div id="profile-page-items">
                         <?php 
-                        $activeItems=Item::getActiveItemsBySellerId($db, $userId);
                         $allItems=Item::getItemsBySellerId($db, $userId);
-                        $inactiveItems =Item::getInactiveItemsBySellerId($db, $userId);
-                        if(empty($activeItems)) {?> <h3>No active items</h3><?php }
-                        else {
+                        $activeItems = [];
+                        $inactiveItems = [];
+        
+                        foreach ($allItems as $item) {
+                            if ($item->active === true) {
+                                $activeItems[] = $item;
+                            } else {
+                                $inactiveItems[] = $item;
+                            }
+                        }
+                        if(empty($activeItems)){
+                            echo "<h3>No items to sell</h3>";
+                        }
                         foreach ($activeItems as $product) : ?>
                                 <article class="">
                                     <?php
@@ -79,14 +88,15 @@ drawProfile(Session $session, $db)
                                         </div>
                                     </a>
                                 </article>
-                            <?php endforeach; }?>
+                            <?php endforeach; ?>
                                 
                         </div>
                         <h2>Sold:</h2>
                         <div id="profile-page-items">
                         <?php
-                        if(empty($inactiveItems)) {?> <h3>No sold items</h3><?php }
-                        else {
+                        if(empty($inactiveItems)){
+                            echo "<h3>No items sold</h3>";
+                        }
                         foreach ($inactiveItems as $product) : ?>
                                 <article class="">
                                     <?php
@@ -100,8 +110,7 @@ drawProfile(Session $session, $db)
                                         </div>
                                     </a>
                                 </article>
-                            <?php endforeach; }?>
-
+                            <?php endforeach; ?>
                     </div>
                 </div>
                 
@@ -302,62 +311,7 @@ drawProfile(Session $session, $db)
                 <p>Description</p>
             </div>
             
-            <div>
-                <h1>Presented Products</h1>
-                <h2>To Sell:</h2>
-                <div id="profile-page-items">
-                <?php 
-                $allItems=Item::getItemsBySellerId($db, $userId);
-                $activeItems = [];
-                $inactiveItems = [];
-
-                foreach ($allItems as $item) {
-                    if ($item->active === true) {
-                        $activeItems[] = $item;
-                    } else {
-                        $inactiveItems[] = $item;
-                    }
-                }
-                if(empty($activeItems)){
-                    echo "<h3>No items to sell</h3>";
-                }
-                foreach ($activeItems as $product) : ?>
-                        <article class="">
-                            <?php
-                            $image = Item::getItemImage($db, $product->itemId)[0];
-                            ?>
-                            <a href="/pages/post.php?id=<?= $product->itemId ?>" class="profilepage-item">
-                                <img class="profilepage-img-item" src="../<?=$image->imageUrl?>" alt="" width="100">
-                                <div class="profilepage-title-price-item">
-                                    <h1><?= htmlspecialchars($product->title) ?></h1>
-                                    <h2><?= $product->price ?>€</h2>
-                                </div>
-                            </a>
-                        </article>
-                    <?php endforeach; ?>
-                        
-                </div>
-                <h2>Sold:</h2>
-                <div id="profile-page-items">
-                <?php
-                if(empty($inactiveItems)){
-                    echo "<h3>No items sold</h3>";
-                }
-                foreach ($inactiveItems as $product) : ?>
-                        <article class="">
-                            <?php
-                            $image = Item::getItemImage($db, $product->itemId)[0];
-                            ?>
-                            <a href="/pages/post.php?id=<?= $product->itemId ?>" class="profilepage-item">
-                                <img class="profilepage-img-item" src="../<?=$image->imageUrl?>" alt="" width="100">
-                                <div class="profilepage-title-price-item">
-                                    <h1><?= htmlspecialchars($product->title) ?></h1>
-                                    <h2><?= $product->price ?>€</h2>
-                                </div>
-                            </a>
-                        </article>
-                    <?php endforeach; ?>
-            </div>
+            
         </main>
     <?php
     } catch (Exception $e) {
