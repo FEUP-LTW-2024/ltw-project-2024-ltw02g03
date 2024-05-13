@@ -13,7 +13,7 @@ function drawLoginForm(Session $session,$db) { ?>
             <h1>Login</h1>
             <form class="form-log" action="../actions/action_login.php" method="post"> 
                 <label>
-                    Email <input type="text" name="email">
+                    Email <input type="email" name="email">
                 </label>
                 <label>
                     Password <input type="password" name="password">

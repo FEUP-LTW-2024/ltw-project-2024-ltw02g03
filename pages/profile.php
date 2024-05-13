@@ -7,7 +7,7 @@
   if (!$session->isLoggedIn()) die(header('Location: /'));
 
   require_once(__DIR__ . '/../database/connection.db.php');
-  require_once(__DIR__ . '/../database/customer.class.php');
+
 
   require_once(__DIR__ . '/../templates/common.tpl.php');
   require_once(__DIR__ . '/../templates/customer.tpl.php');
@@ -16,7 +16,7 @@
 
   $user = User::getUser($db, $session->getId());
 
-  drawHeader($session);
+  drawHeader($session, $db);
   drawProfileForm($user);
   drawFooter();
 ?>

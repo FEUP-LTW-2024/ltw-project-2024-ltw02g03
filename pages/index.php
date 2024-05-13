@@ -11,7 +11,8 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
 
 function getTotalProductsCount($db) {
     try {
-        $stmt = $db->query('SELECT COUNT(*) AS total FROM Item');
+        $stmt = $db->prepare('SELECT COUNT(*) AS total FROM Item WHERE Active = 1');
+        $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return (int)$result['total'];
     } catch (PDOException $e) {
@@ -31,7 +32,7 @@ if(isset($_GET['category'])) {
 
 $totalProducts = getTotalProductsCount($db);
 
-drawHeader($session);
+drawHeader($session, $db);
 
 drawBody($session, $db, $totalProducts);
 

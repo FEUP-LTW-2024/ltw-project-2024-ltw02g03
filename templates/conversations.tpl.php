@@ -5,22 +5,28 @@ require_once(__DIR__ . '/../database/communication.class.php');
 
 function drawConversations(Session $session, $db) {
     $userId = $session->getId();
+    
 
     $conversations = Communication::getAllChats($db);
-
+    echo "<main id='conversation-main'>";
     echo "<h1>" . htmlentities("Conversas Ativas") . "</h1>";
     echo "<ul>";
-    foreach ($conversations as $conversation) {
+    if(empty($conversations)) {
+        echo "<h2>No open conversations</h2>";
+    }
+    foreach (array_reverse($conversations) as $conversation) {
         $otherUserId = ($userId == $conversation['senderId']) ? $conversation['receiverId'] : $conversation['senderId'];
         $item = $conversation['itemId'];
         $otherName = htmlentities(User::getUsernameById($db, $otherUserId));
         $itemName = htmlentities(Item::getItemNameById($db, $item));
+        $image = Item::getItemImage($db, $item);
         ?>
-        <li>
+        <li class="conversation-li">
+            <img class="conversation-img" src="../<?= $image[0]->imageUrl ?>" height="200" width="200">
             <a href='/pages/chat.php?receiver_id=<?= $otherUserId ?>'>
                 <h3><?= htmlentities("Conversa com {$otherName} sobre {$itemName}") ?></h3>
             </a>
-            <form action="/pages/chat.php" method="post">
+            <form action="/pages/chat.php" method="post" class="post-form-button-2">
                 <input type="hidden" name="owner_id" value="<?= $otherUserId ?>">
                 <input type="hidden" name="item_id" value="<?= $item ?>">
                 <button type="submit">Abrir Chat</button>
@@ -29,5 +35,6 @@ function drawConversations(Session $session, $db) {
         <?php
     }
     echo "</ul>";
+    echo "</main>";
 }
 ?>

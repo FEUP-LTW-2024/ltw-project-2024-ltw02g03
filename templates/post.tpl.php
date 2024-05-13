@@ -40,18 +40,29 @@ function drawPost(Session $session, $db, int $itemId) {
             <section id="post">
                 <div id="product-img-post">
                     <button class="img-button"><</button>
-                    <img src="../<?= $image[0]->imageUrl ?>" alt="">
+                    <img id="post-image-product" src="../<?= $image[0]->imageUrl ?>" alt="" >
                     <button class="img-button">></button>  
                 </div>
                 <aside id="user-aside">
                     <div id="price-post">
-                        <h2 id="product-title-post"><?= htmlspecialchars($item->title) ?></h2>
+                        <?php if ($userId != $item->sellerId) { ?>
+                        <div id="title-button-post">
+                            <h2 id="product-title-post"><?= htmlspecialchars($item->title) ?></h2>
+                            <form action="../pages/chat.php" method="post" class="post-form-button">
+                                <input type="hidden" name="owner_id" value="<?= $sellerId ?>">
+                                <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
+                                <button type="submit" class="send-message-button">Enviar Mensagem</button>
+                            </form>
+                        </div>
+                        <?php } else { ?>
+                            <h2 id="product-title-post"><?= htmlspecialchars($item->title) ?></h2>
+                        <?php } ?>
                         <div id="post-price-button">
                             <h1><?= number_format($item->price, 2) ?>€</h1>
                             <?php if (($userId == $sellerId && $item->active === (true)) || ($current_user->admin === (true)&& $item->active === (true) )) { ?>
                                 <form action="../actions/delete_item.php" method="post">
                                     <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
-                                    <button type="submit" class="cart-button-post">Delete</button>
+                                    <button type="submit" id="delete-cart-button" class="cart-button-post">Delete</button>
                                 </form>
                             <?php } else if ($userId == $sellerId && $item->active === (false)) { ?>
                                 <form action="../actions/print_shippingForm.php" method="post">
@@ -120,8 +131,10 @@ function drawPost(Session $session, $db, int $itemId) {
 
 
 function drawPostCreation($session, $db) {
+
     $images= Item::getAllImages($db);
      
+
     ?>
     
      
@@ -171,7 +184,7 @@ function drawPostCreation($session, $db) {
                     <label>
                         Condition 
                         <select name="condition" class="publish-select" required>
-                            <option></option>
+                            <option selected disabled>Selecione...</option>
                             <?php 
                                 $conditions = Item::getConditionsObj($db);
                                 foreach($conditions as $cond) {
@@ -185,7 +198,7 @@ function drawPostCreation($session, $db) {
                     <label>
                         Size
                         <select name="size" class="publish-select" required>
-                            <option></option>
+                            <option selected disabled>Selecione...</option>
                             <?php 
                                 $conditions = Item::getSizesObj($db);
                                 foreach($conditions as $cond) {
@@ -298,7 +311,7 @@ function previewImages(event, startIndex) {
 </script>
 
 
-    </script>
+    
 <?php
 }
 ?>

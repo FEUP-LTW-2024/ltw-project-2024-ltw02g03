@@ -18,11 +18,12 @@ function drawCheckout(Session $session, $db, $item, $userId) {
 
         ?>
         <main>
-            <section id="checkout">
+            <section class="publish-section">
                 <h2>Checkout</h2>
                 
                 <!-- Formulário de checkout -->
                 <form action="/../actions/action_checkout.php" method="post">
+                <div class="publish-div">
                     <!-- Informações de envio -->
                     <h3>Informações de Envio</h3>
                         <label for="address">Endereço:</label>
@@ -38,7 +39,7 @@ function drawCheckout(Session $session, $db, $item, $userId) {
                     
                     <h3>Opções de Pagamento</h3>
                     <label for="payment_method">Método de Pagamento:</label>
-                    <select id="payment_method" name="payment_method" required>
+                    <select id="payment_method" class="publish-select" name="payment_method" required>
                         <option value="" selected disabled>Selecione...</option>
                         <option value="credit_card">Cartão de Crédito</option>
                         <option value="paypal">PayPal</option>
@@ -63,6 +64,7 @@ function drawCheckout(Session $session, $db, $item, $userId) {
                     <input type="hidden" name="item_ids[]" value="<?= $itemId ?>">
 
                     <button type="submit" id="finalizar_compra_btn" onclick="simulatePurchaseAndRedirect()">Finalizar Compra</button>
+                    </div>
                 </form>
             </section>
         </main>

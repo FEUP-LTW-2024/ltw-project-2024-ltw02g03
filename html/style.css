@@ -30,6 +30,12 @@ main {
     display: inline-block;
 }
 
+.utility-wrap-anchor{
+    width: fit-content;
+    height: fit-content;
+    cursor:auto;
+}
+
 #home-img {
     width: 100%;
     height: 95%;
@@ -79,6 +85,12 @@ main {
         2px 2px 0 rgb(92, 190, 255);
     color: white;
     z-index: 1;
+}
+
+#profile-pic-header {
+    height: 1.9em;
+    width: 1.9em;
+    border-radius: 0.9em;
 }
 
 header>h1 {
@@ -201,6 +213,7 @@ header li a {
     padding: 0.6em;
     vertical-align: middle;
     align-items: center;
+    cursor: pointer;
 }
 
 .header-button:hover {
@@ -646,6 +659,18 @@ body {
     transition: background-color 0.3s;
 }
 
+.profile-edit{
+    background-color: white;
+    border-radius: 1em;
+    padding: 1em;
+}
+
+#admin-section {
+    background-color: white;
+    padding: 1em;
+    border-radius: 1em;
+}
+
 #profile-menu ul li a:hover {
     background-color: #f0f0f0;
 }
@@ -658,6 +683,28 @@ body {
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr auto;
+}
+
+#title-button-post {
+    display: flex;
+    flex-direction: row;
+    
+    justify-content: space-between;
+}
+
+#post-image-product{
+    width: 50em;
+    object-fit: cover;
+    height: 50em;
+}
+
+.post-form-button {
+    display: flex;
+    margin: 0;
+    vertical-align: middle;
+    text-align: center;
+    justify-content:center;
+    align-items: center;
 }
 
 #user-aside {
@@ -835,6 +882,9 @@ body {
     font-size: 1.3em;
 }
 
+#delete-cart-button {
+    background-color: red;
+}
 
 /*--------profilepage.css---------*/
 
@@ -911,12 +961,35 @@ body {
     object-fit: cover;
 }
 
+.button-left-prof {
+    background-color: #ccc;
+    color: #999;
+    border-radius: 0;
+    border-top: solid 2px black;
+}
+
+#left-profile-page .button-left-prof:last-child {
+    border-bottom: solid 2px black;
+}
+
+.button-left-prof:hover {
+    background-color: #ddd;
+}
+.button-left-prof:active {
+       color: #ddd;
+}
 
 #left-profile-page {
     background-color: white;
     border-radius: 1em;
     margin: 1em;
     padding: 1em;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    height: fit-content;
+    
 }
 
 /*--------search.css---------*/
@@ -1124,8 +1197,8 @@ select {
 
 /* CSS para o chat */
 #chat-container {
-    max-width: 600px;
-    margin: 0 auto;
+    background-color: white;
+    margin: 0;
     padding: 20px;
 }
 
@@ -1133,8 +1206,15 @@ select {
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 10px;
-    max-height: 300px;
+    height: 60%;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+#messages-container p {
+    word-wrap: break-word;
 }
 
 .message-input {
@@ -1151,10 +1231,40 @@ select {
 .message.sent {
     background-color: #007bff; /* Fundo azul para mensagens enviadas */
     color: #fff; /* Texto branco para mensagens enviadas */
-    align-self: flex-end; /* Alinhando as mensagens enviadas à direita */
+    text-align: end;
+    padding: 0 1em;
 }
 
+
 .message.received {
-    background-color: #f2f2f2; /* Fundo cinza para mensagens recebidas */
+    background-color: #e0e0e0; /* Fundo cinza para mensagens recebidas */
+    padding: 0 1em;
 }
 /* Restante do seu CSS permanece o mesmo */
+
+.conversation-li {
+    background-color: white;
+    margin: 1em 2em;
+    display: flex;
+    
+    justify-content: space-between;
+    
+    align-items: center;
+}
+#conversation-main {
+    width: 60em;
+    margin: 0 auto;
+}
+
+.conversation-img {
+    object-fit: cover;
+}
+.post-form-button-2 {
+    display: flex;
+    margin: 0;
+    margin-right: 1em;
+    vertical-align: middle;
+    text-align: center;
+    justify-content:center;
+    align-items: center;
+}

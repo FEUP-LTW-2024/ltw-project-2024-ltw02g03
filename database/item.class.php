@@ -236,6 +236,7 @@ class Item {
 
     //get condition id
     static function getConditionId(PDO $db, ?string $conditionName) : int {
+        if ($conditionName == null) {return -1;}
         try {
             $stmt = $db->prepare('SELECT ConditionId FROM ItemCondition WHERE ConditionName = ?');
             $stmt->execute([$conditionName]);
@@ -248,6 +249,7 @@ class Item {
 
     //get brand id
     static function getBrandId(PDO $db, ?string $brandName) : int {
+        if ($brandName == null) {return -1;}
         try {
             $stmt = $db->prepare('SELECT BrandId FROM ItemBrand WHERE BrandName = ?');
             $stmt->execute([$brandName]);
@@ -260,6 +262,7 @@ class Item {
 
     //get size id
     static function getSizeId(PDO $db, ?string $sizeName) : int {
+        if ($sizeName == null) {return -1;}
         try {
             $stmt = $db->prepare('SELECT SizeId FROM ItemSize WHERE SizeName = ?');
             $stmt->execute([$sizeName]);
@@ -272,6 +275,7 @@ class Item {
 
     //get model id
     static function getModelId(PDO $db, ?string $modelName) : int {
+        if ($modelName == null) {return -1;}
         try {
             $stmt = $db->prepare('SELECT ModelId FROM ItemModel WHERE ModelName = ?');
             $stmt->execute([$modelName]);
