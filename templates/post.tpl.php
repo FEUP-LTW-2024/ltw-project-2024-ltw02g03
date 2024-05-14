@@ -64,7 +64,7 @@ function drawPost(Session $session, $db, int $itemId) {
                                     <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
                                     <button type="submit" id="delete-cart-button" class="cart-button-post">Delete</button>
                                 </form>
-                            <?php } else if ($userId == $sellerId && $item->active === (false)) { ?>
+                            <?php } if ($userId == $sellerId && $item->active === (false)) { ?>
                                 <form action="../actions/print_shippingForm.php" method="post">
                                     <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
                                     <button type="submit" class="cart-button-post">Shipping Form</button>
