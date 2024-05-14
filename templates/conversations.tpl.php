@@ -23,13 +23,13 @@ function drawConversations(Session $session, $db) {
         ?>
         <li class="conversation-li">
             <img class="conversation-img" src="../<?= $image[0]->imageUrl ?>" height="200" width="200">
-            <a href='/pages/chat.php?receiver_id=<?= $otherUserId ?>'>
-                <h3><?= htmlentities("Conversa com {$otherName} sobre {$itemName}") ?></h3>
-            </a>
+            
+            <h3><?= htmlentities("Conversa com {$otherName} sobre {$itemName}") ?></h3>
+            
             <form action="/pages/chat.php" method="post" class="post-form-button-2">
                 <input type="hidden" name="owner_id" value="<?= $otherUserId ?>">
                 <input type="hidden" name="item_id" value="<?= $item ?>">
-                <button type="submit">Abrir Chat</button>
+                <button type="submit">Chat</button>
             </form>
         </li>
         <?php

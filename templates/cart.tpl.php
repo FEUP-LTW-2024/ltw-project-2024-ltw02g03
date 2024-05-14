@@ -46,10 +46,10 @@ function drawCart(Session $session, $db)
                               <img class="img-product-cart" src="../<?= $image->imageUrl ?>" alt="<?= $item->title ?>" style="width: 12em; height: 10em;">
                                 <div class="name-condition">
                                     <h1><?= htmlspecialchars($item->title) ?></h1>
-                                    <p><strong>Condition:</strong> <?= htmlspecialchars($condition->conditionName) ?></p>
+                                    <p class="condition-cart"><strong>Condition:</strong> <?= htmlspecialchars($condition->conditionName) ?></p>
                                 </div>
                             </div>
-                            <p><strong>Brand:</strong> <?= htmlspecialchars($brandName) ?> </p>
+                            <p class="brand-cart"><strong>Brand:</strong> <?= htmlspecialchars($brandName) ?> </p>
                             <p><?= $item->price ?>€</p>
                                 <form class="cart-form" action="../actions/remove_from_cart.php" method="post">
                                   <input type="hidden" name="cart_id" value="<?= $cartItem->cartId ?>">
