@@ -39,9 +39,17 @@ function drawPost(Session $session, $db, int $itemId) {
         <main>
             <section id="post">
                 <div id="product-img-post">
-                    <button class="img-button"><</button>
-                    <img id="post-image-product" src="../<?= $image[0]->imageUrl ?>" alt="" >
-                    <button class="img-button">></button>  
+                <button class="img-button" onclick="leftbuttPost()">◄</button>
+                <div class="image-container">
+                    
+                    <?php 
+                
+                    foreach ($image as $key => $img): ?>
+                        <img class="post-image-product <?php echo $key == 0 ? 'active' : ''; ?>" src="../<?= $img->imageUrl ?>" alt="">
+                    <?php endforeach; ?>
+                </div>
+                <button class="img-button" onclick="rightbuttPost()">►</button>
+
                 </div>
                 <aside id="user-aside">
                     <div id="price-post">
@@ -434,3 +442,21 @@ function drawPostBought(Session $session, $db, int $itemId) {
     }
 }
 ?>
+
+<script>
+    var imgIndex = 0; // Initial index
+
+    function leftbuttPost() {
+        var images = document.getElementsByClassName('post-image-product');
+        images[imgIndex].classList.remove('active');
+        imgIndex = (imgIndex - 1 + images.length) % images.length;
+        images[imgIndex].classList.add('active');
+    }
+
+    function rightbuttPost() {
+        var images = document.getElementsByClassName('post-image-product');
+        images[imgIndex].classList.remove('active');
+        imgIndex = (imgIndex + 1) % images.length;
+        images[imgIndex].classList.add('active');
+    }
+</script>
