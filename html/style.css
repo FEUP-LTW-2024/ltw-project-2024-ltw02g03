@@ -640,6 +640,14 @@ body {
     border-radius: 0.5em; 
 }
 
+.post-image-product {
+    display: none;
+}
+
+.post-image-product.active {
+    display: block;
+}
+
 .success {
     background-color: #4CAF50;
     color: white;
@@ -692,7 +700,7 @@ body {
     justify-content: space-between;
 }
 
-#post-image-product{
+.post-image-product{
     width: 50em;
     object-fit: cover;
     height: 50em;
