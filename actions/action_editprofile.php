@@ -15,10 +15,10 @@ $db = getDatabaseConnection();
 $user = User::getUser($db, $session->getId());
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Initialize an array to store the fields to be updated
+ 
     $fieldsToUpdate = [];
 
-      // Retrieve form data and add non-empty fields to the update array
+
       if (!empty($_POST['email'])) {
         $fieldsToUpdate['Email'] = $_POST['email'];
     }
@@ -49,9 +49,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($_POST['phone'])) {
         $fieldsToUpdate['Phone'] = $_POST['phone'];
     }
-    // Retrieve form data and add non-empty fields to the update array
+
     if (!empty($_FILES['images']['name'][0])) {
-        $uploadDirectory = '../path/to/upload/directory/';
+        $uploadDirectory = '../database/uploads/';
         $imageUrls = [];
 
         foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name) {
@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $file_type = $_FILES['images']['type'][$key];
                 
                 if ($file_type == 'image/jpeg' || $file_type == 'image/png') {
-                    // Generate directory for the user if not exists
+               
                     $userFolder = $uploadDirectory . 'user_' . $user->userId . '/';
                     if (!file_exists($userFolder)) {
                         mkdir($userFolder, 0777, true);
@@ -81,31 +81,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Other form data processing goes here...
-    
-    // Update user's profile if there are fields to be updated
+
     if (!empty($fieldsToUpdate)) {
-        // Construct the SET part of the SQL query dynamically
+ 
         $setClause = '';
         foreach ($fieldsToUpdate as $field => $value) {
             $setClause .= "$field = :$field, ";
         }
-        // Remove the trailing comma and space
+       
         $setClause = rtrim($setClause, ', ');
 
-        // Prepare and execute the SQL update query
+      
         $sql = "UPDATE User SET $setClause WHERE UserId = :userId";
         $stmt = $db->prepare($sql);
 
         if ($stmt) {
-            // Bind parameters
+           
             foreach ($fieldsToUpdate as $field => &$value) {
                 $stmt->bindParam(":$field", $value);
             }
-            // Bind UserId
+           
             $stmt->bindParam(':userId', $user->userId);
 
-            // Execute the query
+            
             if ($stmt->execute()) {
                 $session->addMessage('success', 'Profile updated successfully');
                 header('Location: ../pages/profilepage.php');
@@ -121,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
     } else {
-        // No fields to update, redirect back to profile page
+    
         header('Location: ../pages/profilepage.php');
         exit();
     }
