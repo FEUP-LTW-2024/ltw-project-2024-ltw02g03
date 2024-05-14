@@ -640,13 +640,6 @@ body {
     border-radius: 0.5em; 
 }
 
-.post-image-product {
-    display: none;
-}
-
-.post-image-product.active {
-    display: block;
-}
 
 .success {
     background-color: #4CAF50;
@@ -690,7 +683,7 @@ body {
 #post {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: 1fr 1fr;
 }
 
 #title-button-post {
@@ -701,9 +694,17 @@ body {
 }
 
 .post-image-product{
-    width: 50em;
+    width: 100%;
+    max-width: 40em;
+    max-height: 40em;
     object-fit: cover;
     height: 50em;
+    display: none;
+}
+
+
+.post-image-product.active {
+    display: block;
 }
 
 .post-form-button {
@@ -841,9 +842,12 @@ body {
 }
 
 #description-post {
+    grid-column: 1 / 2; /* Placing in the first column */
+    grid-row: 2 / 3;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    
     padding: 1em;
     margin: 1em;
     background-color: rgb(194, 226, 255);
@@ -1260,12 +1264,14 @@ select {
     align-items: center;
 }
 #conversation-main {
-    width: 60em;
+    max-width: 60em;
     margin: 0 auto;
+    padding: 1em;
 }
 
 .conversation-img {
     object-fit: cover;
+    margin-right: 1em;
 }
 .post-form-button-2 {
     display: flex;
@@ -1275,4 +1281,111 @@ select {
     text-align: center;
     justify-content:center;
     align-items: center;
+}
+
+
+@media (max-width: 70em) {
+    
+    #header-list {
+        display: none;
+    }
+
+    #profilepage {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #index-product {
+        font-size: 80%;
+    }
+
+    #home-welcome {
+        font-size: 120%;
+    }
+    #ecox-home {
+        font-size: 400%;
+    }
+    
+    #profile-button{
+        display: inline-block;
+    }
+
+     #post {
+        display: flex;
+        flex-direction: column;
+    }
+    #cart {
+        display: flex;
+        flex-direction: column;
+    }
+    .cart-total {
+        width: auto;
+        display: block;
+        position: static;
+    }
+    .total-price {
+        text-align: center;
+    }
+    #main-search {
+        font-size: 80%;
+    }
+    .img-name-condition > p{
+        display: none;
+    }
+    .publish-section {
+        padding: 0 1em;
+    }
+    #conversation-main {
+        font-size: 80%;
+    }
+    .conversation-img {
+        width: 12em;
+        height: 12em;
+    }
+}
+
+@media (max-width: 40em) {
+    #index-product {
+        font-size: 60%;
+        margin: 1em 2.5em;
+    }
+    #main-search {
+        font-size: 70%;
+    }
+    .search-img {
+        width: 60%;
+    }
+    #home-welcome {
+        font-size: 120%;
+    }
+    #ecox-home {
+        font-size: 350%;
+    }
+    #recomended > h1, #recomended > h2 {
+        font-size: 170%;
+    }
+    .brand-cart, .condition-cart {
+        display: none;
+    }
+    .cart-item > p {
+        margin-right: 1em;
+    }
+    .cart-item{
+        font-size: 80%;
+    }
+    .publish-section {
+        margin: 1em;
+        align-self: center;
+        font-size: 80%;
+       
+    }
+    #conversation-main {
+        font-size: 60%;
+        
+    }
+    .conversation-img {
+        width: 10em;
+        height: 10em;
+    }
+    
 }

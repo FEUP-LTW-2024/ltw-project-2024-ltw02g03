@@ -51,6 +51,13 @@ function drawPost(Session $session, $db, int $itemId) {
                 <button class="img-button" onclick="rightbuttPost()">►</button>
 
                 </div>
+                <div id="description-post">
+                        <div>
+                            <h2 id="description-post-h2">Description</h2>
+                            <p><?= !empty($item->description) ? htmlspecialchars($item->description) : "No description" ?></p>
+                        </div>
+                        <p id="date-post"><?= !empty($item->listingDate) ? htmlentities($item->listingDate) : " No Date " ?></p>
+                     </div>
                 <aside id="user-aside">
                     <div id="price-post">
                         <?php if ($userId != $item->sellerId) { ?>
@@ -89,6 +96,9 @@ function drawPost(Session $session, $db, int $itemId) {
                         </form>
                         </div>
                     </div>
+
+                    
+
                     <div id="user-post">
                         <img id="img-user-post" src="<?= !empty($user->imageUrl) ? $user->imageUrl : "/Docs/img/9024845_user_circle_light_icon.png"?>" alt="" width="100">
                         <div class="user-info">
@@ -118,13 +128,7 @@ function drawPost(Session $session, $db, int $itemId) {
                         <p class="spec"><?= !empty($model->modelName) ? htmlspecialchars($model->modelName) : " - " ?></p>
                     </div>
                 </aside>
-                <div id="description-post">
-                    <div>
-                        <h2 id="description-post-h2">Description</h2>
-                        <p><?= !empty($item->description) ? htmlspecialchars($item->description) : "No description" ?></p>
-                    </div>
-                    <p id="date-post"><?= !empty($item->listingDate) ? htmlentities($item->listingDate) : " No Date " ?></p>
-                </div>
+                
             </section>
         </main>
         <?php

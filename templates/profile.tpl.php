@@ -359,10 +359,12 @@ drawProfile(Session $session, $db)
         var presentedProducts = document.getElementById("profile-presented");
         var profileEdit = document.getElementById("edit-profile-section");
         var changepass = document.getElementById("change-password");
+        var purchaseHistory = document.getElementById("purchase-history");
         adminSection.style.display = "block";
         presentedProducts.style.display = "none";
         profileEdit.style.display = "none";
         changepass.style.display = "none";
+        purchaseHistory.style.display = "none";
         
     }
     function toggleProfileProd() {
@@ -370,10 +372,12 @@ drawProfile(Session $session, $db)
         var presentedProducts = document.getElementById("profile-presented");
         var profileEdit = document.getElementById("edit-profile-section");
         var changepass = document.getElementById("change-password");
+        var purchaseHistory = document.getElementById("purchase-history");
         adminSection.style.display = "none";
         presentedProducts.style.display = "block";
         profileEdit.style.display = "none";
         changepass.style.display = "none";
+        purchaseHistory.style.display = "none";
     }
 
     function toggleEditProfile() {
@@ -381,11 +385,13 @@ drawProfile(Session $session, $db)
         var presentedProducts = document.getElementById("profile-presented");
         var profileEdit = document.getElementById("edit-profile-section");
         var changepass = document.getElementById("change-password");
+        var purchaseHistory = document.getElementById("purchase-history");
 
         adminSection.style.display = "none";
         presentedProducts.style.display = "none";
         profileEdit.style.display = "block";
         changepass.style.display = "none";
+        purchaseHistory.style.display = "none";
     }
 
     function toggleChangePass() {
@@ -393,11 +399,13 @@ drawProfile(Session $session, $db)
         var presentedProducts = document.getElementById("profile-presented");
         var profileEdit = document.getElementById("edit-profile-section");
         var changepass = document.getElementById("change-password");
+        var purchaseHistory = document.getElementById("purchase-history");
 
         adminSection.style.display = "none";
         presentedProducts.style.display = "none";
         profileEdit.style.display = "none";
         changepass.style.display = "block";
+        purchaseHistory.style.display = "none";
     }
     function togglePurchaseHistory() {
         var adminSection = document.getElementById("admin-section");
