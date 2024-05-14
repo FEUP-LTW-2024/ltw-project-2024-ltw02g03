@@ -156,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             $session->addMessage('error', 'Failed to insert item into the database');
             header('Location: ../pages/postcreation.php');
-            exit();
+                exit();
         }
     
 }

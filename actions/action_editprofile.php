@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     // Retrieve form data and add non-empty fields to the update array
     if (!empty($_FILES['images']['name'][0])) {
-        $uploadDirectory = '../path/to/upload/directory/';
+        $uploadDirectory = '../database/uploads/';
         $imageUrls = [];
 
         foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name) {
