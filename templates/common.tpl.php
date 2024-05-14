@@ -212,7 +212,7 @@ function drawProducts(Session $session, $db, int $limit, $categoryName = null) {
     
     try {
         $myId = $session->getId();
-        $items = $categoryName ? Item::getItemsByCategoryName($db, $limit, $categoryName) : Item::getItems($db, $limit);
+        $items = Item::getAllActiveItems($db, $limit, $categoryName);
         if ($items) {
             
             foreach($items as $row) {
