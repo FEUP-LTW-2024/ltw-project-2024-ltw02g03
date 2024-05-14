@@ -18,8 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Initialize an array to store the fields to be updated
     $fieldsToUpdate = [];
 
-      // Retrieve form data and add non-empty fields to the update array
-      if (!empty($_POST['email'])) {
+    // Retrieve form data and add non-empty fields to the update array
+    if (!empty($_POST['email'])) {
         $fieldsToUpdate['Email'] = $_POST['email'];
     }
     if (!empty($_POST['username'])) {
@@ -70,6 +70,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $targetFile = $userFolder . $file_name;
                     
                     if (move_uploaded_file($file_tmp, $targetFile)) {
+                        // Delete old profile picture from database if exists
+                        if (!empty($user->imageUrl)) {
+                            unlink($user->imageUrl);
+                        }
                         $fieldsToUpdate['ImageUrl'] = $targetFile;
                     } else {
                         $session->addMessage('error', 'Failed to upload image: ' . $file_name);
