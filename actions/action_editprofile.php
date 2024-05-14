@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($_POST['phone'])) {
         $fieldsToUpdate['Phone'] = $_POST['phone'];
     }
-    // Retrieve form data and add non-empty fields to the update array
+    
     if (!empty($_FILES['images']['name'][0])) {
         $uploadDirectory = '../database/uploads/';
         $imageUrls = [];
