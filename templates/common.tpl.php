@@ -182,7 +182,7 @@ function drawHeader(Session $session, $db) { ?>
         <h1>Produtos Recomendados</h1>  
         <h2><?php echo $limit; ?> produtos</h2>
         <div id="index-products">
-            <?php drawProducts($session,$db, $limit, $category); ?>
+            <?php drawProducts($session,$db, $limit); ?>
         </div>
     </section>
 
@@ -208,13 +208,13 @@ function drawHeader(Session $session, $db) { ?>
 <?php } ?>
 
 <?php
-function drawProducts(Session $session, $db, int $limit, $categoryName = null) {
+function drawProducts(Session $session, $db, int $limit) {
     
     try {
         $myId = $session->getId();
-        $items = Item::getAllActiveItems($db, $limit, $categoryName);
+        $items = Item::getAllActiveItems($db);
+
         if ($items) {
-            
             foreach($items as $row) {
                 $ownerId = $row->sellerId;
                 

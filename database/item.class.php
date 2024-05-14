@@ -122,16 +122,17 @@ class Item {
             throw new Exception("Error fetching item: " . $e->getMessage());
         }
     }
-
-    // Get x Items
+    
+    
+    
     static function getItems(PDO $db, int $limit) : array {
         try {
             $stmt = $db->prepare('
                 SELECT ItemId, SellerId, Title, Description, Price, ListingDate, Active
                 FROM Item
-                LIMIT :limit
+                LIMIT ?
             ');
-            $stmt->bindValue(':limit', $limit, PDO::PARAM_INT); // Bind do valor do limite
+            $stmt->bindValue(1, $limit, PDO::PARAM_INT);
             $stmt->execute();
             $items = array();
 
@@ -149,11 +150,15 @@ class Item {
                     );
                 }
             }
+                
+            
+
             return $items;
         } catch (PDOException $e) {
             throw new Exception("Error fetching items: " . $e->getMessage());
         }
     }
+
 
     // Search Items
     static function searchItems(PDO $db, string $search, int $count) : array {

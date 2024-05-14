@@ -341,6 +341,25 @@ static function elevateUserToAdmin(PDO $db, int $userId) : void {
 
 
 }
+
+// Verify if user is admin
+static function isAdmin(PDO $db, int $userId) : bool {
+    try {
+        $stmt = $db->prepare('SELECT Admin FROM User WHERE UserId = ?');
+        $stmt->execute([$userId]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user) {
+            return (bool) $user['Admin'];
+        } else {
+            return false;
+        }
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching user: " . $e->getMessage());
+    }
+}
+
+
 // Get all admins
 static function getAllAdmins(PDO $db) : array {
     try {

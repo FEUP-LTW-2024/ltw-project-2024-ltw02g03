@@ -4,6 +4,7 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/item.class.php');
+require_once(__DIR__ . '/../database/user.class.php');
 
 $session = new Session();
 $db = getDatabaseConnection();
@@ -19,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
         $userId = $session->getId();
         $sellerId = Item::getSellerId($db, $itemId);
-        
-        if ($userId === $sellerId) {
+        $admin = User::isAdmin($db, $userId);
+        if ($userId === $sellerId || $admin) {
             Item::deleteItem($db, $itemId);
             $session->addMessage('success', 'Item deleted successfully!');
             header('Location: /pages');
@@ -37,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 } else {
     $session->addMessage('error', 'Invalid request method!');
-    header('Location: /pages/error.php');
+    header('Location: /pages');
     exit();
 }
 ?>

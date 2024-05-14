@@ -209,26 +209,9 @@
     /*
     EXTRA FEATURES
 
-    -- PaymentHistory Table
-    CREATE TABLE PaymentHistory (
-        PaymentId INTEGER PRIMARY KEY,
-        BuyerId INTEGER,
-        SellerId INTEGER,
-        ItemId INTEGER,
-        PaymentDate DATE DEFAULT CURRENT_DATE,
-        FOREIGN KEY (BuyerId) REFERENCES User (UserId) ON DELETE NO ACTION ON UPDATE NO ACTION,
-        FOREIGN KEY (SellerId) REFERENCES User (UserId) ON DELETE NO ACTION ON UPDATE NO ACTION,
-        FOREIGN KEY (ItemId) REFERENCES Item (ItemId) ON DELETE NO ACTION ON UPDATE NO ACTION
-    );
 
-    -- Notification Table
-    CREATE TABLE Notification (
-        NotificationId INTEGER PRIMARY KEY,
-        UserId INTEGER,
-        NotificationText TEXT,
-        NotificationDate DATE DEFAULT CURRENT_DATE,
-        FOREIGN KEY (UserId) REFERENCES User (UserId) ON DELETE NO ACTION ON UPDATE NO ACTION
-    );
+
+    
     */
 
 

@@ -71,7 +71,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt->execute([$user->userId, $productName, $description, $price, $brand->brandId, $model->modelId, $condition->conditionId, $size->sizeId])) {
             $itemId = $db->lastInsertId();
             
-            // Process image uploads
             $uploadDirectory = '../database/uploads/';
             $imageUrls = [];
             foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name) {
