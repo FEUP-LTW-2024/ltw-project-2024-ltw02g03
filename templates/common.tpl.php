@@ -239,7 +239,7 @@ function drawHeader(Session $session, $db) { ?>
 function drawProducts(Session $session, $db, int $limit, $itemsToDisplay) {
     try {
         
-
+        $myId = $session->getId();
         if ($itemsToDisplay) {
             foreach($itemsToDisplay as $row) {
                 $ownerId = $row->sellerId;

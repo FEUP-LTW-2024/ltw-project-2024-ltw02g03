@@ -25,14 +25,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $joinDate = date("Y-m-d"); 
 
-    // Campos opcionais
     $address = $_POST['address'] !== '' ? $_POST['address'] : null;
     $city = $_POST['city'] !== '' ? $_POST['city'] : null;
     $district = $_POST['district'] !== '' ? $_POST['district'] : null;
     $country = $_POST['country'] !== '' ? $_POST['country'] : null;
     $postalCode = $_POST['postalCode'] !== '' ? $_POST['postalCode'] : null;
     $phone = $_POST['phone'] !== '' ? $_POST['phone'] : null;
-    $imageUrl = $_POST['imageUrl'] !== '' ? $_POST['imageUrl'] : null;
+    $imageUrl = $_POST['imageUrl'] !== '' ? $_POST['imageUrl'] : "database/uploads/default_user.png";
     $admin = false;
 
    

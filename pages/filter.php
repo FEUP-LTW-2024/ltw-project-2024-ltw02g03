@@ -12,7 +12,6 @@ require_once(__DIR__ . '/../templates/search.tpl.php');
 
 
 
-
 $db = getDatabaseConnection();
 
 if(isset($_GET['category'])) {

@@ -25,7 +25,7 @@ function drawChat($db, int $senderId, int $ownerId, int $itemId, array $messages
             <?php endforeach; ?>
         </div>
         <div id="input-container">
-            <form id="message-form" action="../templates/messages/send_message.php" method="POST">
+            <form id="message-form" action="../actions/send_message.php" method="POST">
                 <input type="hidden" id="receiver-id" value="<?= $ownerId ?>">
                 <input type="hidden" id="item-id" name="item-id" value="<?= $itemId ?>">
                 <input type="text" name="message-input" id="message-input" placeholder="Digite sua mensagem...">
