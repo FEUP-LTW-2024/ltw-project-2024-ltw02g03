@@ -36,6 +36,38 @@ class Review
             throw new Exception("Error inserting review: " . $e->getMessage());
         }
     }
+    //Get all reviews
+    static function getReviews(PDO $db): array
+    {
+        try {
+            $stmt = $db->prepare('
+                SELECT r.ReviewId, r.UserId, r.ItemId, r.Rating, r.Comment, r.ReviewDate, u.Username
+                FROM Review r
+                JOIN User u ON r.UserId = u.UserId
+            ');
+
+            $stmt->execute();
+            $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $reviewList = array();
+            foreach ($reviews as $review) {
+                $reviewList[] = new Review(
+                    $review['ReviewId'],
+                    $review['UserId'],
+                    $review['ItemId'],
+                    $review['Rating'],
+                    $review['Comment'],
+                    $review['ReviewDate']
+                );
+            }
+
+            return $reviewList;
+        } catch (PDOException $e) {
+            throw new Exception("Error getting reviews: " . $e->getMessage());
+        }
+    }
+
+
 
     // Get all reviews for a specific item
     static function getReviewsByItemId(PDO $db, int $itemId): array

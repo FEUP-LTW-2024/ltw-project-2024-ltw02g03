@@ -3,17 +3,34 @@ document.addEventListener('DOMContentLoaded', function() {
     stars.forEach(star => {
         const rating = parseFloat(star.getAttribute('data-rating'));
         const filledStars = '★'.repeat(Math.floor(rating));
-        const halfStar = (rating % 1 !== 0) ? '★' : '';
-        star.innerHTML = filledStars + halfStar;
+        const remainder = rating % 1;
+        let starHTML = filledStars;
+        if (remainder > 0) {
+            const fraction = '&#x2605;'.repeat(Math.ceil(remainder * 2)); // Dividimos cada estrela em 2 partes
+            starHTML += '<span class="half-star">' + fraction + '</span>';
+        }
+        star.innerHTML = starHTML;
     });
-});
-document.addEventListener('DOMContentLoaded', function() {
+
     const averageRating = parseFloat(document.getElementById('average-rating').textContent);
     const averageStars = document.getElementById('average-stars');
-    const filledStars = '★'.repeat(Math.floor(averageRating));
-    const halfStar = (averageRating % 1 !== 0) ? '★' : '';
-    averageStars.textContent = filledStars + halfStar;
+    const filledAverageStars = '★'.repeat(Math.floor(averageRating));
+    const averageRemainder = averageRating % 1;
+    let averageStarHTML = filledAverageStars;
+    if (averageRemainder > 0.25 && averageRemainder < 0.75) {
+        const averageFraction = '&#x2605;'.repeat(Math.ceil(averageRemainder * 2)); 
+        averageStarHTML += '<span class="half-star">' + averageFraction + '</span>';
+    }
+    else if (averageRemainder >= 0.75) {
+        averageStarHTML += '★';
+    }
+    
+    averageStars.innerHTML = averageStarHTML;
 });
+
+
+
+
 function toggleAdminSection() {
     var adminSection = document.getElementById("admin-section");
     var presentedProducts = document.getElementById("profile-presented");

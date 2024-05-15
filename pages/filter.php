@@ -57,6 +57,6 @@ if(isset($_GET['maxPrice'])) {
 
 
 drawHeader($session, $db);
-drawFilteredProducts($db,$categoryName,$brandName,$condition,$size,$model,$minPrice,$maxPrice);
+drawFilteredProducts($session,$db,$categoryName,$brandName,$condition,$size,$model,$minPrice,$maxPrice);
 drawFooter();
 ?>

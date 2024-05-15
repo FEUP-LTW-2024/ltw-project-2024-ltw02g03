@@ -1436,6 +1436,13 @@ select {
 
 .stars {
     font-size: 1.5em;
-    color: gold;
+    color: black;
 }
 
+.half-star {
+    vertical-align: middle;
+    position: relative;
+    display: inline-block;
+    width: 0.5em;
+    overflow: hidden;
+}

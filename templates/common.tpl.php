@@ -5,6 +5,8 @@ require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/user.class.php');
 require_once(__DIR__ . '/../database/payment.class.php');
+require_once(__DIR__ . '/../database/cart.class.php');
+
 
 function drawHeader(Session $session, $db) { ?>
 
@@ -169,7 +171,7 @@ function drawHeader(Session $session, $db) { ?>
 
 
 
-<?php function drawBody(Session $session, $db, int $limit, $category = null) { ?>
+<?php function drawBody(Session $session, $db) { ?>
     <main>
         <div>
             <header>
@@ -179,12 +181,31 @@ function drawHeader(Session $session, $db) { ?>
             
         </div>
     
-    
+    <?php
+    $myId = $session->getId();
+    $items = Item::getAllActiveItems($db);
+    $cartItems= Cart::getItemsByUser($db, $myId);
+    $itemsToDisplay = array();
+
+    foreach ($items as $item) {
+        $foundInCart = false;
+        foreach ($cartItems as $cartItem) {
+            if ($item->itemId === $cartItem->itemId) {
+                $foundInCart = true;
+                break;
+            }
+        }
+        if (!$foundInCart) {
+            $itemsToDisplay[] = $item;
+        }
+    }
+    $limit = $itemsToDisplay ? count($itemsToDisplay) : 0;
+    ?>
     <section id="recomended">
         <h1>Produtos Recomendados</h1>  
         <h2><?php echo $limit; ?> produtos</h2>
         <div id="index-products">
-            <?php drawProducts($session,$db, $limit); ?>
+            <?php drawProducts($session,$db, $limit,$itemsToDisplay); ?>
         </div>
     </section>
 
@@ -210,14 +231,13 @@ function drawHeader(Session $session, $db) { ?>
 <?php } ?>
 
 <?php
-function drawProducts(Session $session, $db, int $limit) {
+function drawProducts(Session $session, $db, int $limit, $itemsToDisplay) {
     
     try {
-        $myId = $session->getId();
-        $items = Item::getAllActiveItems($db);
+        
 
-        if ($items) {
-            foreach($items as $row) {
+        if ($itemsToDisplay) {
+            foreach($itemsToDisplay as $row) {
                 $ownerId = $row->sellerId;
                 
                 

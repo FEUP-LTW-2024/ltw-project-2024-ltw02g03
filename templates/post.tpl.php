@@ -384,10 +384,15 @@ function drawPostBought(Session $session, $db, int $itemId) {
                                 <select id="rating" name="rating" required>
                                     <option value="">Selecione uma classificação</option>
                                     <option value="1.0">1 estrela</option>
+                                    <option value="1.5">1.5 estrelas</option>
                                     <option value="2.0">2 estrelas</option>
+                                    <option value="2.5">2.5 estrelas</option>
                                     <option value="3.0">3 estrelas</option>
+                                    <option value="3.5">3.5 estrelas</option>
                                     <option value="4.0">4 estrelas</option>
+                                    <option value="4.5">4.5 estrelas</option>
                                     <option value="5.0">5 estrelas</option>
+                                    
                                 </select><br>
 
                                 <input type="submit" value="Enviar revisão">

@@ -8,11 +8,31 @@ require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/user.class.php');
 
 
-function drawSearchedProducts($db, array $items, string $searchQuery) { ?>   
+function drawSearchedProducts($session,$db, array $items, string $searchQuery) { ?>   
     <main id="main-search">
         <h1>Results for: <?= htmlspecialchars($searchQuery) ?></h1>
-        <?php if (!empty($items)) : ?>
-            <?php foreach ($items as $item) : 
+        <?php 
+        $myId = $session->getId();
+        $items = Item::getAllActiveItems($db);
+        $cartItems= Cart::getItemsByUser($db, $myId);
+        $itemsToDisplay = array();
+    
+        foreach ($items as $item) {
+            $foundInCart = false;
+            foreach ($cartItems as $cartItem) {
+                if ($item->itemId === $cartItem->itemId) {
+                    $foundInCart = true;
+                    break;
+                }
+            }
+            if (!$foundInCart) {
+                $itemsToDisplay[] = $item;
+            }
+        }
+        
+        
+        if (!empty($itemsToDisplay)) : ?>
+            <?php foreach ($itemsToDisplay as $item) : 
                 $image = Item::getItemImage($db, $item->itemId)[0]; 
                 $condition = Item::getItemCondition($db, $item->itemId);
                 ?>
@@ -44,7 +64,7 @@ function drawSearchedProducts($db, array $items, string $searchQuery) { ?>
     
 <?php } 
 
-function drawFilteredProducts($db, ?string $categoryName = null, ?string $brandName = null, ?string $condition = null, ?string $size = null, ?string $model = null, ?int $minPrice=0,?int $maxPrice=10000) { ?>   
+function drawFilteredProducts($session,$db, ?string $categoryName = null, ?string $brandName = null, ?string $condition = null, ?string $size = null, ?string $model = null, ?int $minPrice=0,?int $maxPrice=10000) { ?>   
     <main id="main-search">
         <h1>Results for: <?= htmlspecialchars($categoryName ?? 'All Categories') ?></h1>
         <?php
@@ -77,9 +97,25 @@ function drawFilteredProducts($db, ?string $categoryName = null, ?string $brandN
         if($modelId !=0){
            $items = Item::filterItemsByModelId($db, $modelId, $items);
         }
+        $myId = $session->getId();
+        $cartItems= Cart::getItemsByUser($db, $myId);
+        $itemsToDisplay = array();
+
+        foreach ($items as $item) {
+            $foundInCart = false;
+            foreach ($cartItems as $cartItem) {
+                if ($item->itemId === $cartItem->itemId) {
+                    $foundInCart = true;
+                    break;
+                }
+            }
+            if (!$foundInCart) {
+                $itemsToDisplay[] = $item;
+            }
+        }
         
-        if (!empty($items)) : ?>
-            <?php foreach ($items as $item) : 
+        if (!empty($itemsToDisplay)) : ?>
+            <?php foreach ($itemsToDisplay as $item) : 
                 
                 if($item->price < $minPrice || $item->price > $maxPrice){
                     continue;
