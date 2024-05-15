@@ -9,9 +9,9 @@ require_once(__DIR__ . '/../database/user.class.php');
 require_once(__DIR__ . '/../database/payment.class.php');
 require_once(__DIR__ . '/../actions/action_editprofile.php');
 require_once(__DIR__ . '/../actions/action_change_password.php');
+require_once(__DIR__ . '/../database/review.class.php');
 
-function 
-drawProfile(Session $session, $db)
+function drawProfile(Session $session, $db)
 {
     
     try {
@@ -41,6 +41,8 @@ drawProfile(Session $session, $db)
                     Published products
                 </button>
                 <button onclick="togglePurchaseHistory()" class="button-left-prof">Purchase History</button> 
+                <button onclick="toggleReviewsSection()" class="button-left-prof">Reviews</button>
+
 
                 <button onclick="toggleEditProfile()" class="button-left-prof">
                     Edit Profile
@@ -141,9 +143,87 @@ drawProfile(Session $session, $db)
                             if(empty($payments)){
                                 ?><h3>No purchase history</h3>
                             <?php } ?>
+                        </div>  
+                </div>
+
+
+                
+                <div id="reviews-section" style="display: none;">
+                    <div id="reviews-header">
+                        <?php 
+                        try {
+                            $averageRating = Review::calculateAverageRating($db, $userId);
+                        } catch (Exception $e) {
+                            $averageRating = 0.0;
+                            echo "Error: " . $e->getMessage();
+                        }
+                        ?>
+                <h2>Reviews <span id="average-rating"><?= number_format($averageRating, 2) ?></span><span id="average-stars" class="stars"></span></h2>
+                    </div>
+                    <div class="reviews-container">
+                        <div class="reviews-column">
+                            <h3>Reviews Made:</h3>
+                            <div id="reviews-made">
+                                <?php 
+                                try {
+                                    $reviewsMade = Review::getReviewsMadebyId($db, $userId);
+                                } catch (Exception $e) {
+                                    echo "Error: " . $e->getMessage();
+                                    $reviewsMade = [];
+                                }
+
+                                if (empty($reviewsMade)): ?>
+                                    <p>No reviews made</p>
+                                <?php else: ?>
+                                    <?php foreach ($reviewsMade as $review): 
+                                        $item = Item::getItem($db, $review->itemId);
+                                        $image = Item::getItemImage($db, $item->itemId);
+                                        ?>
+                                        <div class="review-item">
+                                            <img src="../<?= htmlspecialchars($image[0]->imageUrl) ?>" alt="<?= htmlspecialchars($item->title) ?>" class="item-image" style="width: 40%; height: 40%;">
+                                            <div class="review-details">
+                                                <p><strong>Item:</strong> <?= htmlspecialchars($item->title) ?></p>
+                                                <p><strong>Rating:</strong> <span class="stars" data-rating="<?= number_format($review->rating,2) ?>"></span></p>
+                                                <p><strong>Comment:</strong> <?= htmlspecialchars($review->comment) ?></p>
+                                                <p><strong>Date:</strong> <?= htmlspecialchars($review->reviewDate) ?></p>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
-                        
-                        
+                        <div class="reviews-column">
+                            <h3>Reviews Received:</h3>
+                            <div id="reviews-received">
+                                <?php 
+                                try {
+                                    $reviewsReceived = Review::getReviewsReceivedbyId($db, $userId);
+                                } catch (Exception $e) {
+                                    echo "Error: " . $e->getMessage();
+                                    $reviewsReceived = [];
+                                }
+
+                                if (empty($reviewsReceived)): ?>
+                                    <p>No reviews received</p>
+                                <?php else: ?>
+                                    <?php foreach ($reviewsReceived as $review): 
+                                        $item = Item::getItem($db, $review->itemId);
+                                        $image = Item::getItemImage($db, $item->itemId);
+                                        ?>
+                                        <div class="review-item">
+                                            <img src="../<?= htmlspecialchars($image[0]->imageUrl) ?>" alt="<?= htmlspecialchars($item->title) ?>" class="item-image" style="width: 40%; height: 40%;">
+                                            <div class="review-details">
+                                                <p><strong>Item:</strong> <?= htmlspecialchars($item->title) ?></p>
+                                                <p><strong>Rating:</strong> <span class="stars" data-rating="<?= number_format($review->rating,2) ?>"></span></p>
+                                                <p><strong>Comment:</strong> <?= htmlspecialchars($review->comment) ?></p>
+                                                <p><strong>Date:</strong> <?= htmlspecialchars($review->reviewDate) ?></p>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 
@@ -353,118 +433,5 @@ drawProfile(Session $session, $db)
 }
 
 ?>
-<script>
-    function toggleAdminSection() {
-        var adminSection = document.getElementById("admin-section");
-        var presentedProducts = document.getElementById("profile-presented");
-        var profileEdit = document.getElementById("edit-profile-section");
-        var changepass = document.getElementById("change-password");
-        var purchaseHistory = document.getElementById("purchase-history");
-        adminSection.style.display = "block";
-        presentedProducts.style.display = "none";
-        profileEdit.style.display = "none";
-        changepass.style.display = "none";
-        purchaseHistory.style.display = "none";
-        
-    }
-    function toggleProfileProd() {
-        var adminSection = document.getElementById("admin-section");
-        var presentedProducts = document.getElementById("profile-presented");
-        var profileEdit = document.getElementById("edit-profile-section");
-        var changepass = document.getElementById("change-password");
-        var purchaseHistory = document.getElementById("purchase-history");
-        adminSection.style.display = "none";
-        presentedProducts.style.display = "block";
-        profileEdit.style.display = "none";
-        changepass.style.display = "none";
-        purchaseHistory.style.display = "none";
-    }
 
-    function toggleEditProfile() {
-        var adminSection = document.getElementById("admin-section");
-        var presentedProducts = document.getElementById("profile-presented");
-        var profileEdit = document.getElementById("edit-profile-section");
-        var changepass = document.getElementById("change-password");
-        var purchaseHistory = document.getElementById("purchase-history");
-
-        adminSection.style.display = "none";
-        presentedProducts.style.display = "none";
-        profileEdit.style.display = "block";
-        changepass.style.display = "none";
-        purchaseHistory.style.display = "none";
-    }
-
-    function toggleChangePass() {
-        var adminSection = document.getElementById("admin-section");
-        var presentedProducts = document.getElementById("profile-presented");
-        var profileEdit = document.getElementById("edit-profile-section");
-        var changepass = document.getElementById("change-password");
-        var purchaseHistory = document.getElementById("purchase-history");
-
-        adminSection.style.display = "none";
-        presentedProducts.style.display = "none";
-        profileEdit.style.display = "none";
-        changepass.style.display = "block";
-        purchaseHistory.style.display = "none";
-    }
-    function togglePurchaseHistory() {
-        var adminSection = document.getElementById("admin-section");
-        var presentedProducts = document.getElementById("profile-presented");
-        var profileEdit = document.getElementById("edit-profile-section");
-        var changepass = document.getElementById("change-password");
-        var purchaseHistory = document.getElementById("purchase-history");
-
-        adminSection.style.display = "none";
-        presentedProducts.style.display = "none";
-        profileEdit.style.display = "none";
-        changepass.style.display = "none";
-        purchaseHistory.style.display = "block"; // Exibe a seção do histórico de compras
-    }
-
-
-    function previewImage(event) {
-    const file = event.target.files[0]; // Get the first file from the selected files
-
-    if (file) {
-        const reader = new FileReader();
-        const previewImage = document.getElementById('profile-img');
-
-        reader.onloadend = function () {
-            previewImage.style.display = "block";
-            previewImage.src = reader.result;
-        }
-
-        reader.readAsDataURL(file);
-    } else {
-        previewImage.style.display = "none"; // Hide the preview image if no file is selected
-        previewImage.src = "";
-    }
-}
-
-
-
-        
-function previewImages(event, startIndex) {
-    const files = event.target.files;
     
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const reader = new FileReader();
-        const previewImage = document.getElementById(`preview-image-${startIndex + i}`);
-
-        reader.onloadend = function () {
-            previewImage.style.display = "block";
-            previewImage.src = reader.result;
-        }
-
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            previewImage.style.display = "none"; // Hide the preview image if no file is selected
-            previewImage.src = "";
-        }
-    }
-}
-
-
-</script>
