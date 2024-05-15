@@ -330,12 +330,8 @@ function drawPostBought(Session $session, $db, int $itemId) {
     
     try {
         $item = Item::getItem($db, $itemId);
-        
           
-        if (!$item) {
-            echo "<p>Item not found.</p>";
-            return;
-        }
+       
         $userId = $session->getId();
 
         $condition = Item::getItemCondition($db, $itemId);
@@ -348,11 +344,11 @@ function drawPostBought(Session $session, $db, int $itemId) {
         $current_user=0;
         if ($session->isLoggedIn()) {
             $current_user = User::getUser($db, $session->getId());
-        }       
-        if ($item->active === (false) && $current_user->admin === (false)) {
-            echo "<p>Item not found.</p>";
-            return;
         }
+        else{
+            header('Location: ../pages/login.php');
+        }   
+        
    
         ?>
         <main>

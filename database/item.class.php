@@ -101,10 +101,8 @@ class Item {
             ');
             $stmt->execute(array($id));
     
-            // Fetch the item
             $item = $stmt->fetch();
     
-            // Check if item exists
             if (!$item) {
                 return null;
             }

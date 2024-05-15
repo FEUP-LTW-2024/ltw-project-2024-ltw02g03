@@ -24,6 +24,8 @@ function drawHeader(Session $session, $db) { ?>
         <script src="../javascript/script.js" defer></script>
         <script src="../javascript/filter_items.js" defer></script>
         <script src="../javascript/chat.js" defer></script>
+        <script src="../javascript/profile.js" defer></script>
+
     </head>
     <body>
     
