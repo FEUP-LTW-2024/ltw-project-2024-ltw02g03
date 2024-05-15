@@ -19,9 +19,12 @@
   require_once(__DIR__ . '/../templates/common.tpl.php');
   session_start();
 
-  if (isset($_SESSION['redirect_to_profile']) && $_SESSION['redirect_to_profile']) {
-      unset($_SESSION['redirect_to_profile']); 
-      header('Location: ../pages/profilepage.php'); 
+
+  // Check if redirection is needed
+  if (isset($_SESSION['redirect_to_postc']) && $_SESSION['redirect_to_postc']) {
+      unset($_SESSION['redirect_to_postc']); // Clear the session variable
+      header('Location: ../pages/postcreation.php'); // Perform the redirection
+
       exit();
   }
   $session = new Session();

@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if (!$condition || !$size) {
         $session->addMessage('error', 'Please fill in all required fields.');
-        header('Location: ../pages/postcreation.php');
+        redirectToPostcreation();
         exit();
     }
 
@@ -117,22 +117,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             if ($stmt->execute([$itemId, $imageId])) {
                             } else {
                                 $session->addMessage('error', 'Failed to associate image with item');
-                                header('Location: ../pages/postcreation.php');
+                                redirectToPostcreation();
                                 exit();
                             }
                         } else {
                             $session->addMessage('error', 'Failed to prepare SQL statement for associating image with item');
-                            header('Location: ../pages/postcreation.php');
+                            redirectToPostcreation();
                             exit();
                         }
                     } else {
                         $session->addMessage('error', 'Failed to save image URL in the database');
-                        header('Location: ../pages/postcreation.php');
+                        redirectToPostcreation();
                         exit();
                     }
                 } else {
                     $session->addMessage('error', 'Failed to prepare SQL statement for saving image URL');
-                    header('Location: ../pages/postcreation.php');
+                    redirectToPostcreation();
                     exit();
                 }
             }
@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 if (!$stmt->execute([$itemId, $category->categoryId])) {
                     $session->addMessage('error', 'Failed to associate item with category');
-                    header('Location: ../pages/postcreation.php');
+                    redirectToPostcreation();
                     exit();
                 }
                 
@@ -154,9 +154,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         } else {
             $session->addMessage('error', 'Failed to insert item into the database');
-            header('Location: ../pages/postcreation.php');
+            redirectToPostcreation();
                 exit();
         }
     
+}
+function redirectToPostcreation() {
+    $_SESSION['redirect_to_postc'] = true;
+    header('Location: ../pages/postcreation.php');
+    exit();
 }
 ?>

@@ -12,7 +12,6 @@
 
   
 
-  $db = getDatabaseConnection();
 
   
 

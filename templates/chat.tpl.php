@@ -36,15 +36,3 @@ function drawChat($db, int $senderId, int $ownerId, int $itemId, array $messages
 </main>
 
 <?php } ?>
-<script>
-    // Function to scroll the messages container to the bottom
-    function scrollMessagesToBottom() {
-        var messagesContainer = document.getElementById('messages-container');
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }
-
-    // Call the function to scroll to the bottom once the messages are loaded
-    window.onload = function() {
-        scrollMessagesToBottom();
-    };
-</script>
