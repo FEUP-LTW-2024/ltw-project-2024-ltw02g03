@@ -29,7 +29,7 @@ if(chatContainer) {
         const itemId = document.getElementById('item-id').value;
         
         if(receiverId && itemId) { 
-            fetch(`/../templates/messages/get_messages.php?owner_id=${receiverId}&item_id=${itemId}`)
+            fetch(`/../actions/get_messages.php?owner_id=${receiverId}&item_id=${itemId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Erro ao carregar mensagens: ' + response.statusText);
@@ -85,7 +85,7 @@ if(chatContainer) {
         formData.append('receiverId', receiverId);
         formData.append('message-input', message);
         formData.append('item-id', document.getElementById('item-id').value);
-        fetch('../templates/messages/send_message.php', {
+        fetch('../actions/send_message.php', {
             method: 'POST',
             body: formData,
         })
@@ -93,16 +93,14 @@ if(chatContainer) {
             if (!response.ok) {
                 throw new Error('Erro ao enviar mensagem: ' + response.statusText);
             }
-            // Verifica se a resposta é JSON
             return response.json();
         })
         .then(data => {
             if (data.success) {
-                console.log(data.message); // Exibe mensagem de sucesso no console
-                // Se a mensagem foi enviada com sucesso, recarrega as mensagens
-                loadMessages(); // Chamada para recarregar as mensagens
+                console.log(data.message); 
+                loadMessages();
             } else {
-                console.error(data.error); // Exibe mensagem de erro no console
+                console.error(data.error); 
             }
         })
         .catch(error => {

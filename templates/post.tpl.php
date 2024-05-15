@@ -6,6 +6,7 @@ require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/user.class.php');
+require_once(__DIR__ . '/../database/review.class.php');
 
 function drawPost(Session $session, $db, int $itemId) { 
     
@@ -103,6 +104,9 @@ function drawPost(Session $session, $db, int $itemId) {
                         <img id="img-user-post" src="<?= !empty($user->imageUrl) ? $user->imageUrl : "/Docs/img/9024845_user_circle_light_icon.png"?>" alt="" width="100">
                         <div class="user-info">
                             <h1>Username: <?= htmlspecialchars($user->username) ?></h1>
+                            <?php 
+                            $averageRating = Review::calculateAverageRating($db, $user->userId);?>
+                            <h2>Rating: <span id="average-rating"><?= number_format($averageRating, 2) ?></span><span id="average-stars" class="stars"></span></h2>
                             <div class="location-info">
                                 <h2>Location:</h2>
                                 <p><?= !empty($user->address) ? htmlspecialchars($user->address) : " - " ?></p>
@@ -383,6 +387,8 @@ function drawPostBought(Session $session, $db, int $itemId) {
                         <img id="img-user-post" src="<?= !empty($user->imageUrl) ? $user->imageUrl : "/Docs/img/9024845_user_circle_light_icon.png"?>" alt="" width="100">
                         <div class="user-info">
                             <h1>Username: <?= htmlspecialchars($user->username) ?></h1>
+                            <?php $averageRating = Review::calculateAverageRating($db, $user->userId);?>
+                            <h2>Rating: <span id="average-rating"><?= number_format($averageRating, 2) ?></span><span id="average-stars" class="stars"></span></h2>
                             <div class="location-info">
                                 <h2>Location:</h2>
                                 <p><?= !empty($user->address) ? htmlspecialchars($user->address) : " - " ?></p>
