@@ -13,10 +13,11 @@ function drawSearchedProducts($session,$db, array $items, string $searchQuery) {
         <h1>Results for: <?= htmlspecialchars($searchQuery) ?></h1>
         <?php 
         $myId = $session->getId();
-        $items = Item::getAllActiveItems($db);
-        $cartItems= Cart::getItemsByUser($db, $myId);
-        $itemsToDisplay = array();
     
+        $itemsToDisplay = array();
+        if($session->isLoggedIn()) {
+            $cartItems= Cart::getItemsByUser($db, $myId);
+        
         foreach ($items as $item) {
             $foundInCart = false;
             foreach ($cartItems as $cartItem) {
@@ -28,6 +29,9 @@ function drawSearchedProducts($session,$db, array $items, string $searchQuery) {
             if (!$foundInCart) {
                 $itemsToDisplay[] = $item;
             }
+        }
+        } else {
+            $itemsToDisplay = $items;
         }
         
         
@@ -98,9 +102,12 @@ function drawFilteredProducts($session,$db, ?string $categoryName = null, ?strin
            $items = Item::filterItemsByModelId($db, $modelId, $items);
         }
         $myId = $session->getId();
-        $cartItems= Cart::getItemsByUser($db, $myId);
+    
+        
         $itemsToDisplay = array();
-
+        if($session->isLoggedIn()) {
+            $cartItems= Cart::getItemsByUser($db, $myId);
+        
         foreach ($items as $item) {
             $foundInCart = false;
             foreach ($cartItems as $cartItem) {
@@ -112,6 +119,9 @@ function drawFilteredProducts($session,$db, ?string $categoryName = null, ?strin
             if (!$foundInCart) {
                 $itemsToDisplay[] = $item;
             }
+        }
+        } else {
+            $itemsToDisplay = $items;
         }
         
         if (!empty($itemsToDisplay)) : ?>

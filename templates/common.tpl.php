@@ -183,10 +183,12 @@ function drawHeader(Session $session, $db) { ?>
     
     <?php
     $myId = $session->getId();
+    
     $items = Item::getAllActiveItems($db);
-    $cartItems= Cart::getItemsByUser($db, $myId);
     $itemsToDisplay = array();
-
+    if($session->isLoggedIn()) {
+        $cartItems= Cart::getItemsByUser($db, $myId);
+    
     foreach ($items as $item) {
         $foundInCart = false;
         foreach ($cartItems as $cartItem) {
@@ -198,6 +200,9 @@ function drawHeader(Session $session, $db) { ?>
         if (!$foundInCart) {
             $itemsToDisplay[] = $item;
         }
+    }
+    } else {
+        $itemsToDisplay = $items;
     }
     $limit = $itemsToDisplay ? count($itemsToDisplay) : 0;
     ?>
@@ -232,7 +237,6 @@ function drawHeader(Session $session, $db) { ?>
 
 <?php
 function drawProducts(Session $session, $db, int $limit, $itemsToDisplay) {
-    
     try {
         
 
