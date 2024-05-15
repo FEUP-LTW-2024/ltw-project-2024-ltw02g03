@@ -16,7 +16,7 @@ $items = Item::getItemsbyName($db, $searchQuery, 8);
 
 
 drawHeader($session, $db);
-drawSearchedProducts($db,$items,$searchQuery);
+drawSearchedProducts($session,$db,$items,$searchQuery);
 drawFooter();
 
 ?>
