@@ -296,31 +296,7 @@ function drawPostCreation($session, $db) {
         </section>
     </main>
     
-<script>
-        
-function previewImages(event, startIndex) {
-    const files = event.target.files;
-    
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const reader = new FileReader();
-        const previewImage = document.getElementById(`preview-image-${startIndex + i}`);
 
-        reader.onloadend = function () {
-            previewImage.style.display = "block";
-            previewImage.src = reader.result;
-        }
-
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            previewImage.style.display = "none"; // Hide the preview image if no file is selected
-            previewImage.src = "";
-        }
-    }
-}
-
-</script>
 
 
     
@@ -448,20 +424,4 @@ function drawPostBought(Session $session, $db, int $itemId) {
 }
 ?>
 
-<script>
-    var imgIndex = 0; // Initial index
 
-    function leftbuttPost() {
-        var images = document.getElementsByClassName('post-image-product');
-        images[imgIndex].classList.remove('active');
-        imgIndex = (imgIndex - 1 + images.length) % images.length;
-        images[imgIndex].classList.add('active');
-    }
-
-    function rightbuttPost() {
-        var images = document.getElementsByClassName('post-image-product');
-        images[imgIndex].classList.remove('active');
-        imgIndex = (imgIndex + 1) % images.length;
-        images[imgIndex].classList.add('active');
-    }
-</script>
