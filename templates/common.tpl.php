@@ -267,30 +267,3 @@ function drawProducts(Session $session, $db, int $limit) {
 <?php } ?>
 
 
-<script>
-function openSearchTab() {
-    var searchTab = document.getElementById("search-tab");
-    if (searchTab.style.display === "none") {
-        searchTab.style.display = "block";
-    } else {
-        searchTab.style.display = "none";
-    }
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    // Your script here
-var filterButton = document.getElementById("filter-search-tab");
-
-    // Toggle the display of the filter box when the button is clicked
-    filterButton.addEventListener("click", function() {
-        
-        var filterBox = document.getElementById("filter-box");
-        if (filterBox.style.display === "none") {
-            filterBox.style.display = "block";
-        } else {
-            filterBox.style.display = "none";
-        }
-    });
-});
-
-</script>

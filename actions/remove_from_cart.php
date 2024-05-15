@@ -25,7 +25,7 @@ if(isset($_POST['cart_id'])) {
         echo "Error: " . $e->getMessage();
     }
 } else {
-    header('Location: /caminho_para_o_carrinho.php');
+    header('Location: ../pages/cart.php');
     exit();
 }
 ?>
