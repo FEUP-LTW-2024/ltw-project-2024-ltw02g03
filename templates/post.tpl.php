@@ -67,7 +67,7 @@ function drawPost(Session $session, $db, int $itemId) {
                             <form action="../pages/chat.php" method="post" class="post-form-button">
                                 <input type="hidden" name="owner_id" value="<?= $sellerId ?>">
                                 <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
-                                <button type="submit" class="send-message-button">Enviar Mensagem</button>
+                                <button type="submit" class="send-message-button">Send Mesage</button>
                             </form>
                         </div>
                         <?php } else { ?>
@@ -200,7 +200,7 @@ function drawPostCreation($session, $db) {
                     <label>
                         Condition 
                         <select name="condition" class="publish-select" required>
-                            <option selected disabled>Selecione...</option>
+                            <option selected disabled>Select...</option>
                             <?php 
                                 $conditions = Item::getConditionsObj($db);
                                 foreach($conditions as $cond) {
@@ -214,7 +214,7 @@ function drawPostCreation($session, $db) {
                     <label>
                         Size
                         <select name="size" class="publish-select" required>
-                            <option selected disabled>Selecione...</option>
+                            <option selected disabled>Select...</option>
                             <?php 
                                 $conditions = Item::getSizesObj($db);
                                 foreach($conditions as $cond) {
@@ -338,6 +338,13 @@ function drawPostBought(Session $session, $db, int $itemId) {
                     <img id="post-image-product" src="../<?= $image[0]->imageUrl ?>" alt="" >
                     <button class="img-button">></button>  
                 </div>
+                <div id="description-post">
+                    <div>
+                        <h2 id="description-post-h2">Description</h2>
+                        <p><?= !empty($item->description) ? htmlspecialchars($item->description) : "No description" ?></p>
+                    </div>
+                    <p id="date-post"><?= !empty($item->listingDate) ? htmlentities($item->listingDate) : " No Date " ?></p>
+                </div>
                 <aside id="user-aside">
                     <div id="price-post">
                         <div id="title-button-post">
@@ -346,32 +353,32 @@ function drawPostBought(Session $session, $db, int $itemId) {
                             <form action="../pages/chat.php" method="post" class="post-form-button">
                                 <input type="hidden" name="owner_id" value="<?= $sellerId ?>">
                                 <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
-                                <button type="submit" class="send-message-button">Enviar Mensagem</button>
+                                <button type="submit" class="send-message-button">Send Message</button>
                             </form>
                         </div>
                         
                         <div id="post-price-button">
-                            <h2>Deixe uma review</h2>
+                            <h2>Review the item</h2>
                             <form id="review-form" action="/../actions/action_process_review.php" method="POST">
                                 <input type="hidden" name="user_id" value="<?= $userId ?>">
                                 <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
                                 
 
-                                <label for="review_text">Sua revisão:</label><br>
+                                <label for="review_text">Your review:</label><br>
                                 <textarea id="review_text" name="review_text" rows="4" cols="50" required></textarea><br>
 
-                                <label for="rating">Classificação:</label>
+                                <label for="rating">Grade:</label>
                                 <select id="rating" name="rating" required>
-                                    <option value="">Selecione uma classificação</option>
-                                    <option value="1.0">1 estrela</option>
-                                    <option value="1.5">1.5 estrelas</option>
-                                    <option value="2.0">2 estrelas</option>
-                                    <option value="2.5">2.5 estrelas</option>
-                                    <option value="3.0">3 estrelas</option>
-                                    <option value="3.5">3.5 estrelas</option>
-                                    <option value="4.0">4 estrelas</option>
-                                    <option value="4.5">4.5 estrelas</option>
-                                    <option value="5.0">5 estrelas</option>
+                                    <option value="">Select a grade</option>
+                                    <option value="1.0">1 star</option>
+                                    <option value="1.5">1.5 star</option>
+                                    <option value="2.0">2 star</option>
+                                    <option value="2.5">2.5 star</option>
+                                    <option value="3.0">3 star</option>
+                                    <option value="3.5">3.5 star</option>
+                                    <option value="4.0">4 star</option>
+                                    <option value="4.5">4.5 star</option>
+                                    <option value="5.0">5 star</option>
                                     
                                 </select><br>
 
@@ -414,13 +421,7 @@ function drawPostBought(Session $session, $db, int $itemId) {
                         <p class="spec"><?= !empty($model->modelName) ? htmlspecialchars($model->modelName) : " - " ?></p>
                     </div>
                 </aside>
-                <div id="description-post">
-                    <div>
-                        <h2 id="description-post-h2">Description</h2>
-                        <p><?= !empty($item->description) ? htmlspecialchars($item->description) : "No description" ?></p>
-                    </div>
-                    <p id="date-post"><?= !empty($item->listingDate) ? htmlentities($item->listingDate) : " No Date " ?></p>
-                </div>
+                
             </section>
         </main>
         <?php

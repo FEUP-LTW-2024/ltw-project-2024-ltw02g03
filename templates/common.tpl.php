@@ -138,27 +138,27 @@ function drawHeader(Session $session, $db) { ?>
         <br>
         <label for="category-select">Category:</label>
         <select id="category-select" class="publish-select">
-            <option value="">Selecione a categoria...</option>
+            <option value="">Select a category...</option>
         </select>
         <br>
         <label for="brand-select">Brand:</label>
         <select id="brand-select" class="publish-select">
-            <option value="">Selecione a marca...</option>
+            <option value="">Select a brand...</option>
         </select>
         <br>
         <label for="condition-select">Condition:</label>
         <select id="condition-select" class="publish-select">
-            <option value="">Selecione a condição...</option>
+            <option value="">Select a condition...</option>
         </select>
         <br>
         <label for="size-select">Size:</label>
         <select id="size-select" class="publish-select">
-            <option value="">Selecione o tamanho...</option>
+            <option value="">Select a size...</option>
         </select>
         <br>
         <label for="model-select">Model:</label>
         <select id="model-select" class="publish-select">
-            <option value="">Selecione o modelo...</option>
+            <option value="">Select a model...</option>
         </select>
         <br>
         <button onclick="applyFilters()">Apply Filters</button>
@@ -207,8 +207,8 @@ function drawHeader(Session $session, $db) { ?>
     $limit = $itemsToDisplay ? count($itemsToDisplay) : 0;
     ?>
     <section id="recomended">
-        <h1>Produtos Recomendados</h1>  
-        <h2><?php echo $limit; ?> produtos</h2>
+        <h1>All products</h1>  
+        <h2><?php echo $limit; ?> products</h2>
         <div id="index-products">
             <?php drawProducts($session,$db, $limit,$itemsToDisplay); ?>
         </div>

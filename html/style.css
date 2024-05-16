@@ -106,7 +106,6 @@ a{
     color: black;
 }
 
-
 #login-register {
     display: none;
     position: fixed;
@@ -122,16 +121,10 @@ a{
     display: flex;
     flex-direction: column;
 }
-
-
 #login-register.visible {
     display: flex;
     flex-direction: column;
 }
-
-
-
-
 #header-list {
     display: inline-block;
 }
@@ -194,8 +187,6 @@ header li a {
 
 #img-product {
     height: 40%;
-    
-   
 }
 
 #profile-button {
@@ -388,9 +379,6 @@ body {
     width: 100%;
 }
 
-
-
-
 #flex-login-regis {
     display: flex;
     align-items: center; 
@@ -518,8 +506,6 @@ body {
     background-color: rgb(212, 226, 230);
     padding: 20px; /* Set padding for the total container */
     border-radius: 1em;
-    /* grid-column: 2; /* Place total in the second column 
-    grid-row: 1; Place total in the first row */
     margin: 1em;
     display: flex;
     flex-direction: column;
@@ -729,13 +715,6 @@ body {
     object-fit: cover;
     border-radius: 4em;
 }
-
-/*
-#user-post {
-    display: flex;
-    align-items: center; 
-}
-*/
 .user-info {
     margin-left: 20px; 
 }
@@ -1392,11 +1371,11 @@ select {
     }
     
 }
-/* @media print {
+@media print {
     header, footer, #nav {
         display: none !important;
     }
-  } */
+  } 
 
 /* CSS para o reviews */
 #reviews-header {

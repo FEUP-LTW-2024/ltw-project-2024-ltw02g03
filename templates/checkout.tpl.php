@@ -37,36 +37,36 @@ function drawCheckout(Session $session, $db, $item, $userId) {
                         <label for="country">País:</label>
                         <input type="text" id="country" name="country" value="<?= isset($user->country) ? htmlspecialchars($user->country) : '' ?>" required><br>
                     
-                    <h3>Opções de Pagamento</h3>
-                    <label for="payment_method">Método de Pagamento:</label>
+                    <h3>Payment options</h3>
+                    <label for="payment_method">Payment method:</label>
                     <select id="payment_method" class="publish-select" name="payment_method" required>
-                        <option value="" selected disabled>Selecione...</option>
-                        <option value="credit_card">Cartão de Crédito</option>
+                        <option value="" selected disabled>Select...</option>
+                        <option value="credit_card">Credit Card</option>
                         <option value="paypal">PayPal</option>
                     </select><br>
                     
                     <div id="credit_card_fields" style="display: none;">
-                        <label for="card_number">Número do Cartão:</label>
+                        <label for="card_number">Card Number:</label>
                         <input type="text" id="card_number" name="card_number"required ><br>
-                        <label for="card_holder">Nome no Cartão:</label>
+                        <label for="card_holder">Card Name:</label>
                         <input type="text" id="card_holder" name="card_holder"required><br>
-                        <label for="expiration_date">Data de Expiração:</label>
+                        <label for="expiration_date">Expire Date:</label>
                         <input type="text" id="expiration_date" name="expiration_date"required><br>
                         <label for="cvv">CVV:</label>
                         <input type="text" id="cvv" name="cvv"required><br>
                     </div>
                     
                     <div id="paypal_fields" style="display: none;">
-                        <label for="paypal_email">Endereço de Email do PayPal:</label>
+                        <label for="paypal_email">Email address of PayPal:</label>
                         <input type="email" id="paypal_email" name="paypal_email"required><br>
                     </div>
                     <input type="hidden" name="checkout_submitted" value="1">
                     <input type="hidden" name="item_ids[]" value="<?= $itemId ?>">
 
-                    <button type="submit" id="finalizar_compra_btn" onclick="simulatePurchaseAndRedirect()">Finalizar Compra</button>
+                    <button type="submit" id="finalizar_compra_btn" onclick="simulatePurchaseAndRedirect()">Finish purchase</button>
                     </div>
                 </form>
-            </section>
+            </section>Enviar Mensagem
         </main>
 
     <?php
