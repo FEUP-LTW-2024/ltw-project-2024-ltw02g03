@@ -249,7 +249,7 @@
     -- Inserir dados de exemplo na tabela ItemCategory
     INSERT INTO ItemCategory (ItemId, CategoryId)
     VALUES
-    (1, 1),(1,2),
+    (1, 1),
     (2, 2),
     (3, 1),
     (4, 2),
@@ -298,7 +298,7 @@
     -- Inserir dados de exemplo na tabela ItemImage
     INSERT INTO ItemImage (ItemId, ImageId)
     VALUES
-    (1, 1),(1, 2),
+    (1, 1),
     (2, 2),
     (3, 3),
     (4, 4),
