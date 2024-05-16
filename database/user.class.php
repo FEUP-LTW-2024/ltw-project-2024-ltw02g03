@@ -237,7 +237,7 @@ class User {
     static function loginUser(PDO $db, string $email, string $password) : bool {
         try {
             $user = User::getUserWithPassword($db, $email, $password);
-            if ($user) {
+            if ($user!=null) {
                 return true;
             } else {
                 return false;
@@ -395,6 +395,37 @@ static function getAllAdmins(PDO $db) : array {
 
 
 }
+
+//get all emails
+static function getAllEmails(PDO $db) : array {
+    try {
+        $stmt = $db->prepare('SELECT Email FROM User');
+        $stmt->execute();
+        $emails = [];
+        while ($email = $stmt->fetch()) {
+            $emails[] = $email['Email'];
+        }
+        return $emails;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching emails: " . $e->getMessage());
+    }
+}
+
+// Get all usernames
+static function getAllUsernames(PDO $db) : array {
+    try {
+        $stmt = $db->prepare('SELECT Username FROM User');
+        $stmt->execute();
+        $usernames = [];
+        while ($username = $stmt->fetch()) {
+            $usernames[] = $username['Username'];
+        }
+        return $usernames;
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching usernames: " . $e->getMessage());
+    }
+}
+
 
 // Update user address
 static function updateUserAddress(PDO $db, int $userId, string $address,string $postalCode, string $city, string $district, string $country) : void {

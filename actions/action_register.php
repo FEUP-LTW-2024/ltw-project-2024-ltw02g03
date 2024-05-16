@@ -39,11 +39,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 try {
     $userId = User::registerUser($db, $firstName, $lastName, $username, $email, $password, $joinDate, $address, $city, $district, $country, $postalCode, $phone, $imageUrl, $admin);
     
-    if (User::loginUser($db, $email, $password)) {
+    $user = User::getUserWithPassword($db, $email, $password);
+        
+    if ($user) {
+        $session->setId($user->userId);
+        $session->setName($user->name());
+        $session->addAdmin($user->admin);
         $session->addMessage('success', 'Register successful! You are now logged in.');
-        header("Location: /pages/login.php"); 
+        header("Location: /");
         exit();
-
     } else {
         $session->addMessage('error', 'Login failed after registration.');
         header("Location: /pages/login.php");
@@ -51,10 +55,28 @@ try {
     }
     
 } catch (Exception $e) {
-    $session->addMessage('error', 'Invalid form submission!');
+    $emails = User::getAllEmails($db);
+    $usernames = User::getAllUsernames($db);
+
+    foreach ($emails as $email1) {
+        if ($email === $email1) {
+            $session->addMessage('error', 'Email already in use.');
+            header("Location: /pages/register.php");
+            exit();
+        }
+    }
+    foreach ($usernames as $username1) {
+        if ($username === $username1) {
+            $session->addMessage('error', 'Username already in use.');
+            header("Location: /pages/register.php");
+            exit();
+    }
+    $session->addMessage('error', 'An error occurred while registering.');
     header("Location: /pages/register.php");
     exit();
 }
+}
+
 
 } else {
     header("Location: /pages/register.php");

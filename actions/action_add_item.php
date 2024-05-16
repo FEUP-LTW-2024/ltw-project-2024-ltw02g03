@@ -17,7 +17,7 @@ $db = getDatabaseConnection();
 $user = User::getUser($db, $session->getId());
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve form data
+
     $productName = $_POST['productname'] ?? '';
     $price = floatval($_POST['price'] ?? 0); 
     $description = $_POST['description'] ?? '';
@@ -29,7 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $category2name = $_POST['category2'] ?? '';
     $category3name = $_POST['category3'] ?? '';
 
-    // Retrieve IDs for brand, model, condition, and size
     $brand = $brandname ? Item::getItemBrandByName($db, $brandname) : null;
     $model = $modelname ? Item::getItemModelByName($db, $modelname) : null;
     $condition = $conditionname ? Item::getItemConditionByName($db, $conditionname) : null;
@@ -62,7 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Insert data into the database
     $sql = "INSERT INTO Item (SellerId, Title, Description, Price, BrandId, ModelId, ConditionId, SizeId)
             VALUES (:sellerId, :productName, :description, :price, :brandId, :modelId, :conditionId, :sizeId)";
     $stmt = $db->prepare($sql);
@@ -102,8 +100,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                 }
             }
+            $defaultImageUrl = "database/uploads/default_item.png";
 
-            // Save image URLs in the database
+
+            if (empty($imageUrls)) {
+                $imageUrls[] = $defaultImageUrl;
+            }
             foreach ($imageUrls as $imageUrl) {
                 $sql = "INSERT INTO ProductImage (ImageUrl) VALUES (:imageUrl)";
                 $stmt = $db->prepare($sql);
