@@ -106,26 +106,7 @@ a{
     color: black;
 }
 
-/*#login-register-anchor {
-    display: none;
-    position: fixed;
-    top: 3.2em;
-    right: 2em;
-    padding: 1em;
-    background-color: rgb(194, 226, 255);
-    border-radius: 2em;
-}
 
-#profile-anchor {
-    display: none;
-    position: fixed;
-    right: 2em;
-    top: 3.2em;
-    padding: 1em;
-    background-color: rgb(194, 226, 255);
-    border-radius: 2em;
-}
-*/
 #login-register {
     display: none;
     position: fixed;
@@ -149,32 +130,6 @@ a{
 }
 
 
-/*#logout-anchor {
-    display: none;
-    position: fixed;
-    right: 2em;
-    top: 3.2em;
-    padding: 1em;
-    background-color: rgb(194, 226, 255);
-    border-radius: 2em;
-}
-
-#profile-button:hover ~ #logout-anchor{
-    display: inline-block;
-}
-
-#logout-anchor.visible {
-    display: inline-block;
-}
-
-#profile-button:hover ~ #profile-anchor{
-    display: inline-block;
-}
-
-#profile-anchor.visible {
-    display: inline-block;
-}
-*/
 
 
 #header-list {
@@ -1208,80 +1163,128 @@ select {
 
 
 /* CSS para o chat */
+/* CSS para o chat */
 #chat-container {
-    background-color: white;
+    background-color: #f8f9fa;
     margin: 0;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 60vh;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #messages-container {
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 10px;
-    height: 60%;
+    flex-grow: 1;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 0.5em;
+    background-color: white;
+    border-radius: 5px;
 }
 
 #messages-container p {
     word-wrap: break-word;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    font-size: 1em;
 }
 
 .message-input {
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 10px;
-    max-width: 80%; /* Adicionando largura máxima para as mensagens */
-}
-
-.message-input p {
-    margin: 0; /* Removendo margem padrão dos parágrafos */
+    max-width: 80%;
+    border: 1px solid #ccc;
+    background-color: white;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .message.sent {
-    background-color: #007bff; /* Fundo azul para mensagens enviadas */
-    color: #fff; /* Texto branco para mensagens enviadas */
-    text-align: end;
-    padding: 0 1em;
+    background-color: #007bff;
+    color: #fff;
+    text-align: right;
+    padding: 10px;
+    border-radius: 15px 15px 0 15px;
+    align-self: flex-end;
+    max-width: 60%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
 
 .message.received {
-    background-color: #e0e0e0; /* Fundo cinza para mensagens recebidas */
-    padding: 0 1em;
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 15px 15px 15px 0;
+    align-self: flex-start;
+    max-width: 60%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-/* Restante do seu CSS permanece o mesmo */
 
 .conversation-li {
     background-color: white;
     margin: 1em 2em;
     display: flex;
-    
     justify-content: space-between;
-    
     align-items: center;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 #conversation-main {
     max-width: 60em;
     margin: 0 auto;
     padding: 1em;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .conversation-img {
     object-fit: cover;
     margin-right: 1em;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
 }
+
 .post-form-button-2 {
     display: flex;
     margin: 0;
     margin-right: 1em;
     vertical-align: middle;
     text-align: center;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
+
+.post-form-button-2:hover {
+    background-color: #0056b3;
+}
+
+#messages-container .placeholder {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #999;
+    font-size: 1.2em;
+    font-family: Arial, sans-serif;
+}
+
+
 
 
 @media (max-width: 70em) {

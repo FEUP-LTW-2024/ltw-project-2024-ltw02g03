@@ -1,26 +1,7 @@
 const chatContainer = document.getElementById('chat-container');
 
-
-// Only run this code in the page with the element with the id "chat-container"
 if(chatContainer) {
     
-    function loadContacts() {
-        // Fazer requisição HTTP para carregar os contatos do back-end
-        fetch('../templates/messages/get_contacts.php')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erro ao carregar contatos: ' + response.statusText);
-            }
-            return response.json();
-        })
-        .then(contacts => {
-            // Atualizar a lista de contatos com os dados recebidos do servidor
-            // Implementar lógica para atualizar a lista de contatos na interface
-        })
-        .catch(error => {
-            console.error(error);
-        });
-    }
     
     function loadMessages() {
         console.log('Carregando mensagens...');
@@ -48,8 +29,6 @@ if(chatContainer) {
         
     }
     
-    
-    
     function drawChat(receiverId, itemId, messages) {
         receiverId = parseInt(receiverId); 
     
@@ -63,10 +42,10 @@ if(chatContainer) {
             messageDiv.classList.add('message');
             messageDiv.classList.add(message.SenderId !== receiverId ? 'sent' : 'received');
     
-            const senderName = message.SenderId === receiverId ?  message.SenderName: 'Você';
+            const senderName = message.SenderId === receiverId ? message.SenderName : 'Você';
             console.log('senderName:', senderName);
             const messageContent = document.createElement('p');
-            messageContent.textContent = ` ${message.CommunicationText}`; 
+            messageContent.textContent = `${message.CommunicationText}`; 
             const messageDate = document.createElement('span');
             messageDate.textContent = message.SendDate;
     
@@ -75,10 +54,9 @@ if(chatContainer) {
     
             messagesContainer.appendChild(messageDiv);
         });
-    }
-    
 
-    
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
     
     function sendMessage(receiverId, message) {
         const formData = new FormData();
@@ -123,8 +101,6 @@ if(chatContainer) {
         }
     });
     
-    
     setInterval(loadMessages, 5000);
-    
     
 }
