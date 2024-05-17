@@ -390,7 +390,7 @@ function drawPostBought(Session $session, $db, int $itemId) {
                                     
                                 </select><br>
 
-                                <input type="submit" value="Enviar revisão">
+                                <input type="submit" value="Send Review">
                             </form>
                         </div>
 
