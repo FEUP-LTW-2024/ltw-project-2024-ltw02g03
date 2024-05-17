@@ -36,10 +36,16 @@ main {
     cursor:auto;
 }
 
-#home-img {
+#home-imge {
     width: 100%;
     height: 95%;
     object-fit: cover;
+}
+
+.container {
+    width: 100%;
+            height: 100vh; /* Use 100vh to ensure the container occupies the full viewport height */
+            overflow: hidden;
 }
 
 #options-header {
@@ -183,7 +189,16 @@ header li a {
     align-items: center;
     text-align: center;
     justify-content: center;
+    overflow: hidden;
 } 
+#index-products h2 {
+    max-height: 1em;
+    overflow: hidden;
+}
+#index-products h1 {
+    overflow: hidden;
+    max-height: 1em;
+}
 
 #img-product {
     height: 40%;
@@ -302,7 +317,7 @@ header li a {
     display: block;
     background-color: white;
     padding: 2em;
-    width: 18em;
+    max-width: 18em;
 }
 
 form.add-to-cart-form {
@@ -325,16 +340,10 @@ form.add-to-cart-form button.add-cart-button:hover {
 }
 
 label {
-    width: 100%;
+
     font-family: Poppins;
 }
-input {
-    width: 100%;
-    border: none;
-    border-bottom: solid black 1px;
-    margin-bottom: 2em;
-    outline: none;
-}
+
 
 button{
     
@@ -480,7 +489,6 @@ body {
   #cart-form{
     width: auto;
     padding: 0;
-    padding: 0;
     background-color: transparent;
   }
 
@@ -538,8 +546,14 @@ body {
 .img-name-condition {
   display: flex;
   flex-direction: row;
-}
+  
 
+}
+.img-name-condition h1 {
+  overflow: hidden;
+  
+  max-width: 3em;
+}
 .name-condition {
     align-items: center;
     text-align: center;
@@ -605,12 +619,14 @@ body {
     background-color: white;
     border-radius: 1em;
     padding: 1em;
+    padding-right: 2.5em;
 }
 
 #admin-section {
     background-color: white;
     padding: 1em;
     border-radius: 1em;
+    padding-right: 2.5em
 }
 
 #profile-menu ul li a:hover {
@@ -630,8 +646,11 @@ body {
 #title-button-post {
     display: flex;
     flex-direction: row;
-    
+
     justify-content: space-between;
+}
+#title-button-post > h2 {
+    align-self: center;
 }
 
 .post-image-product{
@@ -666,6 +685,9 @@ body {
 #post-price-button{
     display: flex;
     flex-direction: column;
+    display: block;
+    width:auto;
+    box-sizing: content-box;
 }
 
 
@@ -722,6 +744,7 @@ body {
 .location-info {
     display: flex;
     flex-direction: column;
+    text-align: center;
     width: 150px; 
 }
 
@@ -742,6 +765,7 @@ body {
 
 #price-post {
     background-color: white;
+    word-wrap: break-word;
     padding: 1em;
     border-radius: 1em;
     margin-bottom: 1em;
@@ -787,9 +811,13 @@ body {
     background-color: rgb(194, 226, 255);
     border-radius: 1em;
 }
-
+#description-post p {
+    word-wrap: break-word;
+}
 #product-title-post {
+    width: 50%;
     font-size: 1.5rem; /* Set the font size of the h1 element */
+    word-wrap: break-word;
 }
 
 #description-post-h2 {
@@ -882,6 +910,11 @@ body {
 #profilepage-name-loc h2 {
     font-size: 1.1em;
 }
+
+.profilepage-title-price-item {
+    overflow: hidden;
+}
+
 
 .profilepage-item {
     background-color: white;
@@ -988,6 +1021,8 @@ body {
 
 /*---------postcreation.css----------*/
 input {
+    border: none;
+    border-bottom: solid black;
     background-color: transparent;
     font-size: 1em;
     line-height: 1.5;
@@ -997,6 +1032,22 @@ input {
     display: block;
     margin-bottom: 1em;
     border-width: 2px;
+    outline: none;
+    width:100%;
+    padding-right: 0;
+}
+
+  /* Ensure label takes the full width */
+  label {
+    display: block;
+    width: 100%;
+    margin-bottom: 1em; /* Space between label/input pairs */
+}
+
+/* Ensure input within label takes the full width */
+label input {
+  
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width */
 }
 
 
@@ -1091,6 +1142,7 @@ input:focus {
     background-color: #dee1e2;
 }
 
+
 #description-input {
     font-size: 14px;
     border-radius: 6px;
@@ -1103,9 +1155,16 @@ input:focus {
     display: block;
     height: 7em;
     margin-bottom: 0;
+    padding-right: 0;
+    resize: none;
+    width: 100%;
 }
 
-
+.review-text {
+    padding: 1em;
+    box-sizing: border-box;
+    width: 100%;
+}
 
 #description-input:hover, select:hover {
     border-color: #ccc;
@@ -1139,6 +1198,9 @@ select {
     width: 100%;
 }
 
+#review-form {
+    width: 100%;
+}
 
 
 /* CSS para o chat */
@@ -1153,6 +1215,7 @@ select {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 
 #messages-container {
     border: 1px solid #ccc;
@@ -1174,15 +1237,6 @@ select {
     font-size: 1em;
 }
 
-.message-input {
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-    max-width: 80%;
-    border: 1px solid #ccc;
-    background-color: white;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-}
 
 .message.sent {
     background-color: #007bff;
@@ -1222,14 +1276,12 @@ select {
     display: flex;
     flex-direction: column;
     height: 100%;
+    overflow: hidden;
 }
 
 .conversation-img {
     object-fit: cover;
     margin-right: 1em;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
 }
 
 .post-form-button-2 {
@@ -1263,11 +1315,86 @@ select {
     font-family: Arial, sans-serif;
 }
 
+#input-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#message-form {
+    width: 100%;
+    display: flex;
+}
+
+#message-input {
+    flex: 1;
+    width: calc(100% - 100px); /* Adjust the width calculation as needed */
+    margin-right: 10px; /* Adjust margin as needed */
+}
+
+#send-button {
+    width: 100px; /* Adjust width as needed */
+}
+
+
+/* CSS para o reviews */
+#reviews-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.reviews-container {
+    display: flex;
+    gap: 20px;
+}
+
+.reviews-column {
+    flex: 1;
+}
+
+.review-item {
+    border: 1px solid #ccc;
+    padding: 1em;
+    margin-bottom: 1em;
+    display: flex;
+    align-items: center;
+    max-height: 10em; 
+    overflow: hidden; 
+    background-color: wheat;
+}
+
+.item-image {
+    width: 5em; 
+    height: 3em; 
+    margin-right: 20px; 
+    object-fit: cover;
+}
+
+.review-details {
+    flex: 1; 
+    overflow: auto; 
+}
+
+.stars {
+    font-size: 1.5em;
+    color: black;
+}
+
+.half-star {
+    vertical-align: middle;
+    position: relative;
+    display: inline-block;
+    width: 0.5em;
+    overflow: hidden;
+}
 
 
 
 @media (max-width: 70em) {
-    
+    #search-tab {
+        max-width: 27em;
+    }
     #header-list {
         display: none;
     }
@@ -1324,18 +1451,28 @@ select {
         width: 12em;
         height: 12em;
     }
+    #post {
+        font-size: 80%;
+    }
 }
 
 @media (max-width: 40em) {
+    #post {
+        font-size: 70%;
+    }
     #index-product {
         font-size: 60%;
         margin: 1em 2.5em;
+    }
+    #no-items {
+        font-size: 110%;
     }
     #main-search {
         font-size: 70%;
     }
     .search-img {
         width: 60%;
+        height: 60%;
     }
     #home-welcome {
         font-size: 120%;
@@ -1370,61 +1507,109 @@ select {
         height: 10em;
     }
     
+    #search-tab {
+        max-width: 18em;
+        font-size: 80%;
+    }
+    #filter-search-tab {
+        margin-top: 0.5em;
+        font-size: 90%;
+    }
+    #filter-box {
+        font-size: 80%;
+    }
+    #post-price-button {
+        width: 90%;
+    }
+    #post-image-product {
+        width: 30em;
+        height: 50em;
+        object-fit: cover;
+    }
 }
+
+
+
 @media print {
     header, footer, #nav {
         display: none !important;
     }
   } 
 
-/* CSS para o reviews */
-#reviews-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+  @media (max-width: 30.5em) { 
+    .header-button {
+        margin: 0;
+    }
+    #post {
+        font-size: 60%;
+    }
+    .header-button img, #profile-pic-header {
+        width: 20px; /* Adjust this value as needed to make the images smaller */
+    }
+    #profile-pic-header{
+        height: 20px;
+    }
+    #ecox-home {
+        font-size: 280%;
+    }
+    #ecox-title{
+        font-size:67%;
+    }
+    .img-name-condition h1, .img-name-condition img, .img-name-condition p {
+        font-size: 80%;
+    }
+    .cart-item button {
+        padding: 0.7em;
+        font-size: 70%;
+    }
+    .class-input {
+        height: 70%;
+        width: 70%;
+    }
+    .svg-cam {
+        width: 1em;
+        height: 1em;
+    }
+    .search-img {
+        width: 10px;
+    }
+    .image-input{
+        width: 5em;
+        height: 3em;
+        margin-right: 1px;
+        margin-left: 1px;
+    }
+    #message-input{
+        max-width: 94%;
+    }
+    .profilepage-item {
+        font-size: 80%;
+    }
 
-.reviews-container {
-    display: flex;
-    gap: 20px;
-}
-
-.reviews-column {
-    flex: 1;
-}
-
-.review-item {
-    border: 1px solid #ccc;
-    padding: 1em;
-    margin-bottom: 1em;
-    display: flex;
-    align-items: center;
-    max-height: 10em; 
-    overflow: hidden; 
-    background-color: wheat;
-}
-
-.item-image {
-    width: 5em; 
-    height: 3em; 
-    margin-right: 20px; 
-    object-fit: cover;
-}
-
-.review-details {
-    flex: 1; 
-    overflow: auto; 
-}
-
-.stars {
-    font-size: 1.5em;
-    color: black;
-}
-
-.half-star {
-    vertical-align: middle;
-    position: relative;
-    display: inline-block;
-    width: 0.5em;
-    overflow: hidden;
+    .reviews-container {
+        flex-direction: column;
+    }
+    #index-product {
+        font-size: 60%;
+        margin: 0.2em;
+    }
+    .price-search {
+        font-size: 130%;
+    }
+    
+    .search-img{
+        max-width: 50%;
+    }
+    #profile-img-infos {
+        font-size: 70%;
+    }
+    .review-item {
+        font-size: 80%;
+    }
+    #post-image-product {
+        width: 30em;
+        height: 50em;
+        object-fit: cover;
+    }
+    
 }

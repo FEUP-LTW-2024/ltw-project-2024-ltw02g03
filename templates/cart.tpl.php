@@ -49,11 +49,11 @@ function drawCart(Session $session, $db)
                                     <p class="condition-cart"><strong>Condition:</strong> <?= htmlspecialchars($condition->conditionName) ?></p>
                                 </div>
                             </div>
-                            <p class="brand-cart"><strong>Brand:</strong> <?= htmlspecialchars($brandName) ?> </p>
+                            <p class="brand-cart"><strong>Brand:</strong> <?= !empty($brandName) ? htmlspecialchars($brandName) : " - "?> </p>
                             <p><?= $item->price ?>€</p>
                                 <form class="cart-form" action="../actions/remove_from_cart.php" method="post">
                                   <input type="hidden" name="cart_id" value="<?= $cartItem->cartId ?>">
-                                  <button type="submit">Remove</button>
+                                  <button type="submit">Trash</button>
                                 </form>
 
                             </div>
