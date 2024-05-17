@@ -3,7 +3,7 @@ const chatContainer = document.getElementById('chat-container');
 if(chatContainer) {
     
     
-    function loadMessages() {
+    function loadMessages(bool flag=false) {
         console.log('Carregando mensagens...');
         
         const receiverId = document.getElementById('receiver-id').value;
@@ -20,7 +20,7 @@ if(chatContainer) {
             .then(messages => {
                 console.log('Mensagens recebidas:', messages);
                 
-                drawChat(receiverId, itemId, messages);
+                drawChat(receiverId, itemId, messages, flag);
             })
             .catch(error => {
                 console.error('Erro ao carregar mensagens:', error);
@@ -29,7 +29,7 @@ if(chatContainer) {
         
     }
     
-    function drawChat(receiverId, itemId, messages) {
+    function drawChat(receiverId, itemId, messages, flag=false) {
         receiverId = parseInt(receiverId); 
     
         const messagesContainer = document.getElementById('messages-container');
@@ -54,9 +54,11 @@ if(chatContainer) {
     
             messagesContainer.appendChild(messageDiv);
         });
-
+        if(!flag){
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
     }
+    
     
     function sendMessage(receiverId, message) {
         const formData = new FormData();
@@ -101,6 +103,6 @@ if(chatContainer) {
         }
     });
     
-    setInterval(loadMessages, 5000);
+    setInterval(loadMessages(true), 5000,);
     
 }

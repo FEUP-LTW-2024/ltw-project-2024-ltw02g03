@@ -9,7 +9,8 @@ require_once(__DIR__ . '/../database/user.class.php');
 require_once(__DIR__ . '/../database/review.class.php');
 
 function drawPost(Session $session, $db, int $itemId) { 
-    
+    ini_set('error_reporting', E_ALL); 
+    ini_set('display_errors', 1);
     try {
         $item = Item::getItem($db, $itemId);
         
@@ -21,10 +22,23 @@ function drawPost(Session $session, $db, int $itemId) {
         $userId = $session->getId();
 
         $condition = Item::getItemCondition($db, $itemId);
-        $brand = Item::getItemBrand($db, $itemId);    
+        var_dump($condition);
+        echo "<br>";
+        $brand = Item::getItemBrand($db, $itemId);
+        var_dump($brand);    
+        echo "<br>";
         $image = Item::getItemImage($db, $itemId);
+        var_dump($image);
+        echo "<br>";
         $size = Item::getItemSize($db, $itemId);
+        var_dump($size);
+        echo "<br>";
         $model = Item::getItemModel($db, $itemId);
+        var_dump($model);
+        echo "<br>";
+        $categories = Item::getCategoriesByItemId($db, $itemId);
+        var_dump($categories);
+        echo "<br>";
         $sellerId = $item->sellerId;
         $user = User::getUser($db, $sellerId);
         $current_user=0;
@@ -258,38 +272,32 @@ function drawPostCreation($session, $db) {
                 <div class="publish-div">
                     <h1>Categories</h1>        
                     <label>
-                        <select name="category1" class="publish-select">
+                        <select name="category1" id="category1" class="publish-select">
                             <option value="none">- None -</option>
                             <?php 
                                 $categories = Item::getCategories($db);
                                 foreach($categories as $categ) {
-                                    ?> <option value="<?= htmlentities($categ) ?>"><?= htmlspecialchars($categ) ?></option>
-                                    
-                                    <?php
+                                    echo '<option value="'. htmlentities($categ) .'">'. htmlspecialchars($categ) .'</option>';
                                 }
                             ?>
                         </select>
                     </label>
                     <label>
-                        <select name="category2" class="publish-select">
+                        <select name="category2" id="category2" class="publish-select">
                             <option value="none">- None -</option>
                             <?php 
                                 foreach($categories as $categ) {
-                                    ?> <option value="<?= htmlentities($categ) ?>"><?= htmlspecialchars($categ) ?></option>
-                                    
-                                    <?php
+                                    echo '<option value="'. htmlentities($categ) .'">'. htmlspecialchars($categ) .'</option>';
                                 }
                             ?>
                         </select>
                     </label>
                     <label>
-                        <select name="category3" class="publish-select">
+                        <select name="category3" id="category3" class="publish-select">
                             <option value="none">- None -</option>
                             <?php 
                                 foreach($categories as $categ) {
-                                    ?> <option value="<?= htmlentities($categ) ?>"><?= htmlspecialchars($categ) ?></option>
-                                    
-                                    <?php
+                                    echo '<option value="'. htmlentities($categ) .'">'. htmlspecialchars($categ) .'</option>';
                                 }
                             ?>
                         </select>

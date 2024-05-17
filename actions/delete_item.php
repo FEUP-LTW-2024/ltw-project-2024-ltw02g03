@@ -14,6 +14,24 @@ if (!$session->isLoggedIn()) {
     exit();
 }
 
+function deleteDirectory($dir) {
+    if (!file_exists($dir)) {
+        return true;
+    }
+    if (!is_dir($dir)) {
+        return unlink($dir);
+    }
+    foreach (scandir($dir) as $item) {
+        if ($item == '.' || $item == '..') {
+            continue;
+        }
+        if (!deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
+            return false;
+        }
+    }
+    return rmdir($dir);
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["item_id"])) {
         $itemId = intval($_POST["item_id"]);
@@ -23,7 +41,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $admin = User::isAdmin($db, $userId);
         if ($userId === $sellerId || $admin) {
             Item::deleteItem($db, $itemId);
-            $session->addMessage('success', 'Item deleted successfully!');
+            Item::deleteItemCategories($db, $itemId);
+            Item::deleteItemImages($db, $itemId);
+            
+            $itemDir = __DIR__ . '/../database/uploads/item_' . $itemId;
+            if (deleteDirectory($itemDir)) {
+                $session->addMessage('success', 'Item and associated files deleted successfully!');
+            } else {
+                $session->addMessage('warning', 'Item deleted, but failed to delete associated files.');
+            }
+            
             header('Location: /pages');
             exit();
         } else {
