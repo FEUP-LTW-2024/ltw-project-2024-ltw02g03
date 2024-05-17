@@ -136,7 +136,7 @@ function drawFilteredProducts($session,$db, ?string $categoryName = null, ?strin
                 <a href="/pages/post.php?id=<?= $item->itemId ?>">
                     <article class="search-item">  
                         <div class="img-title-condition">
-                            <img class="search-img" src="../<?= $image->imageUrl ?>" alt="<?= $item->title ?>" style="width: 17em; height: 13em;">
+                            <img id="img-search-BILL" class="search-img" src="../<?= $image->imageUrl ?>" alt="<?= $item->title ?>" style="width: 17em; height: 13em;">
                             <div class="title-cond">
                                 <div>
                                     <h1><?= htmlspecialchars($item->title) ?></h1>

@@ -26,7 +26,7 @@ function drawConversations(Session $session, $db) {
             
             <h3><?= htmlentities("Conversa com {$otherName} sobre {$itemName}") ?></h3>
             
-            <form action="/pages/chat.php" method="post" class="post-form-button-2">
+            <form action="/pages/chat.php" method="post" >
                 <input type="hidden" name="owner_id" value="<?= $otherUserId ?>">
                 <input type="hidden" name="item_id" value="<?= $item ?>">
                 <button type="submit">Chat</button>
