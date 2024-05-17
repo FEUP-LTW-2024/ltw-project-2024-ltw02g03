@@ -747,16 +747,16 @@ class Item {
     }
     
 
-    // Get item category
-    static function getItemCategory(PDO $db, int $id) : array {
+    // Get all categories of an item
+    static function getCategoriesByItemId(PDO $db, int $itemId) : array {
         try {
             $stmt = $db->prepare('
-                SELECT ItemId, CategoryId, CategoryName
-                FROM ItemCategory 
-                JOIN ProductCategory ON ItemCategory.CategoryId = ProductCategory.CategoryId
-                WHERE ItemId = ?
+                SELECT ProductCategory.CategoryId, ProductCategory.CategoryName
+                FROM ProductCategory 
+                JOIN ItemCategory ON ProductCategory.CategoryId = ItemCategory.CategoryId
+                WHERE ItemCategory.ItemId = ?
             ');
-            $stmt->execute(array($id));
+            $stmt->execute([$itemId]);
             $categories = array();
 
             while ($category = $stmt->fetch()) {
@@ -768,6 +768,7 @@ class Item {
             throw new Exception("Error fetching item categories: " . $e->getMessage());
         }
     }
+    
 
     // Get item brand
 public static function getItemBrand(PDO $db, int $id) : ?Brand {
@@ -1404,6 +1405,44 @@ static function deleteItem(PDO $db, int $itemId) :int {
         return 0;
     } catch (PDOException $e) {
         throw new Exception("Error deleting item: " . $e->getMessage());
+    }
+    return 1;
+}
+
+//delete all images from an item
+static function deleteItemImages(PDO $db, int $itemId) :int {
+    try {
+        $stmt = $db->prepare('DELETE FROM ItemImage WHERE ItemId = ?');
+        $stmt->execute([$itemId]);
+        return 0;
+    } catch (PDOException $e) {
+        throw new Exception("Error deleting item images: " . $e->getMessage());
+    }
+    return 1;
+
+}
+//delete all categories from an item
+static function deleteItemCategories(PDO $db, int $itemId) :int {
+    try {
+        $stmt = $db->prepare('DELETE FROM ItemCategory WHERE ItemId = ?');
+        $stmt->execute([$itemId]);
+        return 0;
+    } catch (PDOException $e) {
+        throw new Exception("Error deleting item categories: " . $e->getMessage());
+    }
+    return 1;
+
+}
+
+
+//delete all item ratings
+static function deleteItemRatings(PDO $db, int $itemId) :int {
+    try {
+        $stmt = $db->prepare('DELETE FROM Rating WHERE ItemId = ?');
+        $stmt->execute([$itemId]);
+        return 0;
+    } catch (PDOException $e) {
+        throw new Exception("Error deleting item ratings: " . $e->getMessage());
     }
     return 1;
 }

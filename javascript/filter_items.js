@@ -103,3 +103,37 @@ fetch('/templates/route.php?action=get-sizes')
 fetch('/templates/route.php?action=get-models')
     .then(response => response.json())
     .then(data => populateSelect('model-select', data));
+
+
+//don't allow duplicate categories
+document.addEventListener('DOMContentLoaded', () => {
+    const category1 = document.getElementById('category1');
+    const category2 = document.getElementById('category2');
+    const category3 = document.getElementById('category3');
+
+    function checkDuplicateCategories() {
+        const selectedCategories = [category1, category2, category3];
+        const uniqueCategories = new Set(selectedCategories.map(cat => cat.value).filter(cat => cat !== 'none'));
+
+        if (uniqueCategories.size !== selectedCategories.filter(cat => cat.value !== 'none').length) {
+            alert('You cannot select the same category more than once.');
+            selectedCategories.forEach(cat => {
+                if (cat.value !== 'none' && selectedCategories.filter(c => c.value === cat.value).length > 1) {
+                    cat.value = 'none'; // Reset the duplicated selection
+                }
+            });
+            return false;
+        }
+        return true;
+    }
+
+    category1.addEventListener('change', checkDuplicateCategories);
+    category2.addEventListener('change', checkDuplicateCategories);
+    category3.addEventListener('change', checkDuplicateCategories);
+
+    document.querySelector('form').addEventListener('submit', (event) => {
+        if (!checkDuplicateCategories()) {
+            event.preventDefault();
+        }
+    });
+});
