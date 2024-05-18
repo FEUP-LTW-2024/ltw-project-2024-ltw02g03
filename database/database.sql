@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 
     DROP TABLE IF EXISTS User;
     DROP TABLE IF EXISTS Item;
@@ -112,7 +112,7 @@
             ON DELETE CASCADE ON UPDATE NO ACTION
     );
 
-    CREATE TABLE Wishlist (
+        CREATE TABLE Wishlist (
         WishlistId INTEGER PRIMARY KEY AUTOINCREMENT ,
         UserId INT NOT NULL,
         ItemId INT NOT NULL,
@@ -155,7 +155,8 @@
     ItemId INTEGER,
     CategoryId INTEGER,
     FOREIGN KEY (ItemId) REFERENCES Item (ItemId) 
-            ON DELETE CASCADE ON UPDATE NO ACTION
+            ON DELETE CASCADE ON UPDATE NO ACTION,
+
     FOREIGN KEY (CategoryId) REFERENCES ProductCategory (CategoryId) 
             ON DELETE CASCADE ON UPDATE NO ACTION   
     );
@@ -231,7 +232,7 @@
     -- Inserir dados de exemplo na tabela User
     INSERT INTO User (UserId, FirstName, LastName, Username, Email, Password, Address, City, District, Country, PostalCode, Phone, ImageUrl, Admin)
     VALUES
-    (1, 'John', 'Doe', 'johndoe', 'johndoe@example.com', 'password123', '123 Main St', 'Anytown', 'Anydistrict', 'AnyCountry', '12345', '123-456-7890', 'uploads/user_3/Mortimer_Freeze (1).png', 0),
+    (1, 'John', 'Doe', 'johndoe', 'johndoe@example.com', 'password123', '123 Main St', 'Anytown', 'Anydistrict', 'AnyCountry', '12345', '123-456-7890', 'https://example.com/avatar3.jpg', 0),
     (2, 'Jane', 'Smith', 'janesmith', 'janesmith@example.com', 'password456', '456 Oak St', 'Othertown', 'Otherdistrict', 'OtherCountry', '54321', '987-654-3210', 'https://example.com/avatar2.jpg', 0),
     (3, 'Admin', 'Admin', 'admin', 'admin@example.com', '$2y$10$E/kh5qRzGdBofI4D3O1.L.Yc2vISpqjDKbZX2CSETRo57I8SVEgeG', '789 Elm St', 'Somewhere', 'Somedistrict', 'SomeCountry', '67890', '555-123-4567', '../database/uploads/user_3/Mortimer_Freeze (1).png', 1),
     (4, 'Maria', 'Silva', 'mariasilva', 'mariasilva@example.com', 'password789', '789 Elm St', 'Somewhere', 'Somedistrict', 'SomeCountry', '67890', '555-123-4567', 'https://example.com/avatar3.jpg', 0),
