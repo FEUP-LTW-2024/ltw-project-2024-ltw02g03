@@ -1,8 +1,12 @@
 <?php
-  declare(strict_types = 1);
+declare(strict_types = 1);
 
-  require_once(__DIR__ . '/../utils/session.php');
-  $session = new Session();
-  $session->logout();
+require_once(__DIR__ . '/../utils/session.php');
 
-  header('Location: /');?>
+$session = new Session();
+$session->addMessage('success', 'You have successfully logged out.'); 
+$session->logout();
+
+header('Location: /');  
+exit();  
+?>

@@ -16,13 +16,12 @@ if (!$session->isLoggedIn()) {
     exit();
 }
 
-// Verifique se o método da requisição é POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['item_id'])) {
-        // Handle adding item to cart and removing from wishlist
+
         $itemId = intval($_POST['item_id']);
         $userId = $session->getId();
-        //$wishlistItems = Wishlist::getItemsByUser($db, $userId);
+
         try {
             $lastId = Cart::insertItem($db, $userId, $itemId, 1); 
             

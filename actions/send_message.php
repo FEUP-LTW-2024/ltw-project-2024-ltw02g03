@@ -17,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             Communication::insertCommunication($db, $senderId, $receiverId, $itemId, $message);
             
-            // Após o envio bem-sucedido da mensagem, retorne um JSON com a mensagem enviada
             http_response_code(200);
             echo json_encode(["success" => true, "message" => "Mensagem enviada com sucesso!", "sentMessage" => $message]);
         } catch (Exception $e) {
@@ -26,13 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         exit;
     } else {
-        // Se o campo de mensagem estiver ausente, retorna um erro
         http_response_code(400);
         echo json_encode(["success" => false, "error" => "Erro: Campo de mensagem, ID do destinatário ou ID do item não encontrado na solicitação."]);
         exit;
     }
 } else {
-    // Se a solicitação não for POST, retorna um erro
     http_response_code(405);
     echo json_encode(["success" => false, "error" => "Erro: Método não permitido. Apenas solicitações POST são suportadas."]);
     exit;

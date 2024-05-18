@@ -15,39 +15,110 @@ $db = getDatabaseConnection();
 $user = User::getUser($db, $session->getId());
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Initialize an array to store the fields to be updated
     $fieldsToUpdate = [];
 
-    // Retrieve form data and add non-empty fields to the update array
     if (!empty($_POST['email'])) {
-        $fieldsToUpdate['Email'] = $_POST['email'];
+        if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            if (strlen($_POST['email']) <= 100) { 
+                $fieldsToUpdate['Email'] = $_POST['email'];
+            } else {
+                $session->addMessage('error', 'Email must not exceed 100 characters');
+                header('Location: ../pages/profilepage.php');
+                exit();
+            }
+        } else {
+            $session->addMessage('error', 'Invalid email format');
+            header('Location: ../pages/profilepage.php');
+            exit();
+        }
     }
+    
     if (!empty($_POST['username'])) {
-        $fieldsToUpdate['Username'] = $_POST['username'];
+        if (preg_match('/^[a-zA-ZÀ-ÖØ-öø-ÿ\s-]{1,20}$/', $_POST['username'])) {
+            $fieldsToUpdate['Username'] = $_POST['username'];
+        } else {
+            $session->addMessage('error', 'Username must be 1-20 characters long');
+            header('Location: ../pages/profilepage.php');
+            exit();
+        }
     }
+    
     if (!empty($_POST['firstName'])) {
-        $fieldsToUpdate['FirstName'] = $_POST['firstName'];
+        if (preg_match('/^[a-zA-ZÀ-ÖØ-öø-ÿ\s-]{1,50}$/', $_POST['firstName'])) {
+            $fieldsToUpdate['FirstName'] = $_POST['firstName'];
+        } else {
+            $session->addMessage('error', 'Invalid first name format');
+            header('Location: ../pages/profilepage.php');
+            exit();
+        }
     }
+
     if (!empty($_POST['lastName'])) {
-        $fieldsToUpdate['LastName'] = $_POST['lastName'];
+        if (preg_match('/^[a-zA-ZÀ-ÖØ-öø-ÿ\s-]{1,50}$/', $_POST['lastName'])) {
+            $fieldsToUpdate['LastName'] = $_POST['lastName'];
+        } else {
+            $session->addMessage('error', 'Invalid last name format');
+            header('Location: ../pages/profilepage.php');
+            exit();
+        }
     }
     if (!empty($_POST['address'])) {
-        $fieldsToUpdate['Address'] = $_POST['address'];
+        if(preg_match('/^[a-zA-Z0-9À-ÖØ-öø-ÿ\s,º.\'-]{1,100}$/', $_POST['address'])) {
+            $fieldsToUpdate['Address'] = $_POST['address'];
+        } else {
+            $session->addMessage('error', 'Invalid address format');
+            header('Location: ../pages/profilepage.php');
+            exit();
+        }
     }
     if (!empty($_POST['city'])) {
-        $fieldsToUpdate['City'] = $_POST['city'];
+        if (preg_match('/^[a-zA-ZÀ-ÖØ-öø-ÿ\s-]{1,50}$/', $_POST['city'])) {
+            $fieldsToUpdate['City'] = $_POST['city'];
+        } else {
+            $session->addMessage('error', 'Invalid city format');
+            header('Location: ../pages/profilepage.php');
+            exit();
+        }
     }
+
     if (!empty($_POST['district'])) {
-        $fieldsToUpdate['District'] = $_POST['district'];
+        if (preg_match('/^[a-zA-ZÀ-ÖØ-öø-ÿ\s-]{1,50}$/', $_POST['district'])) {
+            $fieldsToUpdate['District'] = $_POST['district'];
+        } else {
+            $session->addMessage('error', 'Invalid district format');
+            header('Location: ../pages/profilepage.php');
+            exit();
+        }
     }
+
     if (!empty($_POST['country'])) {
-        $fieldsToUpdate['Country'] = $_POST['country'];
+        if (preg_match('/^[a-zA-ZÀ-ÖØ-öø-ÿ\s-]{1,50}$/', $_POST['country'])) {
+            $fieldsToUpdate['Country'] = $_POST['country'];
+        } else {
+            $session->addMessage('error', 'Invalid country format');
+            header('Location: ../pages/profilepage.php');
+            exit();
+        }
     }
+
     if (!empty($_POST['postalCode'])) {
-        $fieldsToUpdate['PostalCode'] = $_POST['postalCode'];
+        if (preg_match('/^\d{4}-\d{3}$/', $_POST['postalCode'])) {
+            $fieldsToUpdate['PostalCode'] = $_POST['postalCode'];
+        } else {
+            $session->addMessage('error', 'Invalid postal code format');
+            header('Location: ../pages/profilepage.php');
+            exit();
+        }
     }
+
     if (!empty($_POST['phone'])) {
-        $fieldsToUpdate['Phone'] = $_POST['phone'];
+        if (preg_match('/^(\d{9}|\+\d{12})$/', $_POST['phone'])) {
+            $fieldsToUpdate['Phone'] = $_POST['phone'];
+        } else {
+            $session->addMessage('error', 'Invalid phone number format');
+            header('Location: ../pages/profilepage.php');
+            exit();
+        }
     }
     
     if (!empty($_FILES['images']['name'][0])) {
@@ -61,7 +132,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $file_type = $_FILES['images']['type'][$key];
                 
                 if ($file_type == 'image/jpeg' || $file_type == 'image/png') {
-                    // Generate directory for the user if not exists
                     $userFolder = $uploadDirectory . 'user_' . $user->userId . '/';
                     if (!file_exists($userFolder)) {
                         mkdir($userFolder, 0777, true);
@@ -70,7 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $targetFile = $userFolder . $file_name;
                     
                     if (move_uploaded_file($file_tmp, $targetFile)) {
-                        // Delete old profile picture from database if exists
+
                         if (!empty($user->imageUrl)) {
                             unlink($user->imageUrl);
                         }
@@ -85,31 +155,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Other form data processing goes here...
     
-    // Update user's profile if there are fields to be updated
     if (!empty($fieldsToUpdate)) {
-        // Construct the SET part of the SQL query dynamically
         $setClause = '';
         foreach ($fieldsToUpdate as $field => $value) {
             $setClause .= "$field = :$field, ";
         }
-        // Remove the trailing comma and space
         $setClause = rtrim($setClause, ', ');
 
-        // Prepare and execute the SQL update query
         $sql = "UPDATE User SET $setClause WHERE UserId = :userId";
         $stmt = $db->prepare($sql);
 
         if ($stmt) {
-            // Bind parameters
+            
             foreach ($fieldsToUpdate as $field => &$value) {
                 $stmt->bindParam(":$field", $value);
             }
-            // Bind UserId
             $stmt->bindParam(':userId', $user->userId);
 
-            // Execute the query
             if ($stmt->execute()) {
                 $session->addMessage('success', 'Profile updated successfully');
                 header('Location: ../pages/profilepage.php');

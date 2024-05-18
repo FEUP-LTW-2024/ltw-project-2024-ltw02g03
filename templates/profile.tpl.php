@@ -229,85 +229,87 @@ function drawProfile(Session $session, $db)
 
 
                 <div id="edit-profile-section" style="display: none;">
-                <form class="profile-edit" action="/actions/action_editprofile.php" method="post" enctype="multipart/form-data">
+                    <form class="profile-edit" action="/actions/action_editprofile.php" method="post" enctype="multipart/form-data">
                         <h1>User</h1>
                         <div class="input-group">
-                        <label class="image-input">
-                        <input name="images[]" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple onchange="previewImages(event,1)">
+                            <label class="image-input">
+                                <input name="images[]" type="file" accept="image/heic, image/png, image/jpeg, image/webp" multiple onchange="previewImages(event,1)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
                                 <img class="preview-image" id="preview-image-1" src="" alt="">
                             </label>
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="<?= $user->email ?>">
+                            <input type="email" id="email" name="email" placeholder="<?= $user->email ?>" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" title="Enter a valid email address.">
                         </div>
                         <div class="input-group">
                             <label for="username">Username</label>
-                            <input type="text" id="username" name="username" placeholder="<?= $user->username ?>">
+                            <input type="text" id="username" name="username" placeholder="<?= $user->username ?>" pattern="^[a-zA-Z0-9_]{3,20}$" title="Username should be 3-20 characters long and can include letters, numbers, and underscores.">
                         </div>
                         <div class="name-group">
                             <div class="input-group">
                                 <label for="first-name">First Name</label>
-                                <input type="text" id="first-name" name="firstName" placeholder="<?= $user->firstName ?>">
+                                <input type="text" id="first-name" name="firstName" placeholder="<?= $user->firstName ?>" pattern="^[a-zA-ZÀ-ÖØ-öø-ÿ\s'-]{1,50}$" title="First name should only contain letters and be 1-50 characters long.">
                             </div>
                             <div class="input-group">
                                 <label for="last-name">Last Name</label>
-                                <input type="text" id="last-name" name="lastName" placeholder="<?= $user->lastName ?>">
+                                <input type="text" id="last-name" name="lastName" placeholder="<?= $user->lastName ?>" pattern="^[a-zA-ZÀ-ÖØ-öø-ÿ\s'-]{1,50}$" title="Last name should only contain letters and be 1-50 characters long.">
                             </div>
                         </div>
                         <div class="location-group">
                             <h1>Location</h1>
                             <div class="input-group">
                                 <label for="address">Address</label>
-                                <input type="text" id="address" name="address" placeholder="<?= $user->address ?>">
+                                <input type="text" id="address" name="address" placeholder="<?= $user->address ?>" pattern="^[a-zA-Z0-9À-ÖØ-öø-ÿ\s,º.'-]{1,100}$" title="Address can contain letters, numbers, and symbols like comma, dot, apostrophe, and hyphen.">
                             </div>
                             <div class="input-group">
                                 <label for="city">City</label>
-                                <input type="text" id="city" name="city" placeholder="<?= $user->city ?>">
+                                <input type="text" id="city" name="city" placeholder="<?= $user->city ?>" pattern="^[a-zA-ZÀ-ÖØ-öø-ÿ\s'-]{1,50}$" title="City should only contain letters and be 1-50 characters long.">
                             </div>
                             <div class="input-group">
                                 <label for="district">District</label>
-                                <input type="text" id="district" name="district" placeholder="<?= $user->district ?>">
+                                <input type="text" id="district" name="district" placeholder="<?= $user->district ?>" pattern="^[a-zA-ZÀ-ÖØ-öø-ÿ\s'-]{1,50}$" title="District should only contain letters and be 1-50 characters long.">
                             </div>
                             <div class="input-group">
                                 <label for="country">Country</label>
-                                <input type="text" id="country" name="country" placeholder="<?= $user->country ?>">
+                                <input type="text" id="country" name="country" placeholder="<?= $user->country ?>" pattern="^[a-zA-ZÀ-ÖØ-öø-ÿ\s'-]{1,50}$" title="Country should only contain letters and be 1-50 characters long.">
                             </div>
                             <div class="input-group">
                                 <label for="postal-code">Postal Code</label>
-                                <input type="text" id="postal-code" name="postalCode" placeholder="<?= $user->postalCode ?>">
+                                <input type="text" id="postal-code" name="postalCode" placeholder="<?= $user->postalCode ?>" pattern="^\d{4}-\d{3}$" title="Postal code should be in the format dddd-ddd.">
                             </div>
                             <div class="input-group">
                                 <label for="phone">Phone Number</label>
-                                <input type="tel" id="phone" name="phone" placeholder="<?= $user->phone ?>">
+                                <input type="tel" id="phone" name="phone" placeholder="<?= $user->phone ?>" pattern="^\+?\d{9,12}$" title="Phone number should be 9 digits long, or up to 12 digits if including an optional leading +.">
                             </div>
                         </div>
-                        
                         <div id="flex-login-regis">
                             <button type="submit">Change</button>
                         </div>
                     </form>
                 </div>
 
+
+
                 <div id="change-password" style="display: none;">
                     <form class="profile-edit" action="../actions/action_change_password.php" method="post">
                         <h1>Change Password</h1>
                         <div class="input-group">
                             <label for="current-password">Current Password</label>
-                            <input type="password" id="current-password" name="currentPassword" required>
+                            <input type="password" id="current-password" name="currentPassword" required pattern=".{6,}" title="Current password should be at least 6 characters long.">
                         </div>
                         <div class="input-group">
                             <label for="new-password">New Password</label>
-                            <input type="password" id="new-password" name="newPassword" required>
+                            <input type="password" id="new-password" name="newPassword" required pattern=".{6,}" title="New password should be at least 6 characters long.">
                         </div>
                         <div class="input-group">
                             <label for="confirm-password">Confirm New Password</label>
-                            <input type="password" id="confirm-password" name="confirmPassword" required>
+                            <input type="password" id="confirm-password" name="confirmPassword" required pattern=".{6,}" title="Confirmation password should be at least 6 characters long.">
                         </div>
                         <div id="flex-login-regis">
                             <button type="submit">Change Password</button>
                         </div>
                     </form>
                 </div>
+
 
 
                 <div id="admin-section" style="display: none;">
