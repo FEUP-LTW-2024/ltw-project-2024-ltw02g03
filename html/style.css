@@ -1347,10 +1347,12 @@ select {
 .reviews-container {
     display: flex;
     gap: 20px;
+    width: 100%;
 }
 
 .reviews-column {
     flex: 1;
+    width: 40%;
 }
 
 .review-item {
@@ -1362,6 +1364,7 @@ select {
     max-height: 10em; 
     overflow: hidden; 
     background-color: wheat;
+    
 }
 
 .item-image {
@@ -1453,6 +1456,13 @@ select {
     }
     #post {
         font-size: 80%;
+    }
+    .reviews-container {
+        flex-direction: column;
+        font-size: 80%;
+    }
+    .reviews-column {
+        width: 100%;
     }
 }
 
@@ -1586,9 +1596,7 @@ select {
         font-size: 80%;
     }
 
-    .reviews-container {
-        flex-direction: column;
-    }
+    
     #index-product {
         font-size: 60%;
         margin: 0.2em;

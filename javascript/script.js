@@ -128,3 +128,10 @@ function scrollMessagesToBottom() {
 window.onload = function() {
   scrollMessagesToBottom();
 };
+
+function updateCharacterCount() {
+    const textarea = document.getElementById('description-input');
+    const charCount = document.getElementById('charCount');
+    const remaining = 40 - textarea.value.length;
+    charCount.textContent = `${remaining} characters remaining`;
+}
