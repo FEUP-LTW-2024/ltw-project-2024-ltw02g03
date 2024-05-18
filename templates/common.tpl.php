@@ -218,14 +218,10 @@ function drawHeader(Session $session, $db) { ?>
     $maxPagesToShow = 5;
 
     $startPage = max(1, $currentPage - floor($maxPagesToShow / 2));
-    var_dump($startPage);
     $endPage = min($totalPages, $startPage + $maxPagesToShow - 1);
-    var_dump($endPage);
 
     $adjustment = $maxPagesToShow - ($endPage - $startPage + 1);
-    var_dump($adjustment);
     $startPage = max(1, $startPage - $adjustment);
-    var_dump($startPage);
     ?>
     <section id="recomended">
         <h1>All products</h1>  
