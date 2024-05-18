@@ -91,6 +91,12 @@ function drawPost(Session $session, $db, int $itemId) {
                                     <button type="submit" class="cart-button-post">Add to Cart</button> 
                                 </form>
                             <?php } ?>
+                            <?php if ($session->isLoggedIn()) { ?>
+                                <form action="../actions/add_to_wishlist.php" method="post">
+                                    <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
+                                    <button type="submit" class="cart-button-post">Add to Wishlist</button>
+                                 </form>
+                            <?php } ?>
 
 
                             

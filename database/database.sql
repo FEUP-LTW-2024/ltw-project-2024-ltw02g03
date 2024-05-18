@@ -112,6 +112,16 @@
             ON DELETE CASCADE ON UPDATE NO ACTION
     );
 
+    CREATE TABLE Wishlist (
+        WishlistId INTEGER PRIMARY KEY AUTOINCREMENT ,
+        UserId INT NOT NULL,
+        ItemId INT NOT NULL,
+        FOREIGN KEY (UserId) REFERENCES Users(UserId)
+           ON DELETE CASCADE ON UPDATE NO ACTION,
+        FOREIGN KEY (ItemId) REFERENCES Item(ItemId)
+          ON DELETE CASCADE ON UPDATE NO ACTION
+);
+
     -- Communication Table
     CREATE TABLE Communication
     (
