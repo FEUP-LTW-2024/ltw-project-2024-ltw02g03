@@ -317,7 +317,7 @@ header li a {
     display: block;
     background-color: white;
     padding: 2em;
-    max-width: 18em;
+    width: 18em;
 }
 
 form.add-to-cart-form {
@@ -804,8 +804,8 @@ body {
     grid-row: 2 / 3;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     
+    height: fit-content;
     padding: 1em;
     margin: 1em;
     background-color: rgb(194, 226, 255);
@@ -1564,6 +1564,9 @@ select {
         width: 30em;
         height: 50em;
         object-fit: cover;
+    }
+    .form-log{
+        font-size: 80%;
     }
 }
 
