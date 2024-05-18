@@ -174,16 +174,9 @@ header li a {
     background-color: rgb(230, 230, 230);
     border-radius: 10em;
 }
- /*   
-#profile-button:hover + #login-register-anchor{
-    display: inline-block;
-}
 
-#login-register-anchor.visible , #logout-anchor.visible {
-    display: inline-block;
-}*/
 
-#index-products {
+.index-products {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -191,11 +184,11 @@ header li a {
     justify-content: center;
     overflow: hidden;
 } 
-#index-products h2 {
+.index-products h2 {
     max-height: 1em;
     overflow: hidden;
 }
-#index-products h1 {
+.index-products h1 {
     overflow: hidden;
     max-height: 1em;
 }
