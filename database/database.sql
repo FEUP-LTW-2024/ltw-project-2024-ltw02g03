@@ -1,4 +1,4 @@
-﻿﻿
+﻿
 
     DROP TABLE IF EXISTS User;
     DROP TABLE IF EXISTS Item;
@@ -319,11 +319,11 @@
     -- Inserir dados de exemplo na tabela ProductImage
     INSERT INTO ProductImage(ImageId,ImageUrl)
     VALUES
-    (1, 'Docs/samsung-galaxy-s20-fe-5g-g781-128gb-dual-sim-lavanda.jpg'),
-    (2, 'Docs/1-nike-air-max-270.jpg'),
-    (3, 'Docs/Apple_16-inch-MacBook-Pro_111319_big.jpg.large.jpg'),
-    (4, 'Docs/sapatilhas-air-force-1-07-1nfJ59.jpg'),
-    (5, 'Docs/adidas-superstar-gore-tex-core-black-white-if6162-658e93bd76e79.jpg');
+    (1, 'database/uploads/item_1/samsung-galaxy-s20-fe-5g-g781-128gb-dual-sim-lavanda.jpg'),
+    (2, 'database/uploads/item_2/1-nike-air-max-270.jpg'),
+    (3, 'database/uploads/item_3/Apple_16-inch-MacBook-Pro_111319_big.jpg.large.jpg'),
+    (4, 'database/uploads/item_4/sapatilhas-air-force-1-07-1nfJ59.jpg'),
+    (5, 'database/uploads/item_5/adidas-superstar-gore-tex-core-black-white-if6162-658e93bd76e79.jpg');
 
     -- Inserir dados de exemplo na tabela Payment
     INSERT INTO Payment (PaymentId, BuyerId, SellerId, ItemId, Address, City, District, Country, PostalCode, PaymentDate)
