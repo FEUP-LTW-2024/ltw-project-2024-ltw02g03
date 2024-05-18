@@ -92,9 +92,14 @@ function drawHeader(Session $session, $db) { ?>
                     <li>
                         <a id="logout-anchor" href="/pages/postcreation.php">Publish Item</a>
                     </li>
+                     <li>
+                        <a id="logout-anchor" href="/pages/wishlist.php">Wish List</a>
+                    </li>
                     <li>
                         <a id="logout-anchor" href="/actions/action_logout.php">Logout</a>
                     </li>
+
+                   
                 </ul>
                 
                 
