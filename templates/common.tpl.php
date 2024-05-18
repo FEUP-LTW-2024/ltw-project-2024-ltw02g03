@@ -176,15 +176,13 @@ function drawHeader(Session $session, $db) { ?>
 
 
 
-<?php function drawBody(Session $session, $db) { ?>
+    <?php function drawBody(Session $session, $db) { ?>
     <main>
         <div class="container">
             <img id="home-imge" src="https://live.staticflickr.com/7023/6806424715_4c1cb053ef_o.jpg" alt="">
             <header>
                 <h1 id="home-welcome">Welcome to <span id="ecox-home">EcoExchange</span></h1>
             </header>
-            
-            
         </div>
     
     <?php
@@ -195,24 +193,39 @@ function drawHeader(Session $session, $db) { ?>
     if($session->isLoggedIn()) {
         $cartItems= Cart::getItemsByUser($db, $myId);
     
-    foreach ($items as $item) {
-        $foundInCart = false;
-        foreach ($cartItems as $cartItem) {
-            if ($item->itemId === $cartItem->itemId) {
-                $foundInCart = true;
-                break;
+        foreach ($items as $item) {
+            $foundInCart = false;
+            foreach ($cartItems as $cartItem) {
+                if ($item->itemId === $cartItem->itemId) {
+                    $foundInCart = true;
+                    break;
+                }
+            }
+            if (!$foundInCart) {
+                $itemsToDisplay[] = $item;
             }
         }
-        if (!$foundInCart) {
-            $itemsToDisplay[] = $item;
-        }
-    }
     } else {
         $itemsToDisplay = $items;
     }
     $limit = $itemsToDisplay ? count($itemsToDisplay) : 0;
-    $itemsPerPage =12;
+    $itemsPerPage = 12;
     $currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
+    
+    $totalPages = ceil($limit / $itemsPerPage);
+
+    
+    $maxPagesToShow = 5;
+
+    $startPage = max(1, $currentPage - floor($maxPagesToShow / 2));
+    var_dump($startPage);
+    $endPage = min($totalPages, $startPage + $maxPagesToShow - 1);
+    var_dump($endPage);
+
+    $adjustment = $maxPagesToShow - ($endPage - $startPage + 1);
+    var_dump($adjustment);
+    $startPage = max(1, $startPage - $adjustment);
+    var_dump($startPage);
     ?>
     <section id="recomended">
         <h1>All products</h1>  
@@ -222,43 +235,27 @@ function drawHeader(Session $session, $db) { ?>
         </div>
         <div class="pagination">
             <?php
-            $totalPages = ceil(count($itemsToDisplay) / $itemsPerPage);
-            $maxPagesToShow = 5; 
-
-            $startPage = max(1, $currentPage - floor($maxPagesToShow / 2));
-            $endPage = min($totalPages, $startPage + $maxPagesToShow - 1);
-
-            $adjustment = $maxPagesToShow - ($endPage - $startPage + 1);
-            $startPage = max(1, $startPage - $adjustment);
-
             if ($currentPage > 1) {
                 echo "<a href='?page=1'>&laquo;&laquo;</a>";
-            }
-
-            if ($currentPage > 1) {
                 echo "<a href='?page=" . ($currentPage - 1) . "'>&laquo;</a>";
             }
-
-            for ($i = $startPage; $i <= $endPage; $i++) {
+            
+            for ($i = (int)$startPage; $i <= (int)$endPage; $i++) {
                 $activeClass = ($i === $currentPage) ? 'active' : '';
                 echo "<a href='?page=$i' class='$activeClass'>$i</a>";
             }
 
             if ($currentPage < $totalPages) {
                 echo "<a href='?page=" . ($currentPage + 1) . "'>&raquo;</a>";
-            }
-
-            if ($currentPage < $totalPages) {
                 echo "<a href='?page=$totalPages'>&raquo;&raquo;</a>";
             }
             ?>
         </div>
-
     </section>
     </main>
-
     
 <?php } ?>
+
 
 <?php function drawFooter() { ?>
     
