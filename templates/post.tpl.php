@@ -22,23 +22,15 @@ function drawPost(Session $session, $db, int $itemId) {
         $userId = $session->getId();
 
         $condition = Item::getItemCondition($db, $itemId);
-        var_dump($condition);
-        echo "<br>";
+        
         $brand = Item::getItemBrand($db, $itemId);
-        var_dump($brand);    
-        echo "<br>";
+        
         $image = Item::getItemImage($db, $itemId);
-        var_dump($image);
-        echo "<br>";
+        
         $size = Item::getItemSize($db, $itemId);
-        var_dump($size);
-        echo "<br>";
+        
         $model = Item::getItemModel($db, $itemId);
-        var_dump($model);
-        echo "<br>";
-        $categories = Item::getCategoriesByItemId($db, $itemId);
-        var_dump($categories);
-        echo "<br>";
+        
         $sellerId = $item->sellerId;
         $user = User::getUser($db, $sellerId);
         $current_user=0;
