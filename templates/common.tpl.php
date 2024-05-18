@@ -246,7 +246,7 @@ function drawHeader(Session $session, $db) { ?>
 
 <?php function drawLogoutForm(Session $session) { ?>
 <form action="../actions/action_logout.php" method="post" class="logout">
-    <a href="../pages/profile.php"><?= $session->getName() ?></a>
+    <a href="../pages/profilepage.php"><?= $session->getName() ?></a>
     <button type="submit">Logout</button>
 </form>
 <?php } ?>

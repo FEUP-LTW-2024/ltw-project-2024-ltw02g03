@@ -22,7 +22,6 @@ if (isset($_POST['createBrand'])) {
     header('Location: /../pages/profilepage.php');
 }
 
-// Verifique se um formulário para criar uma nova condição foi enviado
 if (isset($_POST['createCondition'])) {
     $db = getDatabaseConnection();
     $conditionName = $_POST['conditionName'];
@@ -40,7 +39,6 @@ if (isset($_POST['createCondition'])) {
 
 }
 
-// Verifique se um formulário para criar um novo tamanho foi enviado
 if (isset($_POST['createSize'])) {
     $db = getDatabaseConnection();
     $sizeName = $_POST['sizeName'];

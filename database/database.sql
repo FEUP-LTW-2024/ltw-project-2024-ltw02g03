@@ -14,6 +14,8 @@
     DROP TABLE IF EXISTS ItemImage;
     DROP TABLE IF EXISTS ProductImage;
     DROP TABLE IF EXISTS Review;
+    DROP TABLE IF EXISTS Wishlist;
+
 
 
 

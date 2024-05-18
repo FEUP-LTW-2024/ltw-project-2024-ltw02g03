@@ -56,10 +56,10 @@ function removeCategory($db) {
 
         if ($result==0) {
             $session->addMessage('success', 'Category removed successfully!');
-            header('Location: /pages/profile.php');
+            header('Location: /pages/profilepage.php');
         } else {
             $session->addMessage('error', 'Error removing category!');
-            header('Location: /pages/profile.php');
+            header('Location: /pages/profilepage.php');
         }
     }
     header('Location: /../pages/profilepage.php');
