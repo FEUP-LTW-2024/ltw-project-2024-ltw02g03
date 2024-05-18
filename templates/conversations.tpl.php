@@ -12,7 +12,7 @@ function drawConversations(Session $session, $db) {
     echo "<h1>" . htmlentities("Conversas Ativas") . "</h1>";
     echo "<ul>";
     if(empty($conversations)) {
-        echo "<h2>No open conversations</h2>";
+        echo "<li>No open conversations</li>";
     }
     foreach (array_reverse($conversations) as $conversation) {
         $otherUserId = ($userId == $conversation['senderId']) ? $conversation['receiverId'] : $conversation['senderId'];

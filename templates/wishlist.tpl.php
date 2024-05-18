@@ -73,7 +73,7 @@ function drawWishlist(Session $session, $db)
                     </div>
             
                         <!-- You can add a button here for further actions -->
-                    </div>
+                    
                 </section>
             </main>
             <?php

@@ -175,11 +175,10 @@ function drawPostCreation($session, $db) {
                         Product Name <input id="productname-input" type="text" name="productname" required pattern=".{5,50}" title="Product name must be between 5 and 50 characters long">
                     </label>
                     <label>
-                        Price  
-                        <div>
-                            <input id="price-input" type="number" name="price" min="0" step="0.01" required><span class="currency-symbol">€</span>
-                        </div>
+                        Price      
                     </label>
+                    <input id="price-input" type="number" name="price" min="0" step="0.01" required><span class="currency-symbol">€</span>
+                        
                 </div>
                 <div class="publish-div">
                     <label>
@@ -190,7 +189,7 @@ function drawPostCreation($session, $db) {
                 <div class="publish-div">
                     <label for="model">Model
                         <select name="model" id="model" class="publish-select">
-                        <option></option>
+                        <option>- None -</option>
                             <?php 
                             $models = Item::getModels($db);
                             foreach($models as $model) {
@@ -201,7 +200,7 @@ function drawPostCreation($session, $db) {
                     </label>
                     <label for="brand">Brand
                         <select name="brand" id="brand" class="publish-select">
-                        <option></option>
+                        <option>- None -</option>
                             <?php 
                             $brands = Item::getBrands($db);
                             foreach($brands as $brand) {
@@ -245,25 +244,25 @@ function drawPostCreation($session, $db) {
                         <label class="image-input">
                             <input name="images[]" type="file" accept="image/png, image/jpeg" multiple onchange="previewImages(event, 0)">
                             <svg class="svg-cam" xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
-                            <img class="preview-image" id="preview-image-0" src="" alt="">
+                            <img class="preview-image" id="preview-image-0" src="waitforimage" alt="">
                         </label>
 
                         <label class="image-input">
                             <input name="images[]" type="file" accept="image/png, image/jpeg" multiple onchange="previewImages(event,1)">
                             <svg class="svg-cam" xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
-                            <img class="preview-image" id="preview-image-1" src="" alt="">
+                            <img class="preview-image" id="preview-image-1" src="waitforimage" alt="">
                         </label>
 
                         <label class="image-input">
                             <input name="images[]" type="file" accept="image/png, image/jpeg" multiple onchange="previewImages(event,2)">
                             <svg class="svg-cam" xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
-                            <img class="preview-image" id="preview-image-2" src="" alt="">
+                            <img class="preview-image" id="preview-image-2" src="waitforimage" alt="">
                         </label>
 
                         <label class="image-input">
                             <input name="images[]" type="file" accept="image/png, image/jpeg" multiple onchange="previewImages(event,3)">
                             <svg class="svg-cam" xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 32 32"><path fill="currentColor" d="M29 26H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6.46l1.71-2.55A1 1 0 0 1 12 4h8a1 1 0 0 1 .83.45L22.54 7H29a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1M4 24h24V9h-6a1 1 0 0 1-.83-.45L19.46 6h-6.92l-1.71 2.55A1 1 0 0 1 10 9H4Z"/><path fill="currentColor" d="M16 22a6 6 0 1 1 6-6a6 6 0 0 1-6 6m0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4"/></svg>
-                            <img class="preview-image" id="preview-image-3" src="" alt="">
+                            <img class="preview-image" id="preview-image-3" src="waitforimage" alt="">
                         </label>
                         
                     </div>
