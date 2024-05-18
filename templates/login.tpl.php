@@ -6,30 +6,40 @@ require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/user.class.php');
 
-function drawLoginForm(Session $session,$db) { ?>
+function drawLoginForm(Session $session, $db) { ?>
     <main>
         <section id="login">
             <h1>Login</h1>
-            <form class="form-log" action="../actions/action_login.php" method="post"> 
+            <form class="form-log" action="../actions/action_login.php" method="post">
                 <label>
                     Email <input type="email" name="email" required title="Please enter a valid email address.">
                 </label>
                 <label>
-                    Password <input type="password" name="password" required pattern="^(?=.*[!@#$%^&*])(?=.*[A-Z])[a-zA-Z0-9!?@#$%^&*]{6,}$" title="Password should be at least 6 characters long and contain at least one special character, one uppercase letter, and may contain the '?' symbol.">
+                    Password
+                    <div class="password-wrapper">
+                        <input type="password" name="password" id="login-password" required pattern="^(?=.*[!@#$%^&*?])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*?]{6,}$" title="Password should be at least 6 characters long and contain at least one special character, one uppercase letter, and may contain the '?' symbol.">
+                        <span class="toggle-password" onclick="togglePasswordVisibility('login-password')">
+                            <svg class="eye-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 12C1 12 5 3 12 3C19 3 23 12 23 12C23 12 19 21 12 21C5 21 1 12 1 12Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="12" r="3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <svg class="eye-closed" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+                                <path d="M1 12C1 12 5 3 12 3C19 3 23 12 23 12C23 12 19 21 12 21C5 21 1 12 1 12Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <line x1="1" y1="1" x2="23" y2="23" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </div>
                 </label>
                 <div id="flex-login-regis">
                     <button type="submit">Login</button>
-                    <a href="register.php">Register</a>  
+                    <a href="register.php">Register</a>
                 </div>
             </form>
-
         </section>
     </main>
 <?php } ?>
 
-
-
-<?php function drawRegisterForm(Session $session, $db) { ?>   
+<?php function drawRegisterForm(Session $session, $db) { ?>
 <main>
     <section id="login">
         <h1>Register</h1>
@@ -84,19 +94,43 @@ function drawLoginForm(Session $session,$db) { ?>
                 <h1>Password</h1>
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required pattern="^(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$" title="Password should be at least 6 characters long and contain at least one special character.">
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" required pattern="^(?=.*[!@#$%^&*?])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*?]{6,}$" title="Password should be at least 6 characters long and contain at least one special character, one uppercase letter, and may contain the '?' symbol.">
+                        <span class="toggle-password" onclick="togglePasswordVisibility('password')">
+                            <svg class="eye-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 12C1 12 5 3 12 3C19 3 23 12 23 12C23 12 19 21 12 21C5 21 1 12 1 12Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="12" r="3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <svg class="eye-closed" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+                                <path d="M1 12C1 12 5 3 12 3C19 3 23 12 23 12C23 12 19 21 12 21C5 21 1 12 1 12Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <line x1="1" y1="1" x2="23" y2="23" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </div>
                 </div>
                 <div class="input-group">
                     <label for="repeat-password">Repeat Password</label>
-                    <input type="password" id="repeat-password" name="repeat_password" required pattern="^(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$" title="Password should be at least 6 characters long and contain at least one special character.">
+                    <div class="password-wrapper">
+                        <input type="password" id="repeat-password" name="repeat_password" required pattern="^(?=.*[!@#$%^&*?])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*?]{6,}$" title="Password should be at least 6 characters long and contain at least one special character, one uppercase letter, and may contain the '?' symbol.">
+                        <span class="toggle-password" onclick="togglePasswordVisibility('repeat-password')">
+                            <svg class="eye-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 12C1 12 5 3 12 3C19 3 23 12 23 12C23 12 19 21 12 21C5 21 1 12 1 12Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="12" r="3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <svg class="eye-closed" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+                                <path d="M1 12C1 12 5 3 12 3C19 3 23 12 23 12C23 12 19 21 12 21C5 21 1 12 1 12Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <line x1="1" y1="1" x2="23" y2="23" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </div>
                 </div>
             </div>
+
             <div id="flex-login-regis">
                 <button type="submit">Register</button>
-                <a href="login.php">Login</a>  
+                <a href="login.php">Login</a>
             </div>
         </form>
     </section>
 </main>
 <?php } ?>
-

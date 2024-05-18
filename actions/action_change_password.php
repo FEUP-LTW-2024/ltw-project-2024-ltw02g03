@@ -5,8 +5,7 @@ require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../database/user.class.php');
 require_once(__DIR__ . '/../database/connection.db.php');
 
-// Start the session
-session_start();
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $session = new Session();
@@ -17,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $newPassword = $_POST['newPassword'] ?? '';
     $confirmPassword = $_POST['confirmPassword'] ?? '';
 
-    $passwordPattern = '/^(?=.*[!@#$%^&*])(?=.*[A-Z])[a-zA-Z0-9!?@#$%^&*]{6,}$/';
+    $passwordPattern = '/^(?=.*[!@#$%^&*?])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*?]{6,}$/';
     if (!preg_match($passwordPattern, $currentPassword) || !preg_match($passwordPattern, $newPassword) || !preg_match($passwordPattern, $confirmPassword)) {
         $session->addMessage('error', 'Passwords must be at least 6 characters long and contain at least one special character and one uppercase letter');
         header('Location: ../pages');

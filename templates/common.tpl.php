@@ -16,7 +16,7 @@ function drawHeader(Session $session, $db) { ?>
         <title>EcoExhange</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../html/style.css">
+        <link rel="stylesheet" href="../css/style.css">
         <link rel="icon" href="../Docs/img/Eco.png" type="image/png">
         
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.css">
@@ -211,7 +211,7 @@ function drawHeader(Session $session, $db) { ?>
         $itemsToDisplay = $items;
     }
     $limit = $itemsToDisplay ? count($itemsToDisplay) : 0;
-    $itemsPerPage = 2;
+    $itemsPerPage =12;
     $currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
     ?>
     <section id="recomended">
@@ -220,14 +220,40 @@ function drawHeader(Session $session, $db) { ?>
         <div id="index-products">
             <?php drawProducts($session, $db, $itemsPerPage, $itemsToDisplay, $currentPage); ?>
         </div>
-        <div class="pagination"><?php
+        <div class="pagination">
+            <?php
             $totalPages = ceil(count($itemsToDisplay) / $itemsPerPage);
+            $maxPagesToShow = 5; 
 
-            for ($i = 1; $i <= $totalPages; $i++) {
+            $startPage = max(1, $currentPage - floor($maxPagesToShow / 2));
+            $endPage = min($totalPages, $startPage + $maxPagesToShow - 1);
+
+            $adjustment = $maxPagesToShow - ($endPage - $startPage + 1);
+            $startPage = max(1, $startPage - $adjustment);
+
+            if ($currentPage > 1) {
+                echo "<a href='?page=1'>&laquo;&laquo;</a>";
+            }
+
+            if ($currentPage > 1) {
+                echo "<a href='?page=" . ($currentPage - 1) . "'>&laquo;</a>";
+            }
+
+            for ($i = $startPage; $i <= $endPage; $i++) {
                 $activeClass = ($i === $currentPage) ? 'active' : '';
                 echo "<a href='?page=$i' class='$activeClass'>$i</a>";
             }
-        ?></div>
+
+            if ($currentPage < $totalPages) {
+                echo "<a href='?page=" . ($currentPage + 1) . "'>&raquo;</a>";
+            }
+
+            if ($currentPage < $totalPages) {
+                echo "<a href='?page=$totalPages'>&raquo;&raquo;</a>";
+            }
+            ?>
+        </div>
+
     </section>
 
     
@@ -259,13 +285,14 @@ function drawProducts(Session $session, $db, int $itemsPerPage, $itemsToDisplay,
         
         $myId = $session->getId();
         if ($pagedItems) {
-            foreach($pagedItems as $row) { // Aqui deve ser $pagedItems em vez de $itemsToDisplay
+            foreach($pagedItems as $row) { 
                 $ownerId = $row->sellerId;
                 
                 
                 $condition = Item::getItemCondition($db, $row->itemId);
                 $brand = Item::getItemBrand($db, $row->itemId);            
                 $image = Item::getItemImage($db, $row->itemId);
+                
                 
                 ?>
                     <div id="index-products">

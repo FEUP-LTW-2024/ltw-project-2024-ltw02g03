@@ -28,12 +28,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $category2name = trim($_POST['category2'] ?? '');
     $category3name = trim($_POST['category3'] ?? '');
 
-    if (empty($productName) || $price <= 0 || empty($description)) {
-        $session->addMessage('error', 'Please fill in all required fields.');
+    $productNamePattern = '/^.{5,50}$/';
+    $descriptionPattern = '/^.{5,200}$/';
+
+    if (empty($productName) || $price <= 0 || empty($description) || 
+        !preg_match($productNamePattern, $productName) || !preg_match($descriptionPattern, $description)) {
+        $session->addMessage('error', 'Please fill in all required fields with valid data.');
         redirectToPostcreation();
         exit();
     }
-
     // Fetch related data
     $brand = $brandname ? Item::getItemBrandByName($db, $brandname) : null;
     $model = $modelname ? Item::getItemModelByName($db, $modelname) : null;
