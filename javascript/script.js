@@ -87,36 +87,41 @@ var imgIndex = 0; // Initial index
   });
   
   document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('payment_method').addEventListener('change', function() {
-        var paymentMethod = this.value;
-        
-        var allFields = document.querySelectorAll('#credit_card_fields input, #paypal_fields input');
-        allFields.forEach(function(field) {
-            field.removeAttribute('required');
+    var paymentMethodElement = document.getElementById('payment_method');
+    
+    if (paymentMethodElement) {
+        paymentMethodElement.addEventListener('change', function() {
+            var paymentMethod = this.value;
+            
+            var allFields = document.querySelectorAll('#credit_card_fields input, #paypal_fields input');
+            allFields.forEach(function(field) {
+                field.removeAttribute('required');
+            });
+            
+            if (paymentMethod === 'credit_card') {
+                document.getElementById('credit_card_fields').style.display = 'block';
+                document.getElementById('paypal_fields').style.display = 'none';
+                
+                var creditCardFields = document.querySelectorAll('#credit_card_fields input');
+                creditCardFields.forEach(function(field) {
+                    field.setAttribute('required', '');
+                });
+            } else if (paymentMethod === 'paypal') {
+                document.getElementById('credit_card_fields').style.display = 'none';
+                document.getElementById('paypal_fields').style.display = 'block';
+                
+                var paypalFields = document.querySelectorAll('#paypal_fields input');
+                paypalFields.forEach(function(field) {
+                    field.setAttribute('required', '');
+                });
+            } else {
+                document.getElementById('credit_card_fields').style.display = 'none';
+                document.getElementById('paypal_fields').style.display = 'none';
+            }
         });
-        
-        if (paymentMethod === 'credit_card') {
-            document.getElementById('credit_card_fields').style.display = 'block';
-            document.getElementById('paypal_fields').style.display = 'none';
-            
-            var creditCardFields = document.querySelectorAll('#credit_card_fields input');
-            creditCardFields.forEach(function(field) {
-                field.setAttribute('required', '');
-            });
-        } else if (paymentMethod === 'paypal') {
-            document.getElementById('credit_card_fields').style.display = 'none';
-            document.getElementById('paypal_fields').style.display = 'block';
-            
-            var paypalFields = document.querySelectorAll('#paypal_fields input');
-            paypalFields.forEach(function(field) {
-                field.setAttribute('required', '');
-            });
-        } else {
-            document.getElementById('credit_card_fields').style.display = 'none';
-            document.getElementById('paypal_fields').style.display = 'none';
-        }
-    });
+    }
 });
+
 
 // Function to scroll the messages container to the bottom
 function scrollMessagesToBottom() {

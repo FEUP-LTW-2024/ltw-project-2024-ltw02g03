@@ -174,16 +174,9 @@ header li a {
     background-color: rgb(230, 230, 230);
     border-radius: 10em;
 }
- /*   
-#profile-button:hover + #login-register-anchor{
-    display: inline-block;
-}
 
-#login-register-anchor.visible , #logout-anchor.visible {
-    display: inline-block;
-}*/
 
-#index-products {
+.index-products {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -191,11 +184,11 @@ header li a {
     justify-content: center;
     overflow: hidden;
 } 
-#index-products h2 {
+.index-products h2 {
     max-height: 1em;
     overflow: hidden;
 }
-#index-products h1 {
+.index-products h1 {
     overflow: hidden;
     max-height: 1em;
 }
@@ -317,7 +310,7 @@ header li a {
     display: block;
     background-color: white;
     padding: 2em;
-    max-width: 18em;
+    width: 18em;
 }
 
 form.add-to-cart-form {
@@ -804,8 +797,8 @@ body {
     grid-row: 2 / 3;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     
+    height: fit-content;
     padding: 1em;
     margin: 1em;
     background-color: rgb(194, 226, 255);
@@ -1321,30 +1314,31 @@ select {
     margin-top: 20px;
     text-align: center;
     margin-bottom: 5em;
-}
-
-.pagination a {
+  }
+  
+  .pagination a {
     color: #333;
     padding: 8px 16px;
     text-decoration: none;
     border: 1px solid #ddd;
     border-radius: 4px;
     margin-right: 5px;
-}
-
-.pagination a.active {
+  }
+  
+  .pagination a.active {
     background-color: #4CAF50;
     color: white;
     border: 1px solid #4CAF50;
-}
-
-.pagination a:hover:not(.active) {
+  }
+  
+  .pagination a:hover:not(.active) {
     background-color: #ddd;
-}
+  }
 
 
+  
 
-/* CSS para o chat */
+
 #input-container {
     width: 100%;
     display: flex;
@@ -1567,6 +1561,9 @@ select {
         height: 50em;
         object-fit: cover;
     }
+    .form-log{
+        font-size: 80%;
+    }
 }
 
 
@@ -1651,23 +1648,4 @@ select {
         object-fit: cover;
     }
     
-}
-
-
-/* CSS para o o show das passwords */
-.password-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-.password-wrapper input {
-    width: 100%;
-    padding-right: 30px; /* Adjust this value as needed */
-    box-sizing: border-box;
-}
-.toggle-password {
-    top: 10%;
-    position: absolute;
-    right: 10px;
-    cursor: pointer;
 }

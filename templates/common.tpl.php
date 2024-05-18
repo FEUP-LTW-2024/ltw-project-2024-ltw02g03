@@ -74,7 +74,7 @@ function drawHeader(Session $session, $db) { ?>
                 <?php if($session->isLoggedIn())  {
                     $userId = $session->getId();
                     $user = User::getUser($db, $userId); ?>
-                    <img id="profile-pic-header" src="<?= !empty($user->imageUrl) ? htmlspecialchars($user->imageUrl) : "../Docs/img/9024845_user_circle_light_icon.png" ?>" alt="" width="1.8em">
+                    <img id="profile-pic-header" src="<?= !empty($user->imageUrl) ? htmlspecialchars($user->imageUrl) : "../Docs/img/9024845_user_circle_light_icon.png" ?>" alt="" width="29">
                     <?php } else { ?>
                         <a id="login-register-anchor" href="/pages/login.php">
                         <img src="/Docs/img/9024845_user_circle_light_icon.png" alt="" width="30">
@@ -90,13 +90,13 @@ function drawHeader(Session $session, $db) { ?>
                 
                 <ul id="options-header">
                     <li>
-                        <a id="logout-anchor" href="/pages/postcreation.php">Publish Item</a>
+                        <a class="logout-anchor" href="/pages/postcreation.php">Publish Item</a>
                     </li>
                      <li>
-                        <a id="logout-anchor" href="/pages/wishlist.php">Wish List</a>
+                        <a class="logout-anchor" href="/pages/wishlist.php">Wish List</a>
                     </li>
                     <li>
-                        <a id="logout-anchor" href="/actions/action_logout.php">Logout</a>
+                        <a class="logout-anchor" href="/actions/action_logout.php">Logout</a>
                     </li>
 
                    
@@ -179,7 +179,7 @@ function drawHeader(Session $session, $db) { ?>
 <?php function drawBody(Session $session, $db) { ?>
     <main>
         <div class="container">
-            <img id="home-imge" src="https://live.staticflickr.com/7023/6806424715_4c1cb053ef_o.jpg">
+            <img id="home-imge" src="https://live.staticflickr.com/7023/6806424715_4c1cb053ef_o.jpg" alt="">
             <header>
                 <h1 id="home-welcome">Welcome to <span id="ecox-home">EcoExchange</span></h1>
             </header>
@@ -217,7 +217,7 @@ function drawHeader(Session $session, $db) { ?>
     <section id="recomended">
         <h1>All products</h1>  
         <h2><?php echo $limit; ?> products</h2>
-        <div id="index-products">
+        <div class="index-products">
             <?php drawProducts($session, $db, $itemsPerPage, $itemsToDisplay, $currentPage); ?>
         </div>
         <div class="pagination">
@@ -255,6 +255,7 @@ function drawHeader(Session $session, $db) { ?>
         </div>
 
     </section>
+    </main>
 
     
 <?php } ?>
