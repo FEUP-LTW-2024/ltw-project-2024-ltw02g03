@@ -205,13 +205,23 @@ function drawHeader(Session $session, $db) { ?>
         $itemsToDisplay = $items;
     }
     $limit = $itemsToDisplay ? count($itemsToDisplay) : 0;
+    $itemsPerPage = 2;
+    $currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
     ?>
     <section id="recomended">
         <h1>All products</h1>  
         <h2><?php echo $limit; ?> products</h2>
         <div id="index-products">
-            <?php drawProducts($session,$db, $limit,$itemsToDisplay); ?>
+            <?php drawProducts($session, $db, $itemsPerPage, $itemsToDisplay, $currentPage); ?>
         </div>
+        <div class="pagination"><?php
+            $totalPages = ceil(count($itemsToDisplay) / $itemsPerPage);
+
+            for ($i = 1; $i <= $totalPages; $i++) {
+                $activeClass = ($i === $currentPage) ? 'active' : '';
+                echo "<a href='?page=$i' class='$activeClass'>$i</a>";
+            }
+        ?></div>
     </section>
 
     
@@ -236,12 +246,14 @@ function drawHeader(Session $session, $db) { ?>
 <?php } ?>
 
 <?php
-function drawProducts(Session $session, $db, int $limit, $itemsToDisplay) {
+function drawProducts(Session $session, $db, int $itemsPerPage, $itemsToDisplay, int $currentPage = 1) {
     try {
+        $startIndex = ($currentPage - 1) * $itemsPerPage;
+        $pagedItems = array_slice($itemsToDisplay, $startIndex, $itemsPerPage);
         
         $myId = $session->getId();
-        if ($itemsToDisplay) {
-            foreach($itemsToDisplay as $row) {
+        if ($pagedItems) {
+            foreach($pagedItems as $row) { // Aqui deve ser $pagedItems em vez de $itemsToDisplay
                 $ownerId = $row->sellerId;
                 
                 
@@ -250,7 +262,7 @@ function drawProducts(Session $session, $db, int $limit, $itemsToDisplay) {
                 $image = Item::getItemImage($db, $row->itemId);
                 
                 ?>
-                
+                    <div id="index-products">
                     <article >
                         <a id="index-product" href="/pages/post.php?id=<?= $row->itemId ?>" class="item-link">
                             <div id=img-product>
@@ -277,17 +289,18 @@ function drawProducts(Session $session, $db, int $limit, $itemsToDisplay) {
                             <?php } ?>
                         </a>
                     </article>
+                    </div>
                 
                 <?php
             }
         } else {
             echo "<p>No items found.</p>";
         }
+        
     } catch (PDOException $e) {
         echo "Error fetching items: " . $e->getMessage();
     }
-    ?>
-    </main>
-<?php } ?>
+}
+?>
 
 
