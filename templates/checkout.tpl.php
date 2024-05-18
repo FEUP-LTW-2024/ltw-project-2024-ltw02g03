@@ -66,7 +66,7 @@ function drawCheckout(Session $session, $db, $item, $userId) {
                     <button type="submit" id="finalizar_compra_btn" onclick="simulatePurchaseAndRedirect()">Finish purchase</button>
                     </div>
                 </form>
-            </section>Enviar Mensagem
+            </section>
         </main>
 
     <?php

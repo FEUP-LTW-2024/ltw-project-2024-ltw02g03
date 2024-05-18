@@ -32,7 +32,7 @@ function drawHeader(Session $session, $db) { ?>
     <body>
     
     <header>
-        <h1><a href="/pages">EcoExchange</a></h1>
+        <h1><a id="ecox-title" href="/pages">EcoExchange</a></h1>
         <div id="header-list">
         <ul>
             <?php 
@@ -173,11 +173,12 @@ function drawHeader(Session $session, $db) { ?>
 
 <?php function drawBody(Session $session, $db) { ?>
     <main>
-        <div>
+        <div class="container">
+            <img id="home-imge" src="https://live.staticflickr.com/7023/6806424715_4c1cb053ef_o.jpg">
             <header>
                 <h1 id="home-welcome">Welcome to <span id="ecox-home">EcoExchange</span></h1>
             </header>
-            <img id="home-img" src="https://live.staticflickr.com/7023/6806424715_4c1cb053ef_o.jpg">
+            
             
         </div>
     
