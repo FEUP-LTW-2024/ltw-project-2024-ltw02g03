@@ -172,7 +172,7 @@ function drawPostCreation($session, $db) {
             <form method="post" action="../actions/action_add_item.php" enctype="multipart/form-data">
                 <div class="publish-div">
                     <label>
-                        Product Name <input type="text" name="productname" required>
+                        Product Name <input id="productname-input" type="text" name="productname" required pattern=".{5,50}" title="Product name must be between 5 and 50 characters long">
                     </label>
                     <label>
                         Price  
@@ -183,9 +183,10 @@ function drawPostCreation($session, $db) {
                 </div>
                 <div class="publish-div">
                     <label>
-                        Description <input id="description-input" type="text" name="description" placeholder="Write description here" required>
+                        Description <input id="description-input" type="text" name="description" placeholder="Write description here" required pattern=".{5,200}" title="Description must be between 5 and 200 characters long">
                     </label>
                 </div>
+                
                 <div class="publish-div">
                     <label for="model">Model
                         <select name="model" id="model" class="publish-select">

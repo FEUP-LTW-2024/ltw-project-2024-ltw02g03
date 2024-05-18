@@ -124,32 +124,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($_FILES['images']['name'][0])) {
         $uploadDirectory = '../database/uploads/';
         $imageUrls = [];
-
+    
         foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name) {
             if (!empty($_FILES['images']['name'][$key])) {
                 $file_name = $_FILES['images']['name'][$key];
                 $file_tmp = $_FILES['images']['tmp_name'][$key];
                 $file_type = $_FILES['images']['type'][$key];
                 
-                if ($file_type == 'image/jpeg' || $file_type == 'image/png') {
-                    $userFolder = $uploadDirectory . 'user_' . $user->userId . '/';
-                    if (!file_exists($userFolder)) {
-                        mkdir($userFolder, 0777, true);
-                    }
-                    
-                    $targetFile = $userFolder . $file_name;
-                    
-                    if (move_uploaded_file($file_tmp, $targetFile)) {
-
-                        if (!empty($user->imageUrl)) {
-                            unlink($user->imageUrl);
+                $checkImage = getimagesize($file_tmp);
+                if ($checkImage !== false) {
+                    if ($file_type == 'image/jpeg' || $file_type == 'image/png') {
+                        $userFolder = $uploadDirectory . 'user_' . $user->userId . '/';
+                        if (!file_exists($userFolder)) {
+                            mkdir($userFolder, 0777, true);
                         }
-                        $fieldsToUpdate['ImageUrl'] = $targetFile;
+                        
+                        $targetFile = $userFolder . $file_name;
+                        
+                        if (move_uploaded_file($file_tmp, $targetFile)) {
+                            if (!empty($user->imageUrl)) {
+                                unlink($user->imageUrl);
+                            }
+                            $fieldsToUpdate['ImageUrl'] = $targetFile;
+                        } else {
+                            $session->addMessage('error', 'Failed to upload image: ' . $file_name);
+                        }
                     } else {
-                        $session->addMessage('error', 'Failed to upload image: ' . $file_name);
+                        $session->addMessage('error', 'Only JPEG and PNG files are allowed: ' . $file_name);
                     }
                 } else {
-                    $session->addMessage('error', 'Only JPEG and PNG files are allowed: ' . $file_name);
+                    $session->addMessage('error', 'File is not a valid image: ' . $file_name);
                 }
             }
         }

@@ -23,3 +23,17 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 });
+function togglePasswordVisibility(id) {
+  var input = document.getElementById(id);
+  var eyeOpen = input.nextElementSibling.querySelector('.eye-open');
+  var eyeClosed = input.nextElementSibling.querySelector('.eye-closed');
+  if (input.type === "password") {
+      input.type = "text";
+      eyeOpen.style.display = 'none';
+      eyeClosed.style.display = 'block';
+  } else {
+      input.type = "password";
+      eyeOpen.style.display = 'block';
+      eyeClosed.style.display = 'none';
+  }
+}

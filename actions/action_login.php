@@ -10,14 +10,14 @@ require_once(__DIR__ . '/../database/user.class.php');
 $db = getDatabaseConnection();
 
 if (isset($_POST['email'], $_POST['password'])) {
-    // Verifica se o formato do email é válido usando filter_var
+
     if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
         $session->addMessage('error', 'Invalid email format');
         header('Location: ../pages/login.php');
         exit();
     }
 
-    $passwordPattern = '/^(?=.*[!@#$%^&*])(?=.*[A-Z])[a-zA-Z0-9!?@#$%^&*]{6,}$/';
+    $passwordPattern = '/^(?=.*[!@#$%^&*?])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*?]{6,}$/';
     if (!preg_match($passwordPattern, $_POST['password'])) {
       $session->addMessage('error', 'Passwords must be at least 6 characters long and contain at least one special character and one uppercase letter');
       header('Location: ../pages/login.php');
