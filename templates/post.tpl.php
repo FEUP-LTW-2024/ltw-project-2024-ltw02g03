@@ -365,7 +365,8 @@ function drawPostBought(Session $session, $db, int $itemId) {
                                 
 
                                 <label for="review_text">Your review:</label><br>
-                                <textarea class="review-text" id="description-input" name="review_text" rows="4" cols="50" required></textarea><br>
+                                <textarea class="review-text" id="description-input" name="review_text" rows="4" cols="50" maxlength="40" required oninput="updateCharacterCount()"></textarea><br>
+                                <span id="charCount">40 characters remaining</span><br><br>
 
                                 <label for="rating">Grade:</label>
                                 <select class="publish-select" name="rating" required>
