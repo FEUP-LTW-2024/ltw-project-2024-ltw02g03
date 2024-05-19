@@ -17,7 +17,10 @@
 
 ## Screenshots
 
-(2 or 3 screenshots of your website)
+<img src="/Docs/img/indexpage.png">
+<img src="/Docs/img/indexpage2.png">
+<img src="/Docs/img/searchpage.png">
+<img src="/Docs/img/profilepage.png">
 
 ## Implemented Features
 
@@ -62,3 +65,33 @@ We also implemented the following additional requirements:
 
 - [ ] **User Preferences**
 - [ ] **Real-Time Messaging System**
+
+## Accounts 
+
+<table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Antero Morgado</td>
+                <td>antero@gmail.com</td>
+                <td>Antero123?</td>
+            </tr>
+            <tr>
+                <td>Tiago Pinto</td>
+                <td>tiago@gmail.com</td>
+                <td>Tiago123?</td>
+            </tr>
+            <tr>
+                <td>João Torres</td>
+                <td>Juca@gmail.com</td>
+                <td>Juca123?</td>
+            </tr>
+        </tbody>
+    </table>
+    
