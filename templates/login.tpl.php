@@ -11,6 +11,8 @@ function drawLoginForm(Session $session, $db) { ?>
         <section id="login">
             <h1>Login</h1>
             <form class="form-log" action="../actions/action_login.php" method="post">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
+
                 <label>
                     Email <input type="email" name="email" required title="Please enter a valid email address.">
                 </label>
@@ -44,6 +46,8 @@ function drawLoginForm(Session $session, $db) { ?>
     <section id="login">
         <h1>Register</h1>
         <form class="form-log" action="/actions/action_register.php" method="post">
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
+
             <h1>User</h1>
             <div class="input-group">
                 <label for="email">Email</label>

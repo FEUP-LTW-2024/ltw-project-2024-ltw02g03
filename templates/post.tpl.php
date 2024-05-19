@@ -9,8 +9,7 @@ require_once(__DIR__ . '/../database/user.class.php');
 require_once(__DIR__ . '/../database/review.class.php');
 
 function drawPost(Session $session, $db, int $itemId) { 
-    ini_set('error_reporting', E_ALL); 
-    ini_set('display_errors', 1);
+    
     try {
         $item = Item::getItem($db, $itemId);
         
@@ -304,6 +303,8 @@ function drawPostCreation($session, $db) {
                         </select>
                     </label>
                 </div>
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
+
                 <button type="submit">Post</button>
             </form>
         </section>
@@ -369,6 +370,7 @@ function drawPostBought(Session $session, $db, int $itemId) {
                         <div id="post-price-button">
                             <h2>Review the item</h2>
                             <form id="review-form" action="/../actions/action_process_review.php" method="POST">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
                                 <input type="hidden" name="user_id" value="<?= $userId ?>">
                                 <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
                                 
