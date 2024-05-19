@@ -9,7 +9,7 @@
 ## Install Instructions
 
 
-    git clone <your_repo_url>
+    git clone git@github.com:FEUP-LTW-2024/ltw-project-2024-ltw02g03.git
     git checkout final-delivery-v1
     sqlite database/database.db < database/script.sql
     php -S localhost:9000
