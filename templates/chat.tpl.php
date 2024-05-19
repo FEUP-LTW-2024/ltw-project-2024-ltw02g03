@@ -5,9 +5,10 @@ require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/user.class.php');
-require_once(__DIR__ . '/../database/communication.class.php'); // Adicione a inclusão do arquivo da classe Communication
+require_once(__DIR__ . '/../database/communication.class.php'); //
 
 function drawChat($db, int $senderId, int $ownerId, int $itemId, array $messages) {
+    $session = new Session();
     $ownerName = User::getUserNameById($db, $ownerId);
     $itemName = Item::getItemNameById($db, $itemId);
 ?>
@@ -30,6 +31,8 @@ function drawChat($db, int $senderId, int $ownerId, int $itemId, array $messages
             <form id="message-form" action="../actions/send_message.php" method="POST">
                 <input type="hidden" id="receiver-id" name="receiver-id" value="<?= $ownerId ?>">
                 <input type="hidden" id="item-id" name="item-id" value="<?= $itemId ?>">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
+
                 <input type="text" name="message-input" id="message-input" placeholder="Digite sua mensagem...">
                 <input type="submit" id="send-button" value="Enviar">
             </form>

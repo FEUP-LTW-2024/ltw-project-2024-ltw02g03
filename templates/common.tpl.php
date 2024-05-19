@@ -186,6 +186,7 @@ function drawHeader(Session $session, $db) { ?>
         </div>
     
     <?php
+    
     $myId = $session->getId();
     
     $items = Item::getAllActiveItems($db);

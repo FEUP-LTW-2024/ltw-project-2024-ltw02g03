@@ -8,6 +8,13 @@ $session = new Session();
 $db = getDatabaseConnection();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $csrf_token = isset($_POST['csrf_token']) ? $_POST['csrf_token'] : '';
+    if (!$session->verifyCsrfToken($csrf_token)) {
+        http_response_code(403);
+        echo json_encode(["success" => false, "error" => "Erro de CSRF: Token CSRF inválido."]);
+        exit;
+    }
+
     if (isset($_POST['message-input'], $_POST['receiverId'], $_POST['item-id'])) {
         $message = $_POST['message-input'];
         $senderId = $session->getId();
