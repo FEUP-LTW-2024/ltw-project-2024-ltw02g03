@@ -21,10 +21,8 @@ function drawCheckout(Session $session, $db, $item, $userId) {
             <section class="publish-section">
                 <h2>Checkout</h2>
                 
-                <!-- Formulário de checkout -->
                 <form action="/../actions/action_checkout.php" method="post">
                 <div class="publish-div">
-                    <!-- Informações de envio -->
                     <h3>Informações de Envio</h3>
                         <label for="address">Endereço:</label>
                         <input type="text" id="address" name="address" value="<?= isset($user->address) ? htmlspecialchars($user->address) : '' ?>" required><br>

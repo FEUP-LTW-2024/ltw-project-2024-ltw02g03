@@ -10,6 +10,11 @@ require_once(__DIR__ . '/../database/user.class.php');
 $db = getDatabaseConnection();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $session->addMessage('error', 'Invalid CSRF token');
+        header('Location: ../pages');
+        exit();
+    }
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
     $username = $_POST['username'];

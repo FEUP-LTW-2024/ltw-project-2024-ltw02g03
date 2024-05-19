@@ -153,3 +153,28 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollMessagesToBottom();
     };
 });
+
+
+function openSearchTab() {
+    var searchTab = document.getElementById("search-tab");
+    if (searchTab.style.display === "none") {
+        searchTab.style.display = "block";
+    } else {
+        searchTab.style.display = "none";
+    }
+}
+document.addEventListener("DOMContentLoaded", function() {
+    var filterButton = document.getElementById("filter-search-tab");
+
+    // Toggle the display of the filter box when the button is clicked
+    filterButton.addEventListener("click", function() {
+        var filterBox = document.getElementById("filter-box");
+        
+        // Ensure that the filterBox is initially hidden
+        if (filterBox.style.display === "" || filterBox.style.display === "none") {
+            filterBox.style.display = "block";
+        } else {
+            filterBox.style.display = "none";
+        }
+    });
+});

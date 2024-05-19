@@ -10,6 +10,11 @@ require_once(__DIR__ . '/../database/user.class.php');
 $db = getDatabaseConnection();
 
 if (isset($_POST['email'], $_POST['password'])) {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $session->addMessage('error', 'Invalid CSRF token');
+        header('Location: ../pages');
+        exit();
+    }
 
     if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
         $session->addMessage('error', 'Invalid email format');

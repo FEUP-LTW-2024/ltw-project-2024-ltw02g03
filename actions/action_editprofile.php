@@ -15,6 +15,12 @@ $db = getDatabaseConnection();
 $user = User::getUser($db, $session->getId());
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $session->addMessage('error', 'Invalid CSRF token');
+        header('Location: ../pages');
+        exit();
+    }
+
     $fieldsToUpdate = [];
 
     if (!empty($_POST['email'])) {

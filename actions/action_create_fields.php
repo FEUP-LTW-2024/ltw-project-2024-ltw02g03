@@ -5,8 +5,12 @@ require_once(__DIR__ . '/../database/item.class.php');
 require_once(__DIR__ . '/../database/user.class.php');
 $session = new Session();
 
-// Verifique se um formulário para criar uma nova marca foi enviado
 if (isset($_POST['createBrand'])) {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $session->addMessage('error', 'Invalid CSRF token');
+        header('Location: ../pages');
+        exit();
+    }
     $db = getDatabaseConnection();
     $brandName = $_POST['brandName'];
 
@@ -23,6 +27,12 @@ if (isset($_POST['createBrand'])) {
 }
 
 if (isset($_POST['createCondition'])) {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $session->addMessage('error', 'Invalid CSRF token');
+        header('Location: ../pages');
+        exit();
+    }
+    
     $db = getDatabaseConnection();
     $conditionName = $_POST['conditionName'];
 
@@ -40,6 +50,11 @@ if (isset($_POST['createCondition'])) {
 }
 
 if (isset($_POST['createSize'])) {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $session->addMessage('error', 'Invalid CSRF token');
+        header('Location: ../pages');
+        exit();
+    }
     $db = getDatabaseConnection();
     $sizeName = $_POST['sizeName'];
 
@@ -53,11 +68,16 @@ if (isset($_POST['createSize'])) {
         $session->addMessage('error', 'Error creating size!');
     }
     header('Location: /../pages/profilepage.php');
+    
 
 }
 
-// Verifique se um formulário para criar uma nova categoria foi enviado
 if (isset($_POST['createCategory'])) {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $session->addMessage('error', 'Invalid CSRF token');
+        header('Location: ../pages');
+        exit();
+    }
     $db = getDatabaseConnection();
     $categoryName = $_POST['categoryName'];
 
@@ -74,8 +94,12 @@ if (isset($_POST['createCategory'])) {
 
 }
 
-// Verifique se um formulário para criar um novo modelo de item foi enviado
 if (isset($_POST['createModel'])) {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $session->addMessage('error', 'Invalid CSRF token');
+        header('Location: ../pages');
+        exit();
+    }
     $db = getDatabaseConnection();
     $modelName = $_POST['modelName'];
 
@@ -92,8 +116,12 @@ if (isset($_POST['createModel'])) {
 
 }
 
-// Verifique se um formulário para elevar um usuário a administrador foi enviado
 if (isset($_POST['elevateAdmin'])) {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $session->addMessage('error', 'Invalid CSRF token');
+        header('Location: ../pages');
+        exit();
+    }
     $db = getDatabaseConnection();
     $userId = $_POST['userId'];
     try {

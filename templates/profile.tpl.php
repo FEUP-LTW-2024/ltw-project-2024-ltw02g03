@@ -230,6 +230,8 @@ function drawProfile(Session $session, $db)
 
                 <div id="edit-profile-section" style="display: none;">
                     <form class="profile-edit" action="/actions/action_editprofile.php" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
+
                         <h1>User</h1>
                         <div class="input-group">
                             <label class="image-input">
@@ -304,6 +306,7 @@ function drawProfile(Session $session, $db)
                             <label for="confirm-password">Confirm New Password</label>
                             <input type="password" id="confirm-password" name="confirmPassword" required pattern=".{6,}" title="Confirmation password should be at least 6 characters long.">
                         </div>
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
                         <div class="flex-login-regis">
                             <button type="submit">Change Password</button>
                         </div>
@@ -317,34 +320,40 @@ function drawProfile(Session $session, $db)
                     
                         <h2>Admin Section</h2>
                         <form action="/../actions/action_create_fields.php" method="post">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
                             <label for="brandName">New Brand:</label>
                             <input type="text" id="brandName" name="brandName" required>
                             <button type="submit" name="createBrand">Create Brand</button>
                         </form>
                         <form action="/../actions/action_create_fields.php" method="post">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
                             <label for="conditionName">New Condition:</label>
                             <input type="text" id="conditionName" name="conditionName" required>
                             <button type="submit" name="createCondition">Create Condition</button>
                         </form>
 
                         <form action="/../actions/action_create_fields.php" method="post">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
                             <label for="sizeName">New Size:</label>
                             <input type="text" id="sizeName" name="sizeName" required>
                             <button type="submit" name="createSize">Create Size</button>
                         </form>
 
                         <form action="/../actions/action_create_fields.php" method="post">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
                             <label for="modelName">New Model:</label>
                             <input type="text" id="modelName" name="modelName" required>
                             <button type="submit" name="createModel">Create Model</button>
                         </form>
 
                         <form action="/../actions/action_create_fields.php" method="post">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
                             <label for="categoryName">New Category:</label>
                             <input type="text" id="categoryName" name="categoryName" required>
                             <button type="submit" name="createCategory">Create Category</button>
                         </form>
                         <form action="/../actions/action_create_fields.php" method="post">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
                             <label for="userId">Select User:</label>
                             <select id="userId" name="userId" class="publish-select" required>
                                 <?php
