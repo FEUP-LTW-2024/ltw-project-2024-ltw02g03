@@ -17,7 +17,10 @@
 
 ## Screenshots
 
-(2 or 3 screenshots of your website)
+<img src="/Docs/img/indexpage.png">
+<img src="/Docs/img/indexpage2.png">
+<img src="/Docs/img/searchpage.png">
+<img src="/Docs/img/profilepage.png">
 
 ## Implemented Features
 
