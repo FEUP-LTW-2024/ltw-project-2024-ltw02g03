@@ -64,6 +64,9 @@ if(chatContainer) {
         formData.append('receiverId', receiverId);
         formData.append('message-input', message);
         formData.append('item-id', document.getElementById('item-id').value);
+    
+        formData.append('csrf_token', document.querySelector('input[name="csrf_token"]').value);
+    
         fetch('../actions/send_message.php', {
             method: 'POST',
             body: formData,
@@ -86,6 +89,7 @@ if(chatContainer) {
             console.error('Erro ao enviar mensagem:', error);
         });
     }
+    
     
     document.getElementById('message-form').addEventListener('submit', function(event) {
         event.preventDefault(); 

@@ -3,6 +3,19 @@
 declare(strict_types=1);
 require_once(__DIR__ . '/../utils/session.php');
 
+
+$session = new Session();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $csrf_token = isset($_POST['csrf_token']) ? $_POST['csrf_token'] : '';
+
+    if (!$session->verifyCsrfToken($csrf_token)) {
+        http_response_code(403);
+        echo json_encode(["success" => false, "error" => "Erro de CSRF: Token CSRF inválido."]);
+        exit;
+    }
+}
+
 require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/item.class.php');
 $db = getDatabaseConnection();
@@ -50,6 +63,8 @@ function getCategories($db) {
 }
 function removeCategory($db) {
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['removeCategory'])) {
+        
+        
         $categoryToRemove = $_POST['category'];
         $result = Item::removeCategory($db, $categoryToRemove);
         $session = new Session();

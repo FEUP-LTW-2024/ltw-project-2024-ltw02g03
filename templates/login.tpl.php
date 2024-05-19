@@ -92,7 +92,6 @@ function drawLoginForm(Session $session, $db) { ?>
             </div>
             <div class="password-group">
                 <h1>Password</h1>
-                <div class="input-group">
                     <label for="password">Password</label>
                     <div class="password-wrapper">
                         <input type="password" id="password" name="password" required pattern="^(?=.*[!@#$%^&*?])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*?]{6,}$" title="Password should be at least 6 characters long and contain at least one special character, one uppercase letter, and may contain the '?' symbol.">
@@ -123,7 +122,6 @@ function drawLoginForm(Session $session, $db) { ?>
                             </svg>
                         </span>
                     </div>
-                </div>
             </div>
 
             <div id="flex-login-regis">

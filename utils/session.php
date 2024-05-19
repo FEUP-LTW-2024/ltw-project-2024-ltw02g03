@@ -7,6 +7,9 @@
 
         $this->messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : array();
         unset($_SESSION['messages']);
+        if (!isset($_SESSION['csrf_token'])) {
+          $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); 
+      }
       }
 
       public function isLoggedIn() : bool {
@@ -15,6 +18,12 @@
 
       public function logout() {
         session_destroy();
+      }
+      public function getCsrfToken() : string {
+        return $_SESSION['csrf_token'];
+      }
+      public function verifyCsrfToken(string $token) : bool {
+        return hash_equals($_SESSION['csrf_token'], $token);
       }
 
       public function getId() : ?int {

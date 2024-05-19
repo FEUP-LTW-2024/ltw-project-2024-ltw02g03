@@ -234,9 +234,9 @@
     -- Inserir dados de exemplo na tabela User
     INSERT INTO User (UserId, FirstName, LastName, Username, Email, Password, Address, City, District, Country, PostalCode, Phone, ImageUrl, Admin)
     VALUES
-    (1, 'John', 'Doe', 'johndoe', 'johndoe@example.com', 'password123', '123 Main St', 'Anytown', 'Anydistrict', 'AnyCountry', '12345', '123-456-7890', 'https://example.com/avatar3.jpg', 0),
-    (2, 'Jane', 'Smith', 'janesmith', 'janesmith@example.com', 'password456', '456 Oak St', 'Othertown', 'Otherdistrict', 'OtherCountry', '54321', '987-654-3210', 'https://example.com/avatar2.jpg', 0),
-    (3, 'Admin', 'Admin', 'admin', 'admin@example.com', '$2y$10$E/kh5qRzGdBofI4D3O1.L.Yc2vISpqjDKbZX2CSETRo57I8SVEgeG', '789 Elm St', 'Somewhere', 'Somedistrict', 'SomeCountry', '67890', '555-123-4567', '../database/uploads/user_3/Mortimer_Freeze(1).png', 1),
+    (1, 'Antero', 'Morgado', 'Tero', 'antero@gmail.com', '$2y$10$AbKJuW4fLEPWNdR0Xjt2keg9uRVjxt3p7fzRx4rtEBZQcS5WNwg6K', '123 Main St', 'Anytown', 'Guarda', 'Portugal', '12345', '123-456-7890', 'database/uploads/user_1/eb58c6f4-e9e0-4b58-aa01-72be53093802.webp', 1),
+    (2, 'João', 'Torres', 'Juca', 'juca@gmail.com', '$2y$10$qUYzibLiIgxJ0/7JyepO0.2XGKtpaEuw55kyf.yMeDC29nJuW9Vz6', '456 Oak St', 'Othertown', 'Otherdistrict', 'Portugal', '54321', '987-654-3210', 'https://example.com/avatar2.jpg', 1),
+    (3, 'Tiago', 'Pinto', 'Tiago', 'tiago@gmail.com', '$2y$10$Hw9Rhp.Rp8yQHYeQYc6K/.DytkKaI9Z.3vYjsm.kyfn1WSEEVUkVy', 'Rua Faria de Cima, nº158', 'Cucujães', 'Aveiro', 'Portugal', '372-785', '933774667', '../database/uploads/user_3/Mortimer_Freeze(1).png', 1),
     (4, 'Maria', 'Silva', 'mariasilva', 'mariasilva@example.com', 'password789', '789 Elm St', 'Somewhere', 'Somedistrict', 'SomeCountry', '67890', '555-123-4567', 'https://example.com/avatar3.jpg', 0),
     (5, 'Carlos', 'Santos', 'carlossantos', 'carlossantos@example.com', 'passwordabc', '101 Pine St', 'Anywhere', 'Anydistrict', 'AnyCountry', '54321', '123-555-7890', 'https://example.com/avatar4.jpg', 0);
 

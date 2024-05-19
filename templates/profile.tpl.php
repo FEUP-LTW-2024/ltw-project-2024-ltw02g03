@@ -360,6 +360,7 @@ function drawProfile(Session $session, $db)
                             <button type="submit" name="elevateAdmin">Elevate User to Admin</button>
                     </form>
                     <form action="/templates/route.php?action=remove-category" method="post">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
                         <label for="category-select">Remove Category:</label>
                         <select id="category-select" name="category" class="publish-select">
                             <?php
@@ -372,6 +373,7 @@ function drawProfile(Session $session, $db)
                         <button type="submit" name="removeCategory">Remove Category</button>
                     </form>
                     <form action="/templates/route.php?action=remove-model" method="post">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
                         <label for="model-select">Remove Model:</label>
                         <select id="model-select" name="model" class="publish-select">
                             <?php
@@ -384,6 +386,7 @@ function drawProfile(Session $session, $db)
                         <button type="submit" name="removeModel">Remove Model</button>
                     </form>
                     <form action="/templates/route.php?action=remove-condition" method="post">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
                         <label for="condition-select">Remove Condition:</label>
                         <select id="condition-select" name="condition" class="publish-select">
                             <?php
@@ -396,6 +399,7 @@ function drawProfile(Session $session, $db)
                         <button type="submit" name="removeCondition">Remove Condition</button>
                     </form>
                     <form action="/templates/route.php?action=remove-size" method="post">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
                         <label for="size-select">Remove Size:</label>
                         <select id="size-select" name="size" class="publish-select">
                             <?php
@@ -408,6 +412,7 @@ function drawProfile(Session $session, $db)
                         <button type="submit" name="removeSize">Remove Size</button>
                     </form>
                     <form action="/templates/route.php?action=remove-brand" method="post">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
                         <label for="brand-select">Remove Brand:</label>
                         <select id="brand-select" name="brand" class="publish-select">
                             <?php

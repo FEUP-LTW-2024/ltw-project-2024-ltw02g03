@@ -1334,6 +1334,11 @@ select {
   .pagination a:hover:not(.active) {
     background-color: #ddd;
   }
+  
+.password-group .input-group {
+    display: flex;
+    align-items: center;
+}
 
 
   
@@ -1648,4 +1653,25 @@ select {
         object-fit: cover;
     }
     
+}
+
+/* CSS para o login */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 30px; /* Adjust this value as needed */
+    box-sizing: border-box;
+}
+
+.toggle-password {
+    top: 30%;
+    transform: translateY(-50%);
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
 }
