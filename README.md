@@ -61,4 +61,4 @@ We have been careful with the following security aspects:
 We also implemented the following additional requirements:
 
 - [ ] **User Preferences**
-- [ ] **Real-Time Messaging System
+- [ ] **Real-Time Messaging System**
