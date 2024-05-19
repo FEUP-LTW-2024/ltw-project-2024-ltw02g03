@@ -1,27 +1,64 @@
-# LTW Example
+# EcoExchange
 
-Based on a simplified version of the [Chinook Database](https://github.com/lerocha/chinook-database):
+## Group ltw02g03
 
-![](database.svg)
+- Antero Morgado (up202204971) 33%
+- Tiago Pinto (up) 33%
+- João Torres (up) 33%
 
-You can see previous versions of the example by changing branches.
+## Install Instructions
 
-# Step 1: Create the Database
 
-To create the database, we need to run the following command:
+    git clone <your_repo_url>
+    git checkout final-delivery-v1
+    sqlite database/database.db < database/script.sql
+    php -S localhost:9000
 
-```bash
-sqlite3 database.db < database.sql
-```
 
-# Step 2: Draw Mockups
+## Screenshots
 
-Draw some initial mockups. Don't lose too much time with these:
+(2 or 3 screenshots of your website)
 
-![](mockups.svg)
+## Implemented Features
 
-# Step 3: HTML in PHP files:
+**General**:
 
-* [index.php](index.php)
-* [group.php](group.php)
-* [album.php](album.php)
+- [ ] Register a new account.
+- [ ] Log in and out.
+- [ ] Edit their profile, including their name, username, password, email and address.
+
+**Sellers**  should be able to:
+
+- [ ] List new items, providing details such as category, brand, model, size, and condition, along with images.
+- [ ] Track and manage their listed items.
+- [ ] Respond to inquiries from buyers regarding their items and add further information if needed.
+- [ ] Print shipping forms for items that have been sold.
+
+**Buyers**  should be able to:
+
+- [ ] Browse items using filters like category, price, and condition.
+- [ ] Engage with sellers to ask questions or negotiate prices.
+- [ ] Add items to a wishlist or shopping cart.
+- [ ] Proceed to checkout with their shopping cart (simulate payment process).
+
+**Admins**  should be able to:
+
+- [ ] Elevate a user to admin status.
+- [ ] Introduce new item categories, sizes, conditions, and other pertinent entities.
+- [ ] Oversee and ensure the smooth operation of the entire system.
+
+**Security**:
+We have been careful with the following security aspects:
+
+- [ ] **SQL injection**
+- [ ] **Cross-Site Scripting (XSS)**
+- [ ] **Cross-Site Request Forgery (CSRF)**
+
+**Password Storage Mechanism**: hash_password&verify_password
+
+**Aditional Requirements**:
+
+We also implemented the following additional requirements:
+
+- [ ] **User Preferences**
+- [ ] **Real-Time Messaging System
