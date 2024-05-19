@@ -3,8 +3,8 @@
 ## Group ltw02g03
 
 - Antero Morgado (up202204971) 33%
-- Tiago Pinto (up) 33%
-- João Torres (up) 33%
+- Tiago Pinto (up202206280) 33%
+- João Torres (up202205576) 33%
 
 ## Install Instructions
 
