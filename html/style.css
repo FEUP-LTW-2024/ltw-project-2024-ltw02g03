@@ -381,13 +381,13 @@ body {
     width: 100%;
 }
 
-#flex-login-regis {
+.flex-login-regis {
     display: flex;
     align-items: center; 
     justify-content: space-between;
 }
 
-#flex-login-regis > a {
+.flex-login-regis > a {
     text-align: center; 
 }
 
@@ -888,7 +888,7 @@ body {
     margin-left: 1em;
 }
 
-#profile-page-items {
+.profile-page-items {
     display: flex;
     flex-wrap: wrap;
     align-items: center;

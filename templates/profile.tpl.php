@@ -62,7 +62,7 @@ function drawProfile(Session $session, $db)
                 <div id="profile-presented">
                         <h1>Presented Products</h1>
                         <h2>To Sell:</h2>
-                        <div id="profile-page-items">
+                        <div class="profile-page-items">
                         <?php 
                         $allItems=Item::getItemsBySellerId($db, $userId);
                         $activeItems = [];
@@ -95,7 +95,7 @@ function drawProfile(Session $session, $db)
                                 
                         </div>
                         <h2>Sold:</h2>
-                        <div id="profile-page-items">
+                        <div class="profile-page-items">
                         <?php
                         if(empty($inactiveItems)){
                             echo "<h3>No items sold</h3>";
@@ -123,7 +123,7 @@ function drawProfile(Session $session, $db)
                 <div id="purchase-history" style="display: none;">
                     <h1>Purchase History</h1>
                     
-                        <div id="profile-page-items">
+                        <div class="profile-page-items">
                         <?php 
                         $payments= Payment::getPaymentsByBuyerId($db, $userId);
                         foreach($payments as $payment):
@@ -281,7 +281,7 @@ function drawProfile(Session $session, $db)
                                 <input type="tel" id="phone" name="phone" placeholder="<?= $user->phone ?>" pattern="^\+?\d{9,12}$" title="Phone number should be 9 digits long, or up to 12 digits if including an optional leading +.">
                             </div>
                         </div>
-                        <div id="flex-login-regis">
+                        <div class="flex-login-regis">
                             <button type="submit">Change</button>
                         </div>
                     </form>
@@ -304,7 +304,7 @@ function drawProfile(Session $session, $db)
                             <label for="confirm-password">Confirm New Password</label>
                             <input type="password" id="confirm-password" name="confirmPassword" required pattern=".{6,}" title="Confirmation password should be at least 6 characters long.">
                         </div>
-                        <div id="flex-login-regis">
+                        <div class="flex-login-regis">
                             <button type="submit">Change Password</button>
                         </div>
                     </form>
@@ -424,6 +424,7 @@ function drawProfile(Session $session, $db)
                 
                 
                 <?php endif; ?>
+            </div>
             </div>
             
             
