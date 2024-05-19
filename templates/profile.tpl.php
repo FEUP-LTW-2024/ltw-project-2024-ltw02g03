@@ -62,7 +62,7 @@ function drawProfile(Session $session, $db)
                 <div id="profile-presented">
                         <h1>Presented Products</h1>
                         <h2>To Sell:</h2>
-                        <div id="profile-page-items">
+                        <div class="profile-page-items">
                         <?php 
                         $allItems=Item::getItemsBySellerId($db, $userId);
                         $activeItems = [];
@@ -95,7 +95,7 @@ function drawProfile(Session $session, $db)
                                 
                         </div>
                         <h2>Sold:</h2>
-                        <div id="profile-page-items">
+                        <div class="profile-page-items">
                         <?php
                         if(empty($inactiveItems)){
                             echo "<h3>No items sold</h3>";
@@ -123,7 +123,7 @@ function drawProfile(Session $session, $db)
                 <div id="purchase-history" style="display: none;">
                     <h1>Purchase History</h1>
                     
-                        <div id="profile-page-items">
+                        <div class="profile-page-items">
                         <?php 
                         $payments= Payment::getPaymentsByBuyerId($db, $userId);
                         foreach($payments as $payment):
