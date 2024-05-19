@@ -234,9 +234,9 @@
     -- Inserir dados de exemplo na tabela User
     INSERT INTO User (UserId, FirstName, LastName, Username, Email, Password, Address, City, District, Country, PostalCode, Phone, ImageUrl, Admin)
     VALUES
-    (1, 'Antero', 'Morgado', 'Tero', 'antero@gmail.com', '$2y$10$AbKJuW4fLEPWNdR0Xjt2keg9uRVjxt3p7fzRx4rtEBZQcS5WNwg6K', '123 Main St', 'Anytown', 'Guarda', 'Portugal', '12345', '123-456-7890', '../database/uploads/user_1/eb58c6f4-e9e0-4b58-aa01-72be53093802.webp', 1),
-    (2, 'João', 'Torres', 'Juca', 'juca@gmail.com', '$2y$10$qUYzibLiIgxJ0/7JyepO0.2XGKtpaEuw55kyf.yMeDC29nJuW9Vz6', '456 Oak St', 'Othertown', 'Otherdistrict', 'Portugal', '54321', '987-654-3210', '../database/uploads/user_2/2ba030f1-f3ee-45f7-a0f0-72d69b03aef4.jpeg', 1),
-    (3, 'Tiago', 'Pinto', 'Tiago', 'tiago@gmail.com', '$2y$10$Hw9Rhp.Rp8yQHYeQYc6K/.DytkKaI9Z.3vYjsm.kyfn1WSEEVUkVy', 'Rua Faria de Cima, nº158', 'Cucujães', 'Aveiro', 'Portugal', '372-785', '933774667', '../database/uploads/user_3/Mortimer_Freeze(1).png', 1),
+    (1, 'Antero', 'Morgado', 'Tero', 'antero@gmail.com', '$2y$10$AbKJuW4fLEPWNdR0Xjt2keg9uRVjxt3p7fzRx4rtEBZQcS5WNwg6K', '123 Main St', 'Guarda', 'Guarda', 'Portugal', '12345', '123-456-7890', '../database/uploads/user_1/Screenshot from 2024-05-19 23-37-43.png', 1),
+    (2, 'João', 'Torres', 'Juca', 'juca@gmail.com', '$2y$10$qUYzibLiIgxJ0/7JyepO0.2XGKtpaEuw55kyf.yMeDC29nJuW9Vz6', '456 Oak St', 'Esposende', 'Braga', 'Portugal', '54321', '987-654-3210', '../database/uploads/user_2/Untitled.jpeg', 1),
+    (3, 'Tiago', 'Pinto', 'Tiago', 'tiago@gmail.com', '$2y$10$Hw9Rhp.Rp8yQHYeQYc6K/.DytkKaI9Z.3vYjsm.kyfn1WSEEVUkVy', 'Rua Faria de Cima, nº158', 'Cucujães', 'Aveiro', 'Portugal', '372-785', '933774667', '../database/uploads/user_3/file.jpeg', 1),
     (4, 'Maria', 'Silva', 'mariasilva', 'mariasilva@example.com', 'password789', '789 Elm St', 'Ovar', 'Aveiro', 'Portugal', '4200-721', '919919911', '../database/uploads/default_user.png', 0),
     (5, 'Carlos', 'Santos', 'carlossantos', 'carlossantos@example.com', 'passwordabc', '101 Pine St', 'Ohio', 'California', 'EUA', '54321', '123-555-7890', '../database/uploads/default_user.png', 0);
 
