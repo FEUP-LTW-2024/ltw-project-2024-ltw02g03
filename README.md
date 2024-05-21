@@ -65,6 +65,7 @@ We also implemented the following additional requirements:
 
 - [ ] **User Preferences**
 - [ ] **Real-Time Messaging System**
+- [ ] **Rating and Review System**
 
 ## Accounts 
 
