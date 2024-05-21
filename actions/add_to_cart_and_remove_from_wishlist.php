@@ -29,7 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           
             
             if ($lastId !== false) {
-                // Remove item from wishlist
                 $wishlistId = intval($_POST['wishlist_id']);
                 Wishlist::deleteItem($db, $wishlistId);
 

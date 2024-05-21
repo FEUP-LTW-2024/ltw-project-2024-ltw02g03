@@ -396,9 +396,15 @@ function drawPostBought(Session $session, $db, int $itemId) {
 
                                 <input type="submit" value="Send Review">
                             </form>
+                            
                         </div>
 
-                            
+                        <?php if($item->active === (false) ) { ?>
+                                <form action="../actions/print_shippingForm.php" method="post">
+                                    <input type="hidden" name="item_id" value="<?= $item->itemId ?>">
+                                    <button type="submit" class="cart-button-post">Shipping Form</button>
+                                </form>
+                            <?php } ?>
                         
                         
                     </div>
@@ -418,7 +424,7 @@ function drawPostBought(Session $session, $db, int $itemId) {
                             </div>
                             <h2>Phone: <?= !empty($user->phone) ? htmlspecialchars($user->phone)  : " - "?></h2>
                             <h2>Email: <?= !empty($user->email) ? htmlspecialchars($user->email) : " - "?></h2>
-                        </div>
+                        </div>  
                     </div>
 
                     
